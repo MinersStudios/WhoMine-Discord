@@ -27,7 +27,7 @@ import static net.minecraft.network.protocol.PacketFlow.SERVERBOUND;
  * @see PacketFlow
  * @see PacketRegistry
  * @see <a href="https://wiki.vg/Protocol">Protocol Wiki</a>
- * @version 1.20.4, protocol 756
+ * @version 1.20.4, protocol 765
  */
 @SuppressWarnings("unused")
 @Immutable
