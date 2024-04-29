@@ -1,0 +1,11 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 🌐 Website
+    url: https://whomine.net/
+    about: Check out our website
+  - name: 📖 Docs
+    url: https://docs.whomine.net/
+    about: Could be useful for basic player questions
+  - name: 💬 Discord
+    url: https://discord.whomine.net/
+    about: Join our Discord server, questions are answered faster here
