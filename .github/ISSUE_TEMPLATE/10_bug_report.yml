@@ -19,28 +19,28 @@ body:
       required: false
 
 - type: dropdown
-    attributes: 
-      label: Issue type
-      description: Type of the issue you want to describe.
-      options: 
-        - Source code related
-        - Server game related
-        - Feature not working as intended
-        - Other
-    validations:
-      required: true
+  attributes: 
+    label: Issue type
+    description: Type of the issue you want to describe.
+    options: 
+      - Source code related
+      - Server game related
+      - Feature not working as intended
+      - Other
+  validations:
+    required: true
 
 - type: input
-    attributes: 
-      label: Plugin version
-      description: |
-        Run the `version WhoMine` command in the server console.
+  attributes: 
+    label: Plugin version
+    description: |
+      Run the `version WhoMine` command in the server console.
 
-        If you are a player, leave the field with `Server latest`.
-      placeholder: Example: v1.0.0
-      value: Server latest
-    validations:
-      required: true
+      If you are a player, leave the field with `Server latest`.
+    placeholder: Example: v1.0.0
+    value: Server latest
+  validations:
+    required: true
       
 - type: textarea
   attributes:
@@ -74,13 +74,13 @@ body:
     required: false
 
 - type: checkboxes
-    attributes:
-      label: "Acknowledgements"
-      description: "Your issue will be closed if you haven't done these steps."
-      options: 
-        - label: "I have searched the existing issues and this is a new issue and not a duplicate of any another open issue."
-          required: true
-        - label: "I have written a short but informative title."
-          required: true
-        - label: "I have filled out all of the requested information in this issue properly."
-          required: true
+  attributes:
+    label: Acknowledgements
+    description: Your issue will be closed if you haven't done these steps.
+    options: 
+      - label: I have searched the existing issues and this is a new issue and not a duplicate of any another open issue.
+        required: true
+      - label: I have written a short but informative title.
+        required: true
+      - label: I have filled out all of the requested information in this issue properly.
+        required: true
