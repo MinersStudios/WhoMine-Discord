@@ -9,3 +9,15 @@ contact_links:
   - name: 💬 Discord
     url: https://discord.whomine.net/
     about: Join our Discord server, questions are answered faster here
+  - name: Issue with site (whomine.net)
+    url: https://github.com/MinersStudios/WMSite/issues/new/choose
+    about: Please open issues relating to website in MinersStudios/WMSite
+  - name: Issue with docs (docs.whomine.net)
+    url: https://github.com/MinersStudios/WMDocs/issues/new/choose
+    about: Please open issues relating to docs in MinersStudios/WMDocs
+  - name: Issue with resource pack
+    url: https://github.com/MinersStudios/WMTextures/issues/new/choose
+    about: Please open issues relating to resource pack in MinersStudios/WMTextures
+  - name: Issue with localization
+    url: https://github.com/MinersStudios/WMConfig/issues/new/choose
+    about: Please open issues relating to localization in MinersStudios/WMConfig
