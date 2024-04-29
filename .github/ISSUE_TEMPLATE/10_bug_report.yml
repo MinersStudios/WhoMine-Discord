@@ -1,0 +1,86 @@
+name: 🐞 Bug Report
+description: Create a report about something that is not working
+title: "[Bug]: "
+labels: [ "bug" ]
+body:
+- type: markdown
+  attributes:
+    value: |
+      # Bug report instructions
+      - Your issue may have already been reported before, so please check for existing issues [here](https://github.com/MinersStudios/WhoMine/issues/labels/bug) before reporting any bugs.
+      - Make sure you are using the latest plugin build available.
+      - If the bug is related to a version under development, please indicate this below.
+
+- type: checkboxes
+  attributes:
+    label: Are you using a version under development?
+    options:
+    - label: Yes, and I confirmed that my issue is relevant with the latest commit
+      required: false
+
+- type: dropdown
+    attributes: 
+      label: Issue type
+      description: Type of the issue you want to describe.
+      options: 
+        - Source code related
+        - Server game related
+        - Feature not working as intended
+        - Other
+    validations:
+      required: true
+
+- type: input
+    attributes: 
+      label: Plugin version
+      description: |
+        Run the `version WhoMine` command in the server console.
+
+        If you are a player, leave the field with `Server latest`.
+      placeholder: Example: v1.0.0
+      value: Server latest
+    validations:
+      required: true
+      
+- type: textarea
+  attributes:
+    label: Describe the bug
+    description: A clear and concise description of what the bug is.
+  validations:
+    required: true
+    
+- type: textarea
+  attributes:
+    label: Expected Behavior
+    description: A clear and concise description of what you expected to happen.
+  validations:
+    required: false
+    
+- type: textarea
+  attributes:
+    label: Steps To Reproduce
+    description: Specify clear and concise step-by-step actions to reproduce the problem.
+  validations:
+    required: false
+
+- type: textarea
+  attributes:
+    label: Additional context
+    description: |
+      Links? References? Anything that will give us more context about the issue you are encountering!
+
+      Tip: You can attach images or log files by clicking this area to highlight it and then dragging files in.
+  validations:
+    required: false
+
+- type: checkboxes
+    attributes:
+      label: "Acknowledgements"
+      description: "Your issue will be closed if you haven't done these steps."
+      options: 
+        - label: "I have searched the existing issues and this is a new issue and not a duplicate of any another open issue."
+          required: true
+        - label: "I have written a short but informative title."
+          required: true
+        - label: "I have filled out all of the requested information in this issue properly."
+          required: true
