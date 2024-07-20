@@ -1,0 +1,63 @@
+resources:
+  ExampleRepo:
+    token: ghp_example
+    user: User
+    repo: Repo
+    tag: v2.1.0-SNAPSHOT
+resource-packs:
+  example0:
+    enabled: true
+    auto-update: true
+    name: <lang:resource_pack.example0.name>
+    description:
+      - <lang:resource_pack.example0.description0>
+      - <lang:resource_pack.example0.description1>
+    data:
+      required: true
+    loader:
+      resource-type: FILE
+      file-path: config/resource-packs/default.zip
+  example1:
+    enabled: true
+    auto-update: false
+    name: Example 1
+    description:
+      - This is a lore of example 1
+    data:
+      required: true
+      uuid: 00000000-0000-0000-0000-000000000000
+      hash: 0
+    loader:
+      resource-type: URL
+      url: https://example.com/resource-packs/example1.zip
+  example2:
+    enabled: true
+    auto-update: true
+    name: <lang:resource_pack.example2.name>
+    description:
+      - This is a lore of example <lang:resource_pack.example2.name>
+    data:
+      required: true
+      uuid: 11111111-1111-1111-1111-111111111111
+      hash: 1
+    loader:
+      resource-type: GITHUB
+      token: ghp_example
+      user: User
+      repo: Repo
+      folder-path: config/resource-packs
+      tag: v1.0.0
+  example3:
+    enabled: true
+    auto-update: true
+    name: Example 3
+    description:
+      - This is a lore of example 3
+    data:
+      required: true
+      uuid: 22222222-2222-2222-2222-222222222222
+      hash: 2
+    loader:
+      resource-type: GITHUB
+      resource: ExampleRepo
+      folder-path: config/resource-packs

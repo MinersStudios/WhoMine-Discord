@@ -1,0 +1,26 @@
+resources:
+  ExampleRepo:
+    token: ghp_example
+    user: User
+    repo: Repo
+    tag: v2.1.0-SNAPSHOT
+language:
+  default-code: en_us
+  codes:
+    en_us:
+      resource-type: FILE
+      file-path: config/lang/en_us.json
+    en_gb:
+      resource-type: URL
+      url: https://example.com/languages/en_gb.json
+    de_de:
+      resource-type: GITHUB
+      token: ghp_example
+      user: User
+      repo: Repo
+      folder-path: lang
+      tag: v1.0.0
+    uk_ua:
+      resource-type: GITHUB
+      resource: ExampleRepo
+      folder-path: config/lang

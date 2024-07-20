@@ -1,134 +1,77 @@
 plugins {
     java
-    id("io.papermc.paperweight.userdev") version "1.5.11"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    alias(libs.plugins.paper.userdev)
+    alias(libs.plugins.shadow)
+    alias(libs.plugins.run.paper)
 }
 
-group = "com.minersstudios"
-version = "1.0.0"
-val apiVersion = "'1.20'"
-val website = "https://minersstudios.com"
-val authors = listOf("MinersStudios", "p0loskun")
-val contributors = listOf("PackmanDude")
+group =       "com.minersstudios"
+version =     "1.0.0"
+description = "A Minecraft plugin for WhoMine"
 
-allprojects {
-    apply(plugin = "java")
-    apply(plugin = "io.papermc.paperweight.userdev")
-
-    java {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-    }
-
-    repositories {
-        mavenCentral()
-        maven("https://repo.papermc.io/repository/maven-public/")
-        maven("https://repo.codemc.org/repository/maven-public/")
-        maven("https://maven.playpro.com")
-    }
-
-    dependencies {
-        paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-        compileOnly("org.jetbrains:annotations:24.0.1")
-        compileOnly("net.coreprotect:coreprotect:22.2")
-        compileOnly("fr.xephi:authme:5.6.0-SNAPSHOT")
-        compileOnly("net.dv8tion:JDA:5.0.0-beta.19")
-        compileOnly("com.fasterxml.jackson.core:jackson-annotations:2.16.0")
-    }
-
-    sourceSets {
-        test {
-            java {
-                srcDirs("src/main/test/java")
-            }
-        }
-    }
-
-    tasks {
-        assemble {
-            dependsOn(reobfJar)
-        }
-
-        compileJava {
-            options.encoding = Charsets.UTF_8.name()
-            options.release.set(17)
-            options.compilerArgs.add("-Xlint:deprecation")
-        }
-
-        javadoc {
-            options.encoding = Charsets.UTF_8.name()
-            enabled = false
-        }
-
-        processResources {
-            filteringCharset = Charsets.UTF_8.name()
-        }
-    }
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 }
 
-subprojects {
-    val lowercaseName = project.name.lowercase()
-    val description = when (project.name) {
-        "mscore" ->       "A Minecraft core plugin for WhoMine plugins"
-        "msessentials" -> "A Minecraft plugin with custom features for WhoMine"
-        "mscustoms" ->    "A Minecraft plugin with custom blocks, items, decorations and more for WhoMine"
-        else ->           "A Minecraft plugin for WhoMine"
-    }
+repositories {
+    mavenCentral()
+    maven("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.codemc.org/repository/maven-public/")
+    maven("https://maven.playpro.com")
+}
 
-    dependencies {
-        implementation(rootProject)
-    }
+dependencies {
+    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
+    compileOnly(libs.jetbrains.annotations)
+    compileOnly(libs.jackson.annotations)
+    compileOnly(libs.jda)
+    compileOnly(libs.authme)
+    compileOnly(libs.coreprotect)
+}
 
-    sourceSets {
-        main {
-            java {
-                srcDir("../src/main/java")
-                include("**/com/minersstudios/$lowercaseName/**")
-            }
-
-            resources {
-                srcDir("${project.name}/src/main/resources")
-            }
-        }
-    }
-
-    tasks {
-        reobfJar {
-            outputJar.set(file("$rootDir/builds/jars/${project.name}-v${rootProject.version}.jar"))
-        }
-
-        clean {
-            delete(".gradle")
-        }
-
-        processResources {
-            val props = mapOf(
-                    "name" to         project.name,
-                    "version" to      rootProject.version,
-                    "description" to  description,
-                    "authors" to      authors.joinToString(", "),
-                    "contributors" to contributors.joinToString(", "),
-                    "website" to      website,
-                    "apiVersion" to   apiVersion,
-                    "main" to         "${rootProject.group}.$lowercaseName.${project.name}"
-            )
-
-            inputs.properties(props)
-            filesMatching("paper-plugin.yml") {
-                expand(props)
-            }
+sourceSets {
+    test {
+        java {
+            srcDirs("src/main/test/java")
         }
     }
 }
 
 tasks {
-    jar {
-        doLast {
-            file("builds/jars").deleteRecursively()
-        }
+    val utf8 = Charsets.UTF_8.name()
+
+    assemble {
+        dependsOn(reobfJar)
+    }
+
+    compileJava {
+        options.encoding = utf8
+
+        options.release.set(17)
+        options.compilerArgs.add("-Xlint:deprecation")
     }
 
     javadoc {
-        enabled = true
-        setDestinationDir(file("$rootDir/builds/javadoc"))
+        options.encoding = utf8
+    }
+
+    processResources {
+        filteringCharset = utf8
+        val props = mapOf(
+                "name"               to rootProject.name,
+                "version"            to rootProject.version,
+                "description"        to "A Minecraft plugin for WhoMine",
+                "author"             to "MinersStudios",
+                "contributors"       to "p0loskun, PackmanDude",
+                "website"            to "https://whomine.net",
+                "apiVersion"         to "'1.20'",
+                "coreProtectVersion" to libs.versions.coreprotect.get(),
+                "authMeVersion"      to libs.versions.authme.get(),
+        )
+
+        inputs.properties(props)
+        filesMatching("paper-plugin.yml") {
+            expand(props)
+        }
     }
 }
