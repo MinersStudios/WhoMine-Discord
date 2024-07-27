@@ -1,24 +1,32 @@
 [versions]
 # libraries
+fastutil              = "8.5.13"
+google-guava          = "33.2.1-jre"
+google-gson           = "2.11.0"
+google-jsr305         = "3.0.2"
 jetbrains-annotations = "24.0.1"
-jackson-annotations =   "2.16.0"
-jda =                   "5.0.0-beta.23"
-authme =                "5.6.0-SNAPSHOT"
-coreprotect =           "22.2"
+jackson-annotations   = "2.16.0"
+jda                   = "5.0.0-beta.23"
+authme                = "5.6.0-SNAPSHOT"
+coreprotect           = "22.2"
 
 # plugins
 paper-userdev = "1.5.11"
-shadow =        "8.1.1"
-run-paper =     "2.2.3"
+shadow        = "8.1.1"
+paper-run     = "2.2.3"
 
 [libraries]
+fastutil              = { group = "it.unimi.dsi",               name = "fastutil",            version.ref = "fastutil" }
+google-guava          = { group = "com.google.guava",           name = "guava",               version.ref = "google-guava" }
+google-gson           = { group = "com.google.code.gson",       name = "gson",                version.ref = "google-gson" }
+google-jsr305         = { group = "com.google.code.findbugs",   name = "jsr305",              version.ref = "google-jsr305" }
 jetbrains-annotations = { group = "org.jetbrains",              name = "annotations",         version.ref = "jetbrains-annotations" }
-jackson-annotations =   { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "jackson-annotations" }
-jda =                   { group = "net.dv8tion",                name = "JDA",                 version.ref = "jda" }
-authme =                { group = "fr.xephi",                   name = "authme",              version.ref = "authme" }
-coreprotect =           { group = "net.coreprotect",            name = "coreprotect",         version.ref = "coreprotect" }
+jackson-annotations   = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "jackson-annotations" }
+jda                   = { group = "net.dv8tion",                name = "JDA",                 version.ref = "jda" }
+authme                = { group = "fr.xephi",                   name = "authme",              version.ref = "authme" }
+coreprotect           = { group = "net.coreprotect",            name = "coreprotect",         version.ref = "coreprotect" }
 
 [plugins]
 paper-userdev = { id = "io.papermc.paperweight.userdev",  version.ref = "paper-userdev" }
-shadow =        { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }
-run-paper =     { id = "xyz.jpenilla.run-paper",          version.ref = "run-paper" }
+paper-run     = { id = "xyz.jpenilla.run-paper",          version.ref = "paper-run" }
+shadow        = { id = "com.github.johnrengelman.shadow", version.ref = "shadow" }

@@ -1,77 +1,82 @@
+val utf8:               String = Charsets.UTF_8.name()
+val javaVersion:        Int    = property("java.version").toString().toInt()
+val javaCompilerArgs:   String = property("java.compilerArgs").toString()
+val projectGroup:       String = property("project.group").toString()
+val projectVersion:     Any    = property("project.version")!!
+val projectDescription: String = property("project.description").toString()
+
 plugins {
     java
-    alias(libs.plugins.paper.userdev)
-    alias(libs.plugins.shadow)
-    alias(libs.plugins.run.paper)
+    alias(libs.plugins.shadow)        apply false
+    alias(libs.plugins.paper.userdev) apply false
+    alias(libs.plugins.paper.run)     apply false
 }
 
-group =       "com.minersstudios"
-version =     "1.0.0"
-description = "A Minecraft plugin for WhoMine"
+subprojects {
+    apply(plugin = "java")
 
-java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
-}
+    group       = project.group
+    version     = projectVersion
+    description = projectDescription
 
-repositories {
-    mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/")
-    maven("https://repo.codemc.org/repository/maven-public/")
-    maven("https://maven.playpro.com")
-}
+    java {
+        toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 
-dependencies {
-    paperweight.paperDevBundle("1.20.4-R0.1-SNAPSHOT")
-    compileOnly(libs.jetbrains.annotations)
-    compileOnly(libs.jackson.annotations)
-    compileOnly(libs.jda)
-    compileOnly(libs.authme)
-    compileOnly(libs.coreprotect)
-}
+    repositories {
+        mavenCentral()
+        maven("https://repo.papermc.io/repository/maven-public/")
+        maven("https://repo.codemc.org/repository/maven-public/")
+        maven("https://maven.playpro.com")
+    }
 
-sourceSets {
-    test {
-        java {
-            srcDirs("src/main/test/java")
+    dependencies {
+        compileOnly(rootProject.libs.fastutil)
+        compileOnly(rootProject.libs.google.guava)
+        compileOnly(rootProject.libs.google.gson)
+        compileOnly(rootProject.libs.google.jsr305)
+        compileOnly(rootProject.libs.jetbrains.annotations)
+        compileOnly(rootProject.libs.jackson.annotations)
+        compileOnly(rootProject.libs.jda)
+    }
+
+    tasks {
+        compileJava {
+            options.encoding = utf8
+
+            options.release.set(javaVersion)
+            options.compilerArgs.add(javaCompilerArgs)
+        }
+
+        jar {
+            archiveBaseName.set("${rootProject.name}-${project.name}")
+            destinationDirectory.set(file("$rootDir/build"))
+        }
+
+        javadoc {
+            enabled = false
+            options.encoding = utf8
+            setDestinationDir(file("$rootDir/builds/javadoc"))
+        }
+
+        processResources {
+            filteringCharset = utf8
         }
     }
 }
 
 tasks {
-    val utf8 = Charsets.UTF_8.name()
-
-    assemble {
-        dependsOn(reobfJar)
-    }
-
-    compileJava {
-        options.encoding = utf8
-
-        options.release.set(17)
-        options.compilerArgs.add("-Xlint:deprecation")
-    }
-
-    javadoc {
-        options.encoding = utf8
-    }
-
-    processResources {
-        filteringCharset = utf8
-        val props = mapOf(
-                "name"               to rootProject.name,
-                "version"            to rootProject.version,
-                "description"        to "A Minecraft plugin for WhoMine",
-                "author"             to "MinersStudios",
-                "contributors"       to "p0loskun, PackmanDude",
-                "website"            to "https://whomine.net",
-                "apiVersion"         to "'1.20'",
-                "coreProtectVersion" to libs.versions.coreprotect.get(),
-                "authMeVersion"      to libs.versions.authme.get(),
-        )
-
-        inputs.properties(props)
-        filesMatching("paper-plugin.yml") {
-            expand(props)
+    compileJava      { enabled = false }
+    processResources { enabled = false }
+    classes          { enabled = false }
+    jar {
+        doLast {
+            file("build").deleteRecursively()
         }
     }
+    assemble         { enabled = false }
+    testClasses      { enabled = false }
+    test             { enabled = false }
+    check            { enabled = false }
+    build            { enabled = false }
 }
