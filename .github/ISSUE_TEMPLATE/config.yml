@@ -7,8 +7,8 @@ contact_links:
     url: https://github.com/MinersStudios/WMDocs/issues/new/choose
     about: Please open issues relating to docs in MinersStudios/WMDocs
   - name: Issue with resource pack
-    url: https://github.com/MinersStudios/WMTextures/issues/new/choose
-    about: Please open issues relating to resource pack in MinersStudios/WMTextures
+    url: https://github.com/MinersStudios/WMResources/issues/new/choose
+    about: Please open issues relating to resource pack in MinersStudios/WMResources
   - name: Issue with localization
     url: https://github.com/MinersStudios/WMConfig/issues/new/choose
     about: Please open issues relating to localization in MinersStudios/WMConfig
