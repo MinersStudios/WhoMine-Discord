@@ -15,7 +15,7 @@ body:
   attributes:
     label: "Are you using a version under development?"
     options:
-    - label: "Yes, and I confirmed that my issue is relevant with the latest commit"
+    - label: "Yes, and I confirmed that my issue is relevant with the latest unreleased commit"
       required: false
 
 - type: dropdown
