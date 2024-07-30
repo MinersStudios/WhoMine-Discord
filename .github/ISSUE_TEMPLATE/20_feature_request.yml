@@ -5,7 +5,7 @@ labels: [ "suggestion" ]
 body:
 - type: markdown
   attributes:
-    value: "Please search [here](https://github.com/MinersStudios/WhoMine/issues/labels/suggestion) to see if there is already an issue related to the function you're requesting."
+    value: "Please search [here](https://github.com/MinersStudios/WhoMine/issues/labels/suggestion) to see if there is already an issue related to the feature you're requesting."
       
 - type: textarea
   attributes:
