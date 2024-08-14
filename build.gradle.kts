@@ -66,14 +66,14 @@ subprojects {
 }
 
 tasks {
-    compileJava      { enabled = false }
-    processResources { enabled = false }
-    classes          { enabled = false }
     jar {
         doLast {
             file("build").deleteRecursively()
         }
     }
+    compileJava      { enabled = false }
+    processResources { enabled = false }
+    classes          { enabled = false }
     assemble         { enabled = false }
     testClasses      { enabled = false }
     test             { enabled = false }

@@ -1,5 +1,4 @@
-<!--suppress HtmlDeprecatedAttribute -->
-<!--suppress HtmlUnknownTarget -->
+<!--suppress HtmlDeprecatedAttribute, HtmlUnknownTarget -->
 <div align="center">
   <a href="https://whomine.net">
     <picture>

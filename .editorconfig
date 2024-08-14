@@ -251,9 +251,6 @@ ij_java_wrap_comments = true
 ij_java_wrap_first_method_in_call_chain = false
 ij_java_wrap_long_lines = false
 
-[*.yml]
-indent_size = 2
-
 [*.json]
 ij_json_property_alignment = align_on_value
 ij_json_array_wrapping = off
@@ -266,3 +263,6 @@ ij_json_space_after_comma = true
 ij_json_space_before_colon = false
 ij_json_space_before_comma = false
 ij_json_wrap_long_lines = false
+
+[{*.yml,*.md}]
+indent_size = 2
