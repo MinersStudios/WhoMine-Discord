@@ -1,7 +1,7 @@
 name: "💡 Feature request"
 description: "Suggest an idea for this project"
 title: "[Suggestion]: "
-labels: [ "suggestion" ]
+labels: [ "Suggestion" ]
 body:
 - type: markdown
   attributes:
