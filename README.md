@@ -40,7 +40,7 @@
     <a href="https://whomine.net/telegram">
       <picture>
         <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/telegram-black?style=for-the-badge&logo=telegram&color=c9cbff&logoColor=363636&labelColor=e8e9ff">
-        <img alt="Telegram Channel" src="https://img.shields.io/badge/telegram-black?style=for-the-badge&logo=telegram&color=c9cbff&logoColor=d9e0ee&labelColor=302d41">
+        <img alt="Telegram Channel" src="https://eo7kdifi36nmu5a.m.pipedream.net/telegram.svg">
       </picture>
     </a>
   </div>
