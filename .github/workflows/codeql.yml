@@ -19,7 +19,7 @@ jobs:
       matrix:
         include:
         - language: java-kotlin
-          build-mode: none
+          build-mode: autobuild
     steps:
     - if: ${{ github.event_name == 'push' }}
       uses: actions/checkout@v4
