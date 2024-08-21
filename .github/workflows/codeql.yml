@@ -17,7 +17,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: [ 'java' ]
+        include:
+        - language: java-kotlin
+          build-mode: none
     steps:
     - if: ${{ github.event_name == 'push' }}
       uses: actions/checkout@v4
