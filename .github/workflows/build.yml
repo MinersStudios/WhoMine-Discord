@@ -8,11 +8,12 @@ on:
 jobs:
   build:
     if: "!contains(github.event.commits[0].message, '[ci-skip]')"
+    name: Build
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: true
       matrix:
         java: [ '17' ]
-      fail-fast: true
     steps:
       - if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4
