@@ -7,7 +7,8 @@ on:
 
 jobs:
   analyze:
-    name: Analyze (${{ matrix.language }})
+    if: "!contains(github.event.commits[0].message, '[ql-skip]')"
+    name: Analyze
     runs-on: ubuntu-latest
     permissions:
       security-events: write
@@ -20,7 +21,6 @@ jobs:
         include:
         - language: java-kotlin
           build-mode: none
-    if: "!contains(github.event.commits[0].message, '[ql-skip]')"
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
