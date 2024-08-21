@@ -7,9 +7,9 @@ on:
 
 jobs:
   analyze:
-    if: "!contains(github.event.commits[0].message, '[ql-skip]')"
     name: Analyze (${{ matrix.language }})
     runs-on: ubuntu-latest
+    if: "!contains(github.event.commits[0].message, '[ql-skip]')"
     permissions:
       security-events: write
       packages: read
