@@ -22,8 +22,12 @@ jobs:
         - language: java-kotlin
           build-mode: none
     steps:
-    - name: Checkout repository
+    - if: ${{ github.event_name == 'push' }}
       uses: actions/checkout@v4
+    - if: ${{ github.event_name == 'pull_request' }}
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.pull_request.head.sha }}
       
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
