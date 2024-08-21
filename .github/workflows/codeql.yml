@@ -11,16 +11,13 @@ jobs:
     name: Analyze
     runs-on: ubuntu-latest
     permissions:
-      security-events: write
-      packages: read
       actions: read
       contents: read
+      security-events: write
     strategy:
       fail-fast: false
       matrix:
-        include:
-        - language: java-kotlin
-          build-mode: none
+        language: [ 'java' ]
     steps:
     - if: ${{ github.event_name == 'push' }}
       uses: actions/checkout@v4
