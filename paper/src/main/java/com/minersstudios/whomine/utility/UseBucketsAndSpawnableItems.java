@@ -110,7 +110,7 @@ public final class UseBucketsAndSpawnableItems {
         final Predicate<Entity> filter =
                 entity ->
                         entity != this.player
-                        && entity.getType() != EntityType.DROPPED_ITEM;
+                        && entity.getType() != EntityType.ITEM;
         final RayTraceResult rayTraceEntities = this.world.rayTraceEntities(eyeLocation, eyeLocation.getDirection(), 4.5d, 0.1d, filter);
         final RayTraceResult rayTraceBlocks = this.world.rayTraceBlocks(eyeLocation, eyeLocation.getDirection(), 4.5d);
 
@@ -121,7 +121,7 @@ public final class UseBucketsAndSpawnableItems {
         final Location summonLocation = rayTraceBlocks.getHitPosition().toLocation(this.world);
 
         for (final var nearbyEntity : this.world.getNearbyEntities(summonLocation, 0.5d, 0.5d, 0.5d)) {
-            if (nearbyEntity.getType() != EntityType.DROPPED_ITEM) {
+            if (nearbyEntity.getType() != EntityType.ITEM) {
                 return;
             }
         }
@@ -194,7 +194,7 @@ public final class UseBucketsAndSpawnableItems {
         final Predicate<Entity> filter =
                 entity ->
                         entity != this.player
-                        && entity.getType() != EntityType.DROPPED_ITEM;
+                        && entity.getType() != EntityType.ITEM;
         final RayTraceResult rayTraceResult = this.world.rayTraceEntities(eyeLocation, eyeLocation.getDirection(), 4.5d, 0.1d, filter);
 
         if (rayTraceResult == null) {

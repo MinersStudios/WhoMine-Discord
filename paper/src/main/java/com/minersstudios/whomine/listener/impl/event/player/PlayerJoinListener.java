@@ -4,7 +4,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.listener.api.EventListener;
 import com.minersstudios.whomine.packet.ChannelHandler;
 import com.minersstudios.whomine.player.PlayerInfo;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

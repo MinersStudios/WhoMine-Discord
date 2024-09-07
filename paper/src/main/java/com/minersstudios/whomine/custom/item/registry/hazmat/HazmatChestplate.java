@@ -10,9 +10,11 @@ import com.minersstudios.whomine.custom.item.damageable.Damageable;
 import com.minersstudios.whomine.custom.item.damageable.DamageableItem;
 import org.bukkit.Color;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -25,6 +27,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("UnstableApiUsage")
 public final class HazmatChestplate extends CustomItemImpl implements Damageable {
     private static final @Subst("key") String KEY;
     private static final ItemStack ITEM_STACK;
@@ -43,11 +46,21 @@ public final class HazmatChestplate extends CustomItemImpl implements Damageable
         meta.addItemFlags(ItemFlag.HIDE_DYE);
         meta.addAttributeModifier(
                 Attribute.GENERIC_ARMOR,
-                new AttributeModifier(UUID.randomUUID(), "armor", 4, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.CHEST)
+                new AttributeModifier(
+                        NamespacedKey.minecraft("armor"),
+                        4.0d,
+                        AttributeModifier.Operation.ADD_NUMBER,
+                        EquipmentSlotGroup.CHEST
+                )
         );
         meta.addAttributeModifier(
                 Attribute.GENERIC_ARMOR_TOUGHNESS,
-                new AttributeModifier(UUID.randomUUID(), "armor_toughness", 1, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.CHEST)
+                new AttributeModifier(
+                        NamespacedKey.minecraft("armor_toughness"),
+                        1.0d,
+                        AttributeModifier.Operation.ADD_NUMBER,
+                        EquipmentSlotGroup.CHEST
+                )
         );
         ITEM_STACK.setItemMeta(meta);
     }

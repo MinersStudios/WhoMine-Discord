@@ -1,6 +1,6 @@
-package com.minersstudios.whomine.packet;
+package com.minersstudios.whomine.api.packet;
 
-import net.minecraft.network.protocol.Packet;
+import com.minersstudios.whomine.api.packet.type.PacketType;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -10,8 +10,9 @@ import org.jetbrains.annotations.NotNull;
  *
  * @see PacketType
  */
-public final class PacketContainer {
-    private Packet<?> packet;
+public abstract class PacketContainer<P> {
+
+    private P packet;
     private final PacketType type;
 
     /**
@@ -20,8 +21,8 @@ public final class PacketContainer {
      * @param packet The packet to contain
      * @param type   The packet type of the packet
      */
-    public PacketContainer(
-            final @NotNull Packet<?> packet,
+    protected PacketContainer(
+            final @NotNull P packet,
             final @NotNull PacketType type
     ) {
         this.packet = packet;
@@ -29,20 +30,22 @@ public final class PacketContainer {
     }
 
     /**
+     * Returns the packet contained in this container
+     *
      * @return The packet contained in this container
      */
-    public @NotNull Packet<?> getPacket() {
+    public @NotNull P getPacket() {
         return this.packet;
     }
 
     /**
      * @param packet The packet to set
-     * @throws IllegalArgumentException If the packet type of the packet is not
-     *                                  the same as the packet type of this
+     * @throws IllegalArgumentException If the packet type of the packet is
+     *                                  different from the packet type of this
      *                                  container
      *                                  (Checks by comparing the classes)
      */
-    public void setPacket(final @NotNull Packet<?> packet) throws IllegalArgumentException {
+    public void setPacket(final @NotNull P packet) throws IllegalArgumentException {
         if (this.packet.getClass() != packet.getClass()) {
             throw new IllegalArgumentException("Packet type cannot be changed!");
         }

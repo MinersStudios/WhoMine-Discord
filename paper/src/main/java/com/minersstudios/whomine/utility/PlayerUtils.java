@@ -29,10 +29,10 @@ import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.block.Block;
 import org.bukkit.block.ShulkerBox;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftInventory;
+import org.bukkit.craftbukkit.CraftServer;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.event.CraftEventFactory;
+import org.bukkit.craftbukkit.inventory.CraftInventory;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -237,7 +237,7 @@ public final class PlayerUtils {
         connection.send(
                 new ClientboundRespawnPacket(
                         new CommonPlayerSpawnInfo(
-                                serverLevel.dimensionTypeId(),
+                                serverLevel.dimensionTypeRegistration(),
                                 serverLevel.dimension(),
                                 BiomeManager.obfuscateSeed(serverLevel.getSeed()),
                                 gameMode.getGameModeForPlayer(),
@@ -262,7 +262,7 @@ public final class PlayerUtils {
         );
 
         for (final var mobEffect : serverPlayer.getActiveEffects()) {
-            connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), mobEffect));
+            connection.send(new ClientboundUpdateMobEffectPacket(serverPlayer.getId(), mobEffect, true));
         }
 
         if (player.isOp()) {
@@ -410,24 +410,24 @@ public final class PlayerUtils {
     private static boolean isIgnorableEntity(final @NotNull EntityType entityType) {
         return switch (entityType) {
             //<editor-fold desc="Ignorable entities" defaultstate="collapsed">
-            case DROPPED_ITEM,
-                    ARROW,
-                    SPECTRAL_ARROW,
-                    AREA_EFFECT_CLOUD,
-                    DRAGON_FIREBALL,
-                    EGG,
-                    FISHING_HOOK,
-                    WITHER_SKULL,
-                    TRIDENT,
-                    SNOWBALL,
-                    SMALL_FIREBALL,
-                    FIREBALL,
-                    FIREWORK,
-                    SPLASH_POTION,
-                    THROWN_EXP_BOTTLE,
-                    EXPERIENCE_ORB,
-                    LLAMA_SPIT,
-                    LIGHTNING -> true;
+            case ITEM,
+                 ARROW,
+                 SPECTRAL_ARROW,
+                 AREA_EFFECT_CLOUD,
+                 DRAGON_FIREBALL,
+                 EGG,
+                 FISHING_BOBBER,
+                 WITHER_SKULL,
+                 TRIDENT,
+                 SNOWBALL,
+                 SMALL_FIREBALL,
+                 FIREBALL,
+                 FIREWORK_ROCKET,
+                 POTION,
+                 EXPERIENCE_BOTTLE,
+                 EXPERIENCE_ORB,
+                 LLAMA_SPIT,
+                 LIGHTNING_BOLT -> true;
             //</editor-fold>
             default -> false;
         };

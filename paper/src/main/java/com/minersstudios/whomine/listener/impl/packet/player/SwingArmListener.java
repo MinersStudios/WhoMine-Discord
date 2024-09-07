@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.packet.type.PlayPackets;
 import com.minersstudios.whomine.listener.api.PacketListener;
-import com.minersstudios.whomine.packet.PacketEvent;
-import com.minersstudios.whomine.packet.PacketType;
+import com.minersstudios.whomine.packet.PaperPacketEvent;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
 import org.bukkit.block.Block;
@@ -16,11 +16,11 @@ public final class SwingArmListener extends PacketListener {
     private Map<String, CompletableFuture<Block>> clickRequestMap;
 
     public SwingArmListener(final @NotNull WhoMine plugin) {
-        super(plugin, PacketType.PLAY_SERVER_SWING_ARM);
+        super(plugin, PlayPackets.SERVER_SWING_ARM);
     }
 
     @Override
-    public void onPacketReceive(final @NotNull PacketEvent event) {
+    public void onPacketReceive(final @NotNull PaperPacketEvent event) {
         if (this.clickRequestMap == null) {
             this.setupClickRequestMap();
         }

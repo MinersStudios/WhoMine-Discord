@@ -228,7 +228,7 @@ public class Anomaly {
                                     );
 
                             particleBuilderList.add(
-                                    particleBuilder.particle() == Particle.REDSTONE
+                                    particleBuilder.particle() == Particle.DUST
                                             ? particleBuilder.color(
                                                     Color.fromRGB(particleSection.getInt("color")),
                                                     (float) particleSection.getDouble("particle-size")

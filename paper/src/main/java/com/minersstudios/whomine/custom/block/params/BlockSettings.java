@@ -81,14 +81,14 @@ public final class BlockSettings {
         float base = 1.0f;
         final ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         final Material material = itemInMainHand.getType();
-        final PotionEffect fastDigging = player.getPotionEffect(PotionEffectType.FAST_DIGGING);
+        final PotionEffect fastDigging = player.getPotionEffect(PotionEffectType.HASTE);
         final ToolType toolType = this.tool.getToolType();
 
         if (toolType == ToolType.fromMaterial(material)) {
             base = ToolTier.fromMaterial(material).getDigSpeed();
 
-            if (itemInMainHand.containsEnchantment(Enchantment.DIG_SPEED)) {
-                base += itemInMainHand.getEnchantmentLevel(Enchantment.DIG_SPEED) * 0.3f;
+            if (itemInMainHand.containsEnchantment(Enchantment.EFFICIENCY)) {
+                base += itemInMainHand.getEnchantmentLevel(Enchantment.EFFICIENCY) * 0.3f;
             }
         } else if (toolType == ToolType.PICKAXE) {
             base /= 30.0f;

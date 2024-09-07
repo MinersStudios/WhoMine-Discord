@@ -27,7 +27,8 @@ public final class PrepareAnvilListener extends EventListener {
     public void onPrepareAnvil(final @NotNull PrepareAnvilEvent event) {
         final ItemStack resultItem = event.getResult();
         final ItemStack firstItem = event.getInventory().getFirstItem();
-        final String renameText = event.getInventory().getRenameText();
+        @SuppressWarnings("UnstableApiUsage")
+        final String renameText = event.getView().getRenameText();
 
         if (
                 resultItem == null

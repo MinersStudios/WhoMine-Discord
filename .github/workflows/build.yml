@@ -13,7 +13,7 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        java: [ '17' ]
+        java: [ '21' ]
     steps:
       - if: ${{ github.event_name == 'push' }}
         uses: actions/checkout@v4

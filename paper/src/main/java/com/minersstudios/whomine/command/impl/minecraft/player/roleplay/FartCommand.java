@@ -78,14 +78,20 @@ public final class FartCommand extends PluginCommandExecutor {
                 && BlockUtils.isReplaceable(location.clone().getBlock().getType());
 
         for (final var nearbyEntity : world.getNearbyEntities(location.getBlock().getLocation().add(0.5d, 0.5d, 0.5d), 0.5d, 0.5d, 0.5d)) {
-            if (nearbyEntity.getType() != EntityType.DROPPED_ITEM && nearbyEntity.getType() != EntityType.PLAYER) {
+            final EntityType entityType = nearbyEntity.getType();
+
+            if (
+                    entityType != EntityType.ITEM
+                    && entityType != EntityType.PLAYER
+            ) {
                 withPoop = false;
+
                 break;
             }
         }
 
         world.playSound(location.add(0, 0.4, 0), Sound.BLOCK_FIRE_EXTINGUISH, SoundCategory.PLAYERS, 1, 1);
-        world.spawnParticle(Particle.REDSTONE, location, 15, 0.0D, 0.0D, 0.0D, 0.5D, new Particle.DustOptions(Color.fromBGR(33, 54, 75), 10));
+        world.spawnParticle(Particle.DUST, location, 15, 0.0D, 0.0D, 0.0D, 0.5D, new Particle.DustOptions(Color.fromBGR(33, 54, 75), 10));
 
         if (withPoop) {
             CustomDecorType.POOP.getCustomDecorData()

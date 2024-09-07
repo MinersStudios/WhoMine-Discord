@@ -1,5 +1,8 @@
 package com.minersstudios.whomine.packet;
 
+import com.minersstudios.whomine.api.packet.PacketContainer;
+import com.minersstudios.whomine.api.packet.PacketEvent;
+import com.minersstudios.whomine.api.packet.type.PacketType;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
 import io.netty.channel.*;
@@ -25,11 +28,11 @@ import javax.annotation.concurrent.Immutable;
  */
 @Immutable
 public final class ChannelHandler extends ChannelDuplexHandler {
+    public static final String CHANNEL_HANDLER_NAME = "ms_channel_handler";
+    public static final String PACKET_HANDLER_NAME  = "packet_handler";
+
     private final WhoMine plugin;
     private final Connection connection;
-
-    public static final String CHANNEL_HANDLER_NAME = "ms_channel_handler";
-    public static final String PACKET_HANDLER_NAME = "packet_handler";
 
     /**
      * Channel handler constructor
@@ -78,21 +81,23 @@ public final class ChannelHandler extends ChannelDuplexHandler {
             return;
         }
 
-        final PacketType packetType = PacketType.fromClass(packet.getClass());
+        final var nmsType = packet.type();
+        final PacketType packetType = PacketType.fromId(nmsType.id().getPath());
 
         if (packetType == null) {
             final ServerPlayer serverPlayer = this.connection.getPlayer();
 
             this.plugin.runTask(() -> serverPlayer.connection.disconnect(
-                Component.text("Unknown packet type: " + packet.getClass().getName()),
+                Component.text("Unknown packet type: " + nmsType),
                 PlayerKickEvent.Cause.PLUGIN
             ));
-            MSLogger.severe("Unknown packet type: " + packet.getClass().getName() + " sent by " + serverPlayer.getName());
+            MSLogger.severe("Unknown packet type: " + nmsType + " sent by " + serverPlayer.getName());
+
             return;
         }
 
-        final PacketContainer packetContainer = new PacketContainer(packet, packetType);
-        final PacketEvent event = new PacketEvent(packetContainer, this.connection);
+        final var packetContainer = new PaperPacketContainer(packet, packetType);
+        final var event = new PaperPacketEvent(packetContainer, this.connection);
 
         this.plugin.getListenerManager().callPacketReceiveEvent(event);
 
@@ -122,21 +127,23 @@ public final class ChannelHandler extends ChannelDuplexHandler {
             return;
         }
 
-        final PacketType packetType = PacketType.fromClass(packet.getClass());
+        final var nmsType = packet.type();
+        final PacketType packetType = PacketType.fromId(nmsType.id().getPath());
 
         if (packetType == null) {
             final ServerPlayer serverPlayer = this.connection.getPlayer();
 
             this.plugin.runTask(() -> serverPlayer.connection.disconnect(
-                Component.text("Unknown packet type: " + packet.getClass().getName()),
+                Component.text("Unknown packet type: " + nmsType),
                 PlayerKickEvent.Cause.PLUGIN
             ));
-            MSLogger.severe("Unknown packet type: " + packet.getClass().getName() + " sent to " + serverPlayer.getName());
+            MSLogger.severe("Unknown packet type: " + nmsType + " sent to " + serverPlayer.getName());
+
             return;
         }
 
-        final PacketContainer packetContainer = new PacketContainer(packet, packetType);
-        final PacketEvent event = new PacketEvent(packetContainer, connection);
+        final var packetContainer = new PaperPacketContainer(packet, packetType);
+        final var event = new PaperPacketEvent(packetContainer, this.connection);
 
         this.plugin.getListenerManager().callPacketSendEvent(event);
 
@@ -178,7 +185,9 @@ public final class ChannelHandler extends ChannelDuplexHandler {
         final ChannelPipeline pipeline = channel.pipeline();
 
         if (pipeline.names().contains(CHANNEL_HANDLER_NAME)) {
-            channel.eventLoop().execute(() -> pipeline.remove(CHANNEL_HANDLER_NAME));
+            try (final var eventLoop = channel.eventLoop()) {
+                eventLoop.execute(() -> pipeline.remove(CHANNEL_HANDLER_NAME));
+            }
         }
     }
 }

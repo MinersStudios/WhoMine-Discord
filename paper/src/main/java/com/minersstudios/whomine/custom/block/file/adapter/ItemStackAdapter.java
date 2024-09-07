@@ -5,7 +5,7 @@ import com.minersstudios.whomine.utility.BlockUtils;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.nbt.TagParser;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
@@ -48,11 +48,12 @@ public class ItemStackAdapter implements JsonSerializer<ItemStack>, JsonDeserial
             final net.minecraft.world.item.ItemStack nmsItemStack = CraftItemStack.asNMSCopy(itemStack);
             final String nbt = jsonObject.get(NBT_KEY).getAsString();
 
-            try {
-                nmsItemStack.setTag(TagParser.parseTag(nbt));
-            } catch (final CommandSyntaxException e) {
-                throw new JsonParseException("Invalid NBT: " + nbt);
-            }
+            // TODO: fix tag deserialization
+            //try {
+            //    nmsItemStack.setTag(TagParser.parseTag(nbt));
+            //} catch (final CommandSyntaxException e) {
+            //    throw new JsonParseException("Invalid NBT: " + nbt);
+            //}
 
             return nmsItemStack.asBukkitCopy();
         }

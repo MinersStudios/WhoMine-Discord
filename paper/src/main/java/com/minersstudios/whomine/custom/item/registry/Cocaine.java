@@ -28,10 +28,10 @@ public final class Cocaine extends CustomItemImpl {
         ITEM_STACK = new ItemStack(Material.POTION);
         final PotionMeta meta = (PotionMeta) ITEM_STACK.getItemMeta();
 
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.CONFUSION, 3600, 1), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.HUNGER, 3600, 1), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED, 1200, 1), true);
-        meta.addCustomEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 800, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.NAUSEA,     3600, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.HUNGER,     3600, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.SPEED,      1200, 1), true);
+        meta.addCustomEffect(new PotionEffect(PotionEffectType.RESISTANCE, 800,  1), true);
         meta.addCustomEffect(new PotionEffect(PotionEffectType.ABSORPTION, 1200, 1), true);
         meta.displayName(ChatUtils.createDefaultStyledText("Кокаин"));
         meta.setCustomModelData(10);

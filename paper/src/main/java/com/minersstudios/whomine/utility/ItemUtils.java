@@ -3,7 +3,7 @@ package com.minersstudios.whomine.utility;
 import com.minersstudios.whomine.custom.item.damageable.DamageableItem;
 import net.minecraft.world.item.Item;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 
 import static org.bukkit.EntityEffect.*;
-import static org.bukkit.enchantments.Enchantment.DURABILITY;
+import static org.bukkit.enchantments.Enchantment.UNBREAKING;
 
 /**
  * Utility class for {@link ItemStack} and {@link ItemMeta}
@@ -150,16 +150,16 @@ public final class ItemUtils {
             damageableItem.setRealDamage(damageableItem.getRealDamage() + originalDamage);
 
             if (
-                    !damageable.hasEnchant(DURABILITY)
-                    || Math.random() < 1.0d / (damageable.getEnchantLevel(DURABILITY) + 1.0d)
+                    !damageable.hasEnchant(UNBREAKING)
+                    || Math.random() < 1.0d / (damageable.getEnchantLevel(UNBREAKING) + 1.0d)
             ) {
                 damage = originalDamage;
 
                 damageableItem.saveForItemStack(item);
             }
         } else if (
-                !damageable.hasEnchant(DURABILITY)
-                || Math.random() < 1.0d / (damageable.getEnchantLevel(DURABILITY) + 1.0d)
+                !damageable.hasEnchant(UNBREAKING)
+                || Math.random() < 1.0d / (damageable.getEnchantLevel(UNBREAKING) + 1.0d)
         ) {
             damage = originalDamage;
 

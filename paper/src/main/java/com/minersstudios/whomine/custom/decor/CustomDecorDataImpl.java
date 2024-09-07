@@ -21,6 +21,7 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.bukkit.*;
@@ -29,9 +30,10 @@ import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.block.data.type.Light;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlockStates;
-import org.bukkit.craftbukkit.v1_20_R3.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.CraftWorld;
+import org.bukkit.craftbukkit.block.CraftBlockState;
+import org.bukkit.craftbukkit.block.CraftBlockStates;
+import org.bukkit.craftbukkit.block.data.CraftBlockData;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
@@ -810,17 +812,12 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
         for (final var blockPos : blocksToReplace) {
             final BlockState blockState = serverLevel.getBlockState(blockPos);
 
-            if (!BlockUtils.isReplaceable(blockState.getBlock())) {
-                return;
-            }
+            if (BlockUtils.isReplaceable(blockState.getBlock())) {
+                final BlockEntity tileEntity = serverLevel.getBlockEntity(blockPos);
+                final CraftBlockState craftState = CraftBlockStates.getBlockState(null, blockPos, blockState, tileEntity);
 
-            blockStates.add(
-                    CraftBlockStates.getUnplacedBlockState(
-                            serverLevel,
-                            blockPos,
-                            blockState
-                    )
-            );
+                blockStates.add(craftState);
+            }
         }
 
         if (

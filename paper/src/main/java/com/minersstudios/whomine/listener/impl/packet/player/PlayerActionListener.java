@@ -6,10 +6,9 @@ import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.collection.DiggingMap;
 import com.minersstudios.whomine.listener.api.PacketListener;
+import com.minersstudios.whomine.api.packet.type.PlayPackets;
+import com.minersstudios.whomine.packet.PaperPacketEvent;
 import com.minersstudios.whomine.world.location.MSPosition;
-import com.minersstudios.whomine.packet.PacketContainer;
-import com.minersstudios.whomine.packet.PacketEvent;
-import com.minersstudios.whomine.packet.PacketType;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import com.minersstudios.whomine.utility.BlockUtils;
 import com.minersstudios.whomine.utility.PlayerUtils;
@@ -42,7 +41,7 @@ public final class PlayerActionListener extends PacketListener {
     final Map<String, CompletableFuture<Block>> clickRequestMap;
 
     public PlayerActionListener(final @NotNull WhoMine plugin) {
-        super(plugin, PacketType.PLAY_SERVER_PLAYER_ACTION);
+        super(plugin, PlayPackets.SERVER_PLAYER_ACTION);
 
         this.handlerMap = new Object2ObjectOpenHashMap<>();
         this.effectMap = new Object2ObjectOpenHashMap<>();
@@ -50,9 +49,9 @@ public final class PlayerActionListener extends PacketListener {
     }
 
     @Override
-    public void onPacketReceive(final @NotNull PacketEvent event) {
+    public void onPacketReceive(final @NotNull PaperPacketEvent event) {
         final ServerPlayer player = event.getConnection().getPlayer();
-        final PacketContainer container = event.getPacketContainer();
+        final var container = event.getPacketContainer();
 
         if (player.gameMode.getGameModeForPlayer() == GameType.SURVIVAL) {
             final var packet = (ServerboundPlayerActionPacket) container.getPacket();

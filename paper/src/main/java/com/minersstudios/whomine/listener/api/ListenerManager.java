@@ -17,9 +17,12 @@ import com.minersstudios.whomine.listener.impl.event.server.ServerCommandListene
 import com.minersstudios.whomine.listener.impl.packet.player.PlayerActionListener;
 import com.minersstudios.whomine.listener.impl.packet.player.PlayerUpdateSignListener;
 import com.minersstudios.whomine.listener.impl.packet.player.SwingArmListener;
-import com.minersstudios.whomine.packet.PacketEvent;
-import com.minersstudios.whomine.packet.PacketType;
+import com.minersstudios.whomine.api.packet.PacketEvent;
+import com.minersstudios.whomine.api.packet.type.PacketType;
 import com.minersstudios.whomine.api.status.StatusWatcher;
+import com.minersstudios.whomine.packet.PaperPacketEvent;
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.*;
 
@@ -38,8 +41,8 @@ public final class ListenerManager {
     private final WhoMine plugin;
     private final List<DiscordListener> discordList;
     private final List<EventListener> eventList;
-    private final Map<PacketType, List<PacketListener>> receivePacketMap;
-    private final Map<PacketType, List<PacketListener>> sendPacketMap;
+    private final Int2ObjectMap<List<PacketListener>> receivePacketMap;
+    private final Int2ObjectMap<List<PacketListener>> sendPacketMap;
 
     /**
      * Constructs a new listener manager
@@ -50,8 +53,8 @@ public final class ListenerManager {
         this.plugin = plugin;
         this.discordList = new ObjectArrayList<>();
         this.eventList = new ObjectArrayList<>();
-        this.receivePacketMap = new EnumMap<>(PacketType.class);
-        this.sendPacketMap = new EnumMap<>(PacketType.class);
+        this.receivePacketMap = new Int2ObjectOpenHashMap<>();
+        this.sendPacketMap = new Int2ObjectOpenHashMap<>();
     }
 
     /**
@@ -101,8 +104,8 @@ public final class ListenerManager {
     public @NotNull @Unmodifiable Collection<PacketListener> packetListeners(final @NotNull PacketType packetType) {
         final var list =
                 packetType.isReceive()
-                ? this.receivePacketMap.get(packetType)
-                : this.sendPacketMap.get(packetType);
+                ? this.receivePacketMap.get(packetType.ordinal())
+                : this.sendPacketMap.get(packetType.ordinal());
 
         return list != null
                 ? Collections.unmodifiableCollection(list)
@@ -144,7 +147,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the packet type set
      */
-    public @NotNull @UnmodifiableView Set<PacketType> packetTypeSet() {
+    public @NotNull @UnmodifiableView Set<Integer> packetTypeSet() {
         return Sets.union(this.receivePacketMap.keySet(), this.sendPacketMap.keySet());
     }
 
@@ -153,7 +156,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the receive packet type set
      */
-    public @NotNull @UnmodifiableView Set<PacketType> receivePacketTypeSet() {
+    public @NotNull @UnmodifiableView Set<Integer> receivePacketTypeSet() {
         return Collections.unmodifiableSet(this.receivePacketMap.keySet());
     }
 
@@ -162,7 +165,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the send packet type set
      */
-    public @NotNull @UnmodifiableView Set<PacketType> sendPacketTypeSet() {
+    public @NotNull @UnmodifiableView Set<Integer> sendPacketTypeSet() {
         return Collections.unmodifiableSet(this.sendPacketMap.keySet());
     }
 
@@ -234,8 +237,8 @@ public final class ListenerManager {
         return packetType != null
                 && (
                         packetType.isReceive()
-                        ? this.receivePacketMap.containsKey(packetType)
-                        : this.sendPacketMap.containsKey(packetType)
+                        ? this.receivePacketMap.containsKey(packetType.ordinal())
+                        : this.sendPacketMap.containsKey(packetType.ordinal())
                 );
     }
 
@@ -246,7 +249,7 @@ public final class ListenerManager {
      * @param event Packet event to be called
      * @see PacketEvent
      */
-    public void callPacketReceiveEvent(final @NotNull PacketEvent event) {
+    public void callPacketReceiveEvent(final @NotNull PaperPacketEvent event) {
         final PacketType packetType = event.getPacketContainer().getType();
 
         if (this.containsPacketType(packetType)) {
@@ -263,7 +266,7 @@ public final class ListenerManager {
      * @param event Packet event to be called
      * @see PacketEvent
      */
-    public void callPacketSendEvent(final @NotNull PacketEvent event) {
+    public void callPacketSendEvent(final @NotNull PaperPacketEvent event) {
         final PacketType packetType = event.getPacketContainer().getType();
 
         if (this.containsPacketType(packetType)) {

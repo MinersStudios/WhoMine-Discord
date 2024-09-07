@@ -8,13 +8,14 @@ import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ShulkerBoxSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftInventory;
-import org.bukkit.craftbukkit.v1_20_R3.inventory.CraftInventoryView;
+import org.bukkit.craftbukkit.inventory.CraftInventory;
+import org.bukkit.craftbukkit.inventory.CraftInventoryView;
+import org.bukkit.inventory.InventoryView;
 import org.jetbrains.annotations.NotNull;
 
 public final class ShulkerBoxMenu extends AbstractContainerMenu {
     private final Container container;
-    private CraftInventoryView bukkitEntity;
+    private InventoryView bukkitEntity;
     private final Inventory playerInventory;
 
     private static final int CONTAINER_SIZE = 27;
@@ -51,9 +52,9 @@ public final class ShulkerBoxMenu extends AbstractContainerMenu {
     }
 
     @Override
-    public @NotNull CraftInventoryView getBukkitView() {
+    public @NotNull InventoryView getBukkitView() {
         return this.bukkitEntity == null
-                ? this.bukkitEntity = new CraftInventoryView(
+                ? this.bukkitEntity = new CraftInventoryView<>(
                         this.playerInventory.player.getBukkitEntity(),
                         new CraftInventory(this.container),
                         this

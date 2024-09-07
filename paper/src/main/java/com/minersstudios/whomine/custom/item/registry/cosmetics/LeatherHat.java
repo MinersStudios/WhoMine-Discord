@@ -9,9 +9,11 @@ import com.minersstudios.whomine.utility.Font;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.Wearable;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.Contract;
@@ -22,6 +24,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+@SuppressWarnings("UnstableApiUsage")
 public final class LeatherHat extends CustomItemImpl implements Wearable {
     private static final @Key String KEY;
     private static final ItemStack ITEM_STACK;
@@ -36,7 +39,12 @@ public final class LeatherHat extends CustomItemImpl implements Wearable {
         meta.lore(Collections.singletonList(Font.Components.PAINTABLE));
         meta.addAttributeModifier(
                 Attribute.GENERIC_ARMOR,
-                new AttributeModifier(UUID.randomUUID(), "armor", 1.0f, AttributeModifier.Operation.ADD_NUMBER, EquipmentSlot.HEAD)
+                new AttributeModifier(
+                        NamespacedKey.minecraft("armor"),
+                        1.0d,
+                        AttributeModifier.Operation.ADD_NUMBER,
+                        EquipmentSlotGroup.HEAD
+                )
         );
         ITEM_STACK.setItemMeta(meta);
     }

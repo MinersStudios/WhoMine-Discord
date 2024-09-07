@@ -6,9 +6,9 @@ import org.bukkit.Material;
 import org.bukkit.SoundGroup;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_20_R3.CraftSoundGroup;
-import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftEntityType;
+import org.bukkit.craftbukkit.CraftSoundGroup;
+import org.bukkit.craftbukkit.block.CraftBlock;
+import org.bukkit.craftbukkit.entity.CraftEntityType;
 import org.bukkit.entity.EntityType;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -401,29 +401,29 @@ public final class BlockUtils {
     public static boolean isIgnorableEntity(final @NotNull EntityType entityType) {
         return switch (entityType) {
             //<editor-fold desc="Entities to be ignored when placing a block on their location" defaultstate="collapsed">
-            case DROPPED_ITEM,
-                    ITEM_FRAME,
-                    GLOW_ITEM_FRAME,
-                    LIGHTNING,
-                    LLAMA_SPIT,
-                    EXPERIENCE_ORB,
-                    THROWN_EXP_BOTTLE,
-                    EGG,
-                    SPLASH_POTION,
-                    FIREWORK,
-                    FIREBALL,
-                    FISHING_HOOK,
-                    SMALL_FIREBALL,
-                    SNOWBALL,
-                    TRIDENT,
-                    WITHER_SKULL,
-                    DRAGON_FIREBALL,
-                    AREA_EFFECT_CLOUD,
-                    ARROW,
-                    SPECTRAL_ARROW,
-                    ENDER_PEARL,
-                    EVOKER_FANGS,
-                    LEASH_HITCH -> true;
+            case ITEM,
+                 ITEM_FRAME,
+                 GLOW_ITEM_FRAME,
+                 LIGHTNING_BOLT,
+                 LLAMA_SPIT,
+                 EXPERIENCE_ORB,
+                 EXPERIENCE_BOTTLE,
+                 EGG,
+                 POTION,
+                 FIREWORK_ROCKET,
+                 FIREBALL,
+                 FISHING_BOBBER,
+                 SMALL_FIREBALL,
+                 SNOWBALL,
+                 TRIDENT,
+                 WITHER_SKULL,
+                 DRAGON_FIREBALL,
+                 AREA_EFFECT_CLOUD,
+                 ARROW,
+                 SPECTRAL_ARROW,
+                 ENDER_PEARL,
+                 EVOKER_FANGS,
+                 LEASH_KNOT -> true;
             //</editor-fold>
             default -> false;
         };

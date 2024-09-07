@@ -6,7 +6,7 @@ import net.minecraft.server.MinecraftServer;
 import org.bukkit.Server;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.craftbukkit.v1_20_R3.CraftServer;
+import org.bukkit.craftbukkit.CraftServer;
 import org.jetbrains.annotations.*;
 
 import javax.annotation.concurrent.Immutable;

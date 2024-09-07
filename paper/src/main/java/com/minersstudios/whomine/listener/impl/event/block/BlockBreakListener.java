@@ -28,9 +28,9 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.type.NoteBlock;
-import org.bukkit.craftbukkit.v1_20_R3.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_20_R3.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_20_R3.event.CraftEventFactory;
+import org.bukkit.craftbukkit.block.CraftBlock;
+import org.bukkit.craftbukkit.entity.CraftPlayer;
+import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -79,7 +79,7 @@ public final class BlockBreakListener extends EventListener {
                     customBlockMaterial.getBlockSettings().getTool().getToolType() == ToolType.AXE
                     && gameMode != GameMode.CREATIVE
             ) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 108000, -1, true, false, false));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 108000, -1, true, false, false));
                 block.getWorld().dropItemNaturally(blockLocation, customBlockMaterial.craftItemStack());
                 this.destroyBlock(serverPlayer, blockPosition);
             }

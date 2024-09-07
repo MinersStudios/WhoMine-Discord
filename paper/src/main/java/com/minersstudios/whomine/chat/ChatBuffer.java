@@ -153,7 +153,7 @@ public final class ChatBuffer {
                             .append(space())
                             .color(NamedTextColor.WHITE)
                     );
-                    entity.setParticle(Particle.TOWN_AURA);
+                    entity.setParticle(Particle.MYCELIUM);
                     entity.setRadius(0);
                     entity.setCustomNameVisible(true);
                     entity.setWaitTime(0);

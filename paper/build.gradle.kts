@@ -1,3 +1,5 @@
+import io.papermc.paperweight.userdev.ReobfArtifactConfiguration.Companion.MOJANG_PRODUCTION
+
 val paperVersion:       String = rootProject.property("paper.version").toString()
 val author:             String = rootProject.property("project.author").toString()
 val contributors:       String = rootProject.property("project.contributors").toString()
@@ -22,6 +24,8 @@ plugins {
     alias(libs.plugins.shadow)
 }
 
+paperweight.reobfArtifactConfiguration = MOJANG_PRODUCTION
+
 dependencies {
     paperweight.paperDevBundle(paperVersion)
 
@@ -41,7 +45,7 @@ tasks {
 
     processResources {
         val props = mapOf(
-            "name"               to project.name,
+            "name"               to rootProject.name + "-" + project.name,
             "version"            to project.version,
             "description"        to project.description,
             "author"             to author,

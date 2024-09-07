@@ -1,19 +1,19 @@
 [versions]
 # libraries
-authme                = "5.6.0-SNAPSHOT"
-coreprotect           = "22.2"
-fastutil              = "8.5.13"
-google-guava          = "33.2.1-jre"
+authme                = "5.6.0"
+coreprotect           = "22.4"
+fastutil              = "8.5.14"
+google-guava          = "33.3.0-jre"
 google-gson           = "2.11.0"
 google-jsr305         = "3.0.2"
-jetbrains-annotations = "24.0.1"
-jackson-annotations   = "2.16.0"
-jda                   = "5.0.0-beta.23"
+jetbrains-annotations = "24.1.0"
+jackson-annotations   = "2.17.2"
+jda                   = "5.1.0"
 
 # plugins
-paper-userdev = "1.5.11"
+paper-userdev = "1.7.2"
 shadow        = "8.1.1"
-paper-run     = "2.2.3"
+paper-run     = "2.3.1"
 
 [libraries]
 authme                = { group = "fr.xephi",                   name = "authme",              version.ref = "authme" }

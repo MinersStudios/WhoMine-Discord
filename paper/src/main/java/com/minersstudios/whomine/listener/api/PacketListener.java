@@ -2,19 +2,20 @@ package com.minersstudios.whomine.listener.api;
 
 import com.google.common.base.Joiner;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.packet.PacketEvent;
-import com.minersstudios.whomine.packet.PacketType;
+import com.minersstudios.whomine.api.packet.type.PacketType;
+import com.minersstudios.whomine.packet.PaperPacketEvent;
 import com.minersstudios.whomine.plugin.AbstractPluginComponent;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.Collections;
-import java.util.EnumSet;
 import java.util.Set;
 
 public abstract class PacketListener extends AbstractPluginComponent {
-    private final Set<PacketType> sendWhiteList;
-    private final Set<PacketType> receiveWhiteList;
+    private final IntSet sendWhiteList;
+    private final IntSet receiveWhiteList;
 
     /**
      * Packet listener constructor
@@ -31,8 +32,8 @@ public abstract class PacketListener extends AbstractPluginComponent {
     ) {
         super(plugin);
 
-        this.sendWhiteList = EnumSet.noneOf(PacketType.class);
-        this.receiveWhiteList = EnumSet.noneOf(PacketType.class);
+        this.sendWhiteList = new IntOpenHashSet();
+        this.receiveWhiteList = new IntOpenHashSet();
 
         this.addPacketType(first);
 
@@ -45,7 +46,7 @@ public abstract class PacketListener extends AbstractPluginComponent {
      * @return Types of received packets listened to by this listener
      * @see PacketType
      */
-    public final @NotNull @UnmodifiableView Set<PacketType> getReceiveWhiteList() {
+    public final @NotNull @UnmodifiableView Set<Integer> getReceiveWhiteList() {
         return Collections.unmodifiableSet(this.receiveWhiteList);
     }
 
@@ -53,7 +54,7 @@ public abstract class PacketListener extends AbstractPluginComponent {
      * @return Types of sent packets listened to by this listener
      * @see PacketType
      */
-    public final @NotNull @UnmodifiableView Set<PacketType> getSendWhiteList() {
+    public final @NotNull @UnmodifiableView Set<Integer> getSendWhiteList() {
         return Collections.unmodifiableSet(this.sendWhiteList);
     }
 
@@ -77,7 +78,7 @@ public abstract class PacketListener extends AbstractPluginComponent {
      *
      * @param event The packet event
      */
-    public void onPacketReceive(final @NotNull PacketEvent event) {
+    public void onPacketReceive(final @NotNull PaperPacketEvent event) {
         throw new UnsupportedOperationException("Packet receive not implemented for " + event.getPacketContainer().getType().getName());
     }
 
@@ -86,15 +87,15 @@ public abstract class PacketListener extends AbstractPluginComponent {
      *
      * @param event The packet event
      */
-    public void onPacketSend(final @NotNull PacketEvent event) {
+    public void onPacketSend(final @NotNull PaperPacketEvent event) {
         throw new UnsupportedOperationException("Packet send not implemented for " + event.getPacketContainer().getType().getName());
     }
 
     private void addPacketType(final @NotNull PacketType packetType) {
         if (packetType.isReceive()) {
-            this.receiveWhiteList.add(packetType);
+            this.receiveWhiteList.add(packetType.ordinal());
         } else {
-            this.sendWhiteList.add(packetType);
+            this.sendWhiteList.add(packetType.ordinal());
         }
     }
 }

@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.world.location;
 
-import io.papermc.paper.chunk.system.entity.EntityLookup;
-import io.papermc.paper.world.ChunkEntitySlices;
+import ca.spottedleaf.moonrise.patches.chunk_system.level.entity.ChunkEntitySlices;
+import ca.spottedleaf.moonrise.patches.chunk_system.level.entity.EntityLookup;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Position;
@@ -15,7 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
-import org.bukkit.craftbukkit.v1_20_R3.CraftWorld;
+import org.bukkit.craftbukkit.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Contract;
@@ -1971,7 +1971,7 @@ public final class MSBoundingBox {
 
         final AABB aabb = this.toAABB();
         final var list = new ObjectArrayList<net.minecraft.world.entity.Entity>();
-        final EntityLookup entityLookup = level.getEntityLookup();
+        final EntityLookup entityLookup = level.moonrise$getEntityLookup();
 
         final int minChunkX = ((int) Math.floor(this.minX) - 2) >> 4;
         final int minChunkZ = ((int) Math.floor(this.minZ) - 2) >> 4;
