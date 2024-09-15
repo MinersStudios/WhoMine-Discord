@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.api.packet;
 
-import com.minersstudios.whomine.api.packet.type.PacketType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Represents a packet container. It contains the packet and the packet type.
@@ -9,7 +9,9 @@ import org.jetbrains.annotations.NotNull;
  * packet can be modified, but the packet type cannot be changed.
  *
  * @see PacketType
+ * @param <P> The packet's object type
  */
+@SuppressWarnings("unused")
 public abstract class PacketContainer<P> {
 
     private P packet;
@@ -54,6 +56,8 @@ public abstract class PacketContainer<P> {
     }
 
     /**
+     * Returns the packet type of the packet contained in this container
+     *
      * @return The packet type of the packet contained in this container
      */
     public @NotNull PacketType getType() {
@@ -61,11 +65,45 @@ public abstract class PacketContainer<P> {
     }
 
     /**
+     * Returns hash code value for this packet container
+     *
+     * @return The hash code value for this packet container
+     */
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + this.packet.hashCode();
+        result = prime * result + this.type.hashCode();
+
+        return result;
+    }
+
+    /**
+     * Returns whether the given object is equal to this packet container
+     *
+     * @param obj The object to compare
+     * @return True if the given object is equal to this packet container
+     */
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        return this == obj
+                || (
+                        obj instanceof PacketContainer<?> that
+                        && this.packet.equals(that.packet)
+                        && this.type.equals(that.type)
+                );
+    }
+
+    /**
+     * Returns the string representation of this packet container
+     *
      * @return The string representation of this packet container
      */
     @Override
     public @NotNull String toString() {
-        return "PacketContainer{" +
+        return this.getClass().getSimpleName() + '{' +
                 "packet=" + this.packet.getClass() +
                 ", type=" + this.type +
                 '}';

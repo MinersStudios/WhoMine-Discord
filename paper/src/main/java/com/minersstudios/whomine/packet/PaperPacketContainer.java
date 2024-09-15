@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.api.packet.PacketContainer;
-import com.minersstudios.whomine.api.packet.type.PacketType;
+import com.minersstudios.whomine.api.packet.PacketType;
 import net.minecraft.network.protocol.Packet;
 import org.jetbrains.annotations.NotNull;
 

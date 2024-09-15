@@ -6,7 +6,7 @@ import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.collection.DiggingMap;
 import com.minersstudios.whomine.listener.api.PacketListener;
-import com.minersstudios.whomine.api.packet.type.PlayPackets;
+import com.minersstudios.whomine.api.packet.registry.PlayPackets;
 import com.minersstudios.whomine.packet.PaperPacketEvent;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.world.sound.SoundGroup;

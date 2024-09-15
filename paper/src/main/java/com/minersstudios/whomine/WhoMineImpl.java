@@ -18,7 +18,6 @@ import com.minersstudios.whomine.menu.DiscordLinkCodeMenu;
 import com.minersstudios.whomine.menu.PronounMenu;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
 import com.minersstudios.whomine.menu.SkinsMenu;
-import com.minersstudios.whomine.api.packet.PacketRegistry;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.scheduler.task.BanListTask;
 import com.minersstudios.whomine.scheduler.task.MuteMapTask;
@@ -35,12 +34,6 @@ import fr.xephi.authme.api.v3.AuthMeApi;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.coreprotect.CoreProtect;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minecraft.network.ProtocolInfo;
-import net.minecraft.network.protocol.configuration.ConfigurationProtocols;
-import net.minecraft.network.protocol.game.GameProtocols;
-import net.minecraft.network.protocol.handshake.HandshakeProtocols;
-import net.minecraft.network.protocol.login.LoginProtocols;
-import net.minecraft.network.protocol.status.StatusProtocols;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -196,7 +189,8 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
 
         this.config.reload();
 
-        PacketRegistry.init(getId2TypeMap());
+        PacketClassBinder.bindAll();
+
         TranslationRegistry.bootstrap(this.config.getDefaultLocale());
         initClass(Translations.class);
 
@@ -594,120 +588,5 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         } catch (final Throwable e) {
             throw new ExceptionInInitializerError(e);
         }
-    }
-
-    private @NotNull Map<String, PacketType> getId2TypeMap() {
-        final var classToType = new Object2ObjectOpenHashMap<String, PacketType>();
-
-        HandshakeProtocols.SERVERBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = HandshakePackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        StatusProtocols.CLIENTBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = StatusPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        StatusProtocols.SERVERBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = StatusPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        LoginProtocols.CLIENTBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = LoginPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        LoginProtocols.SERVERBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = LoginPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        ConfigurationProtocols.CLIENTBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = ConfigurationPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        ConfigurationProtocols.SERVERBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = ConfigurationPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        GameProtocols.CLIENTBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = PlayPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-        GameProtocols.SERVERBOUND_TEMPLATE.listPackets((type, protocolId) -> {
-            final var packet = PlayPackets.getPacket(
-                    PacketBound.fromId(type.flow().id()),
-                    protocolId
-            );
-
-            if (packet != null) {
-                classToType.put(type.id().getPath(), packet);
-            } else {
-                MSLogger.warning("Unknown packet: " + protocolId);
-            }
-        });
-
-        return classToType;
     }
 }

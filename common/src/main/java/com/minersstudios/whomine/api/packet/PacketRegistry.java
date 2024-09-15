@@ -1,92 +1,167 @@
 package com.minersstudios.whomine.api.packet;
 
-import com.minersstudios.whomine.api.packet.type.PacketType;
-import com.minersstudios.whomine.api.packet.type.PlayPackets;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import com.minersstudios.whomine.api.packet.collection.Class2PacketMap;
+import com.minersstudios.whomine.api.packet.collection.PacketMap;
+import com.minersstudios.whomine.api.packet.collection.Path2PacketMap;
+import com.minersstudios.whomine.api.packet.registry.*;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.UnmodifiableView;
-
-import java.util.Collections;
-import java.util.Map;
 
 /**
- * Represents a packet registry for Minecraft packets. This class maps packet
- * classes to their corresponding {@link PacketType} and vice versa.
+ * Represents a packet registry, which contains the packet maps.
+ * <p>
+ * The packet registry contains two packet maps:
+ * <ul>
+ *     <li>The path packet map, which maps the packet's path to the packet
+ *         type</li>
+ *     <li>The class packet map, which maps the packet's class to the packet
+ *         type</li>
+ * </ul>
+ * <p>
+ * You can create a new packet registry using the following methods:
+ * <table>
+ *     <tr>
+ *         <th>Method</th>
+ *         <th>Description</th>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #create(Path2PacketMap)}</td>
+ *         <td>Creates a new packet registry with the given path packet map
+ *             and an empty mutable class packet map</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #create(Path2PacketMap, Class2PacketMap)}</td>
+ *         <td>Creates a new packet registry with the given packet maps, the
+ *             class packet map will be a mutable map</td>
+ *     </tr>
+ * </table>
+ * <p>
+ * Next packet type registries are available by default:
+ * <ul>
+ *     <li>{@link HandshakePackets}</li>
+ *     <li>{@link PlayPackets}</li>
+ *     <li>{@link StatusPackets}</li>
+ *     <li>{@link LoginPackets}</li>
+ *     <li>{@link ConfigurationPackets}</li>
+ * </ul>
  *
- * @see PacketType
- * @see PacketProtocol
- * @see PacketBound
- * @see <a href="https://wiki.vg/Protocol">Protocol Wiki</a>
+ * @see Path2PacketMap
+ * @see Class2PacketMap
  */
 @SuppressWarnings("unused")
 public final class PacketRegistry {
-    private static volatile PacketRegistry singleton;
 
-    private final Map<String, PacketType> idToType;
-    private final Int2ObjectMap<String> ordinalToId;
+    private final Path2PacketMap byPath;
+    private final Class2PacketMap byClass;
 
-    private PacketRegistry() {
-        this.idToType = new Object2ObjectOpenHashMap<>();
-        this.ordinalToId = new Int2ObjectOpenHashMap<>();
+    private PacketRegistry(
+            final @NotNull Path2PacketMap byPath,
+            final @NotNull Class2PacketMap byClass
+    ) {
+        this.byPath = byPath;
+        this.byClass = byClass;
     }
 
     /**
-     * Initialize the packet registry with the given map of packet classes to their
-     * corresponding {@link PacketType}
+     * Returns the packet map, which maps the packet's path to the packet type
      *
-     * @param idToType The map containing packet ids as keys and their
-     *                 corresponding {@link PacketType} as values
-     * @throws IllegalStateException If the packet registry has already been
-     *                               initialized
+     * @return The packet map, which maps the packet's path to the packet type
      */
-    public static void init(final @NotNull Map<String, PacketType> idToType) throws IllegalStateException {
-        if (singleton != null) {
-            throw new IllegalStateException("PacketRegistry has already been initialized");
-        }
-
-        singleton = new PacketRegistry();
-
-        for (final var entry : idToType.entrySet()) {
-            final var packetType = entry.getValue();
-            final var packetId = entry.getKey();
-
-            singleton.idToType.put(packetId, packetType);
-            singleton.ordinalToId.put(packetType.ordinal(), packetId);
-        }
+    public @NotNull Path2PacketMap byPath() {
+        return this.byPath;
     }
 
     /**
-     * Get an unmodifiable view of the map that maps packet classes to their
-     * corresponding {@link PacketType}
+     * Returns the packet map, which maps the packet's class to the packet type
      *
-     * @return An unmodifiable view of the map containing packet classes as keys
-     *         and their corresponding {@link PacketType} as values
+     * @return The packet map, which maps the packet's class to the packet type
      */
-    public static @NotNull @UnmodifiableView Map<String, PacketType> idToType() {
-        return Collections.unmodifiableMap(singleton.idToType);
+    public @NotNull Class2PacketMap byClass() {
+        return this.byClass;
     }
 
     /**
-     * Get an unmodifiable view of the map that maps {@link PacketType} ordinal
-     * to their corresponding packet classes
+     * Returns the hash code value for this packet registry
      *
-     * @return An unmodifiable view of the map containing {@link PacketType}
-     *         ordinal as keys and their corresponding packet classes as values
+     * @return The hash code value for this packet registry
      */
-    public static @NotNull @UnmodifiableView Map<Integer, String> ordinalToId() {
-        return Collections.unmodifiableMap(singleton.ordinalToId);
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+
+        result = prime * result + this.byPath.hashCode();
+        result = prime * result + this.byClass.hashCode();
+
+        return result;
     }
 
-    public static @Nullable PacketType getTypeFromId(final @NotNull String packetId) {
-        return "bundle".equals(packetId)
-               ? PlayPackets.CLIENT_BUNDLE_DELIMITER
-               : singleton.idToType.get(packetId);
+    /**
+     * Returns whether the given object is equal to this packet registry.
+     * <p>
+     * To be equal, the given object must be an instance of
+     * {@link PacketRegistry} and have the same packet maps with same packet
+     * types.
+     *
+     * @param obj The object to compare
+     * @return True if the given object is equal to this packet registry
+     */
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        return this == obj
+               || (
+                       obj instanceof PacketRegistry that
+                       && this.byPath.equals(that.byPath)
+                       && this.byClass.equals(that.byClass)
+               );
     }
 
-    public static @NotNull String getIdFromType(final @NotNull PacketType type) {
-        return singleton.ordinalToId.get(type.ordinal());
+    /**
+     * Returns the string representation of this packet registry
+     *
+     * @return The string representation of this packet registry
+     */
+    @Override
+    public @NotNull String toString() {
+        return this.getClass().getSimpleName() + '{' +
+                "pathToPacketMap=" + this.byPath +
+                ", classToPacketMap=" + this.byClass +
+                '}';
+    }
+
+    /**
+     * Creates a new packet registry with the given path packet map.
+     * <p>
+     * The class packet map will be created as an empty mutable map.
+     *
+     * @param byPath The packet map, which maps the packet's path to the packet
+     *               type
+     * @return A new packet registry with the given path packet map
+     * @see #create(Path2PacketMap, Class2PacketMap)
+     */
+    @Contract("_ -> new")
+    public static @NotNull PacketRegistry create(final @NotNull Path2PacketMap byPath) {
+        return new PacketRegistry(byPath, PacketMap.class2PacketBuilder().build());
+    }
+
+    /**
+     * Creates a new packet registry with the given packet maps.
+     * <p>
+     * <b>NOTE:</b> The class packet map will be a mutable map, check its
+     *              documentation for more information.
+     *
+     * @param byPath  The packet map, which maps the packet's path to the packet
+     *                type
+     * @param byClass The packet map, which maps the packet's class to the
+     *                packet type
+     * @return A new packet registry with the given packet maps
+     */
+    @Contract("_, _ -> new")
+    public static @NotNull PacketRegistry create(
+            final @NotNull Path2PacketMap byPath,
+            final @NotNull Class2PacketMap byClass
+    ) {
+        return new PacketRegistry(byPath, byClass);
     }
 }

@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.packet.type.PlayPackets;
+import com.minersstudios.whomine.api.packet.registry.PlayPackets;
 import com.minersstudios.whomine.listener.api.PacketListener;
 import com.minersstudios.whomine.packet.PaperPacketEvent;
 import net.minecraft.server.level.ServerPlayer;

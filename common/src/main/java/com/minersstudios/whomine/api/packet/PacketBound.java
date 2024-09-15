@@ -1,41 +1,57 @@
 package com.minersstudios.whomine.api.packet;
 
-import com.minersstudios.whomine.api.packet.type.PacketType;
+import com.minersstudios.whomine.api.annotation.Path;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
 import java.util.Locale;
 
 /**
- * This enum represents a packet's flow direction in the Minecraft server
- * networking
+ * This enum represents a packet's bound in the Minecraft server networking.
+ * <p>
+ * Available bounds are:
+ * <ul>
+ *     <li>{@link #SERVERBOUND} - from the client to the server</li>
+ *     <li>{@link #CLIENTBOUND} - from the server to the client</li>
+ * </ul>
  *
  * @see PacketType
  * @see PacketProtocol
- * @see PacketRegistry
  */
+@SuppressWarnings("unused")
 public enum PacketBound {
+    /** The serverbound packet flow */
     SERVERBOUND("serverbound"),
+    /** The clientbound packet flow */
     CLIENTBOUND("clientbound");
+
+    private static final PacketBound[] VALUES = values();
 
     private final String id;
 
-    PacketBound(final @NotNull String id) {
+    /**
+     * Packet bound constructor
+     *
+     * @param id The state ID of the bound
+     */
+    PacketBound(final @Path @NotNull String id) {
         this.id = id;
     }
 
     /**
-     * Returns the ID of the flow direction
+     * Returns the state ID of the bound
      *
-     * @return The ID of the flow direction
+     * @return The state ID of the bound
      */
-    public @NotNull String getId() {
+    public @Path @NotNull String getId() {
         return this.id;
     }
 
     /**
-     * Returns the opposite flow direction
+     * Returns the opposite bound
      *
-     * @return The opposite flow direction
+     * @return The opposite bound
      */
     public @NotNull PacketBound getOpposite() {
         return this == CLIENTBOUND
@@ -44,17 +60,72 @@ public enum PacketBound {
     }
 
     /**
-     * Returns the flow direction from the given ID
+     * Returns all available bounds as an array
      *
-     * @param id The ID of the flow direction
-     * @return The flow direction from the given ID
-     * @throws IllegalArgumentException If the ID is unknown
+     * @return All available bounds as an array
      */
-    public static @NotNull PacketBound fromId(final @NotNull String id) throws IllegalArgumentException {
-        return switch (id.toLowerCase(Locale.ENGLISH)) {
+    public static PacketBound @NotNull [] bounds() {
+        return VALUES;
+    }
+
+    /**
+     * Returns the bound from the given ordinal
+     *
+     * @param ordinal The ordinal of the bound
+     * @return The bound from the given ordinal
+     * @throws ArrayIndexOutOfBoundsException If the ordinal is out of bounds
+     */
+    public static @NotNull PacketBound byOrdinal(final @Range(from = 0, to = 1) int ordinal) throws ArrayIndexOutOfBoundsException {
+        return VALUES[ordinal];
+    }
+
+    /**
+     * Returns the bound from the given state ID (case-insensitive)
+     *
+     * @param id The state ID of the bound
+     * @return The bound from the given ID
+     * @throws EnumConstantNotPresentException If the state ID is unknown
+     */
+    public static @NotNull PacketBound fromId(final @Path @NotNull String id) throws EnumConstantNotPresentException {
+        return dummyId(id.toLowerCase(Locale.ENGLISH));
+    }
+
+    /**
+     * Returns the bound from the given state ID (case-sensitive)
+     *
+     * @param id The state ID of the bound
+     * @return The bound from the given ID
+     * @throws EnumConstantNotPresentException If the state ID is unknown
+     */
+    public static @NotNull PacketBound dummyId(final @Path @NotNull String id) throws EnumConstantNotPresentException {
+        return switch (id) {
             case "serverbound" -> SERVERBOUND;
             case "clientbound" -> CLIENTBOUND;
-            default -> throw new IllegalArgumentException("Unknown packet flow: " + id);
+            default            -> throw new EnumConstantNotPresentException(PacketBound.class, id);
+        };
+    }
+
+    /**
+     * Returns the bound from the given state ID (case-insensitive)
+     *
+     * @param id The state ID of the bound
+     * @return The bound from the given ID, or null if the state ID is unknown
+     */
+    public static @Nullable PacketBound fromIdOrNull(final @Path @NotNull String id) {
+        return dummyIdOrNull(id.toLowerCase(Locale.ENGLISH));
+    }
+
+    /**
+     * Returns the bound from the given state ID (case-sensitive)
+     *
+     * @param id The state ID of the bound
+     * @return The bound from the given ID, or null if the state ID is unknown
+     */
+    public static @Nullable PacketBound dummyIdOrNull(final @Path @NotNull String id) {
+        return switch (id) {
+            case "serverbound" -> SERVERBOUND;
+            case "clientbound" -> CLIENTBOUND;
+            default            -> null;
         };
     }
 }

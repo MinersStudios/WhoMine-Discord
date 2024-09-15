@@ -18,11 +18,10 @@ import com.minersstudios.whomine.listener.impl.packet.player.PlayerActionListene
 import com.minersstudios.whomine.listener.impl.packet.player.PlayerUpdateSignListener;
 import com.minersstudios.whomine.listener.impl.packet.player.SwingArmListener;
 import com.minersstudios.whomine.api.packet.PacketEvent;
-import com.minersstudios.whomine.api.packet.type.PacketType;
+import com.minersstudios.whomine.api.packet.PacketType;
 import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.packet.PaperPacketEvent;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.jetbrains.annotations.*;
 
@@ -41,8 +40,8 @@ public final class ListenerManager {
     private final WhoMine plugin;
     private final List<DiscordListener> discordList;
     private final List<EventListener> eventList;
-    private final Int2ObjectMap<List<PacketListener>> receivePacketMap;
-    private final Int2ObjectMap<List<PacketListener>> sendPacketMap;
+    private final Map<PacketType, List<PacketListener>> receivePacketMap;
+    private final Map<PacketType, List<PacketListener>> sendPacketMap;
 
     /**
      * Constructs a new listener manager
@@ -53,8 +52,8 @@ public final class ListenerManager {
         this.plugin = plugin;
         this.discordList = new ObjectArrayList<>();
         this.eventList = new ObjectArrayList<>();
-        this.receivePacketMap = new Int2ObjectOpenHashMap<>();
-        this.sendPacketMap = new Int2ObjectOpenHashMap<>();
+        this.receivePacketMap = new Object2ObjectOpenHashMap<>();
+        this.sendPacketMap = new Object2ObjectOpenHashMap<>();
     }
 
     /**
@@ -103,9 +102,9 @@ public final class ListenerManager {
      */
     public @NotNull @Unmodifiable Collection<PacketListener> packetListeners(final @NotNull PacketType packetType) {
         final var list =
-                packetType.isReceive()
-                ? this.receivePacketMap.get(packetType.ordinal())
-                : this.sendPacketMap.get(packetType.ordinal());
+                packetType.isServerbound()
+                ? this.receivePacketMap.get(packetType)
+                : this.sendPacketMap.get(packetType);
 
         return list != null
                 ? Collections.unmodifiableCollection(list)
@@ -147,7 +146,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the packet type set
      */
-    public @NotNull @UnmodifiableView Set<Integer> packetTypeSet() {
+    public @NotNull @UnmodifiableView Set<PacketType> packetTypeSet() {
         return Sets.union(this.receivePacketMap.keySet(), this.sendPacketMap.keySet());
     }
 
@@ -156,7 +155,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the receive packet type set
      */
-    public @NotNull @UnmodifiableView Set<Integer> receivePacketTypeSet() {
+    public @NotNull @UnmodifiableView Set<PacketType> receivePacketTypeSet() {
         return Collections.unmodifiableSet(this.receivePacketMap.keySet());
     }
 
@@ -165,7 +164,7 @@ public final class ListenerManager {
      *
      * @return An unmodifiable view of the send packet type set
      */
-    public @NotNull @UnmodifiableView Set<Integer> sendPacketTypeSet() {
+    public @NotNull @UnmodifiableView Set<PacketType> sendPacketTypeSet() {
         return Collections.unmodifiableSet(this.sendPacketMap.keySet());
     }
 
@@ -236,9 +235,9 @@ public final class ListenerManager {
     public boolean containsPacketType(final @Nullable PacketType packetType) {
         return packetType != null
                 && (
-                        packetType.isReceive()
-                        ? this.receivePacketMap.containsKey(packetType.ordinal())
-                        : this.sendPacketMap.containsKey(packetType.ordinal())
+                        packetType.isServerbound()
+                        ? this.receivePacketMap.containsKey(packetType)
+                        : this.sendPacketMap.containsKey(packetType)
                 );
     }
 

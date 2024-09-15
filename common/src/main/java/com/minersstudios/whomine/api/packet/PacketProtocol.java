@@ -1,67 +1,203 @@
 package com.minersstudios.whomine.api.packet;
 
-import com.minersstudios.whomine.api.packet.type.*;
-import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.packet.registry.*;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Unmodifiable;
+import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.Range;
 
-import java.util.Collections;
-import java.util.Map;
+import java.util.Locale;
 
 /**
- * Represents the different packet protocols used in Minecraft. Each protocol
- * corresponds to a specific phase in the network connection process.
+ * Represents the different packet protocols used in Minecraft.
+ * <p>
+ * Each protocol corresponds to a specific phase in the network connection
+ * process.
+ * <p>
+ * Available protocols:
+ * <table>
+ *     <tr>
+ *         <th>Protocol</th>
+ *         <th>Registry</th>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #HANDSHAKING}</td>
+ *         <td>{@link HandshakePackets}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #PLAY}</td>
+ *         <td>{@link PlayPackets}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #STATUS}</td>
+ *         <td>{@link StatusPackets}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #LOGIN}</td>
+ *         <td>{@link LoginPackets}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #CONFIGURATION}</td>
+ *         <td>{@link ConfigurationPackets}</td>
+ *     </tr>
+ * </table>
  *
- * @see PacketType
- * @see PacketBound
  * @see PacketRegistry
- * @see <a href="https://wiki.vg/Protocol">Protocol Wiki</a>
  */
 @SuppressWarnings("unused")
 public enum PacketProtocol {
-    HANDSHAKING  ("handshake",     HandshakePackets.boundedMap()),
-    PLAY         ("play",          PlayPackets.boundedMap()),
-    STATUS       ("status",        StatusPackets.boundedMap()),
-    LOGIN        ("login",         LoginPackets.boundedMap()),
-    CONFIGURATION("configuration", ConfigurationPackets.boundedMap());
+    /**
+     * The handshake protocol
+     *
+     * @see HandshakePackets
+     * @see <a href="https://wiki.vg/Protocol#Handshaking">Protocol Wiki - Handshake</a>
+     */
+    HANDSHAKING("handshake", HandshakePackets.registry()),
+    /**
+     * The play protocol
+     *
+     * @see PlayPackets
+     * @see <a href="https://wiki.vg/Protocol#Play">Protocol Wiki - Play</a>
+     */
+    PLAY("play", PlayPackets.registry()),
+    /**
+     * The status protocol
+     *
+     * @see StatusPackets
+     * @see <a href="https://wiki.vg/Protocol#Status">Protocol Wiki - Status</a>
+     */
+    STATUS("status", StatusPackets.registry()),
+    /**
+     * The login protocol
+     *
+     * @see LoginPackets
+     * @see <a href="https://wiki.vg/Protocol#Login">Protocol Wiki - Login</a>
+     */
+    LOGIN("login", LoginPackets.registry()),
+    /**
+     * The configuration protocol
+     *
+     * @see ConfigurationPackets
+     * @see <a href="https://wiki.vg/Protocol#Configuration">Protocol Wiki - Configuration</a>
+     */
+    CONFIGURATION("configuration", ConfigurationPackets.registry());
+
+    private static final PacketProtocol[] VALUES = values();
 
     private final String id;
-    private final Map<PacketBound, Int2ObjectMap<? extends PacketType>> packetMap;
+    private final PacketRegistry registry;
 
     /**
      * Constructor for the {@link PacketProtocol} enum
      *
-     * @param id        The state id of this protocol
-     * @param packetMap The map of packet types associated with this protocol,
-     *                  organized by packet flow and packet ID
+     * @param id       The state ID of this protocol
+     * @param registry The packet registry of this protocol
      */
     PacketProtocol(
-            final @NotNull String id,
-            final @NotNull Map<PacketBound, Int2ObjectMap<? extends PacketType>> packetMap
+            final @Path @NotNull String id,
+            final @NotNull PacketRegistry registry
     ) {
         this.id = id;
-        this.packetMap = packetMap;
+        this.registry = registry;
     }
 
     /**
-     * Returns the state id of this protocol.
+     * Returns the state ID of this protocol.
      * <p>
-     * The id is the same as the id of the minecraft protocol associated with
-     * this protocol.
+     * The ID is the same as the ID of the Minecraft protocol.
      *
-     * @return The state id of this protocol
+     * @return The state ID of this protocol
      */
     public @NotNull String getId() {
         return this.id;
     }
 
     /**
-     * Get the packet map associated with this protocol. The packet map contains
-     * packet types organized by packet flow and packet ID.
+     * Returns the packet registry of this protocol
      *
-     * @return The unmodifiable packet map of this protocol.
+     * @return The packet registry of this protocol
      */
-    public @NotNull @Unmodifiable Map<PacketBound, Int2ObjectMap<? extends PacketType>> getPacketMap() {
-        return Collections.unmodifiableMap(this.packetMap);
+    public @NotNull PacketRegistry getRegistry() {
+        return this.registry;
+    }
+
+    /**
+     * Returns all available protocols as an array
+     *
+     * @return All available protocols as an array
+     */
+    public static PacketProtocol @NotNull [] protocols() {
+        return VALUES;
+    }
+
+    /**
+     * Returns the protocol from the given ordinal
+     *
+     * @param ordinal The ordinal of the protocol
+     * @return The protocol from the given ordinal
+     * @throws ArrayIndexOutOfBoundsException If the ordinal is out of bounds
+     */
+    public static @NotNull PacketProtocol byOrdinal(final @Range(from = 0, to = 4) int ordinal) throws ArrayIndexOutOfBoundsException {
+        return VALUES[ordinal];
+    }
+
+    /**
+     * Returns the protocol from the given state ID (case-insensitive)
+     *
+     * @param id The ID of the protocol
+     * @return The protocol from the given state ID
+     * @throws EnumConstantNotPresentException If the state ID is unknown
+     * @see #dummyId(String)
+     */
+    public static @NotNull PacketProtocol fromId(final @Path @NotNull String id) throws EnumConstantNotPresentException {
+        return dummyId(id.toLowerCase(Locale.ENGLISH));
+    }
+
+    /**
+     * Returns the protocol from the given state ID (case-sensitive)
+     *
+     * @param id The ID of the protocol
+     * @return The protocol from the given state ID
+     * @throws EnumConstantNotPresentException If the state ID is unknown
+     * @see #fromId(String)
+     */
+    public static @NotNull PacketProtocol dummyId(final @Path @NotNull String id) throws EnumConstantNotPresentException {
+        return switch (id) {
+            case "handshake"     -> HANDSHAKING;
+            case "play"          -> PLAY;
+            case "status"        -> STATUS;
+            case "login"         -> LOGIN;
+            case "configuration" -> CONFIGURATION;
+            default              -> throw new EnumConstantNotPresentException(PacketProtocol.class, id);
+        };
+    }
+
+    /**
+     * Returns the protocol from the given state ID (case-insensitive)
+     *
+     * @param id The ID of the protocol
+     * @return The protocol from the given state ID or null if the ID is unknown
+     * @see #dummyIdOrNull(String)
+     */
+    public static @Nullable PacketProtocol fromIdOrNull(final @Path @NotNull String id) {
+        return dummyIdOrNull(id.toLowerCase(Locale.ENGLISH));
+    }
+
+    /**
+     * Returns the protocol from the given state ID (case-sensitive)
+     *
+     * @param id The ID of the protocol
+     * @return The protocol from the given state ID or null if the ID is unknown
+     * @see #fromIdOrNull(String)
+     */
+    public static @Nullable PacketProtocol dummyIdOrNull(final @Path @NotNull String id) {
+        return switch (id) {
+            case "handshake"     -> HANDSHAKING;
+            case "play"          -> PLAY;
+            case "status"        -> STATUS;
+            case "login"         -> LOGIN;
+            case "configuration" -> CONFIGURATION;
+            default              -> null;
+        };
     }
 }
