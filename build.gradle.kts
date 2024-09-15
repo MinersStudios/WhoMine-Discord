@@ -40,6 +40,12 @@ subprojects {
         compileOnly(rootProject.libs.jda)
     }
 
+    sourceSets {
+        main {
+            java.srcDir(project(":common").sourceSets.main.get().java.srcDirs)
+        }
+    }
+
     tasks {
         compileJava {
             options.encoding = utf8

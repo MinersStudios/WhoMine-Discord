@@ -35,14 +35,6 @@ dependencies {
 }
 
 tasks {
-    reobfJar {
-        outputJar.set(file("$rootDir/build/${jar.get().archiveBaseName.get()}-$version.jar"))
-    }
-
-    assemble {
-        dependsOn(reobfJar)
-    }
-
     processResources {
         val props = mapOf(
             "name"               to rootProject.name + "-" + project.name,

@@ -1,6 +1,6 @@
 rootProject.name = "WhoMine"
 
 include(
-    "paper",
-    "common"
+    "common",
+    "paper"
 )
