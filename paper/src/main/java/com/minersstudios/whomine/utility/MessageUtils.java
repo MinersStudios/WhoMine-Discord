@@ -2,6 +2,8 @@ package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.Config;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.locale.TranslationRegistry;
 import com.minersstudios.whomine.locale.Translations;
 import com.minersstudios.whomine.chat.ChatType;
@@ -167,7 +169,7 @@ public final class MessageUtils {
                     .hoverEvent(HoverEvent.showText(text("Нажмите, чтобы написать приватное сообщение данному игроку", NamedTextColor.GRAY)))
                     .clickEvent(ClickEvent.suggestCommand("/pm " + receiver.getID() + " ")))
                     .color(CHAT_COLOR_PRIMARY))
-                    .append(message.color(CHAT_COLOR_SECONDARY))
+                                          .append(message.color(CHAT_COLOR_SECONDARY))
             );
             receiverPlayer.sendMessage(
                     Font.Components.SPEECH.append(sender.getDefaultName().append(text(" -> Вам : "))

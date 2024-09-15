@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.locale.TranslationRegistry;
 import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
@@ -228,7 +229,7 @@ public final class MSLogger {
             target.sendMessage(
                     switch (level.intValue()) {
                         case SEVERE ->  space().append(Font.Components.RED_EXCLAMATION_MARK).append(space())
-                                        .append(coloredMessage);
+                                               .append(coloredMessage);
                         case WARNING -> space().append(Font.Components.YELLOW_EXCLAMATION_MARK).append(space())
                                         .append(coloredMessage);
                         case FINE ->    space().append(Font.Components.GREEN_EXCLAMATION_MARK).append(space())

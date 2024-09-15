@@ -1,8 +1,9 @@
 package com.minersstudios.whomine;
 
 import com.google.common.base.Charsets;
-import com.minersstudios.whomine.api.packet.PacketBound;
-import com.minersstudios.whomine.api.packet.type.*;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.chat.ChatType;
 import com.minersstudios.whomine.command.api.CommandManager;
 import com.minersstudios.whomine.custom.decor.CustomDecorType;
@@ -66,7 +67,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static com.minersstudios.whomine.locale.Translations.*;
-import static com.minersstudios.whomine.utility.Font.Chars.RED_EXCLAMATION_MARK;
+import static com.minersstudios.whomine.api.utility.Font.Chars.RED_EXCLAMATION_MARK;
 import static net.kyori.adventure.text.Component.text;
 
 @ApiStatus.Internal

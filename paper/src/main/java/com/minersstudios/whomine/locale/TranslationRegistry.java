@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.locale;
 
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;

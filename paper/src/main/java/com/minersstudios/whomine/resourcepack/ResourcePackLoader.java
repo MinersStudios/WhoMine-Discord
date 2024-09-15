@@ -3,7 +3,7 @@ package com.minersstudios.whomine.resourcepack;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.resourcepack.resource.PackResourceManager;
 import com.minersstudios.whomine.resourcepack.throwable.PackLoadException;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.resourcepack.data.ResourcePackData;
 import com.minersstudios.whomine.resourcepack.resource.GitHubPackResourceManager;
 import com.minersstudios.whomine.resource.github.Tag;

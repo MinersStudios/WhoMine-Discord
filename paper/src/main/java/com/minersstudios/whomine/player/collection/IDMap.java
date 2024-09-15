@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.IDUtils;
+import com.minersstudios.whomine.api.utility.IDUtils;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;

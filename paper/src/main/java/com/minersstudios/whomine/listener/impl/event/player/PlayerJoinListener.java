@@ -2,7 +2,8 @@ package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.packet.ChannelHandler;
+import com.minersstudios.whomine.packet.ChannelInjector;
+import com.minersstudios.whomine.packet.handler.ChannelHandler;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -21,13 +22,12 @@ public final class PlayerJoinListener extends EventListener {
     public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
         final WhoMine plugin = this.getPlugin();
         final Player player = event.getPlayer();
-
-        plugin.runTask(() ->
-            ChannelHandler.injectConnection(
-                ((CraftPlayer) event.getPlayer()).getHandle().connection.connection,
-                plugin
-            )
+        final ChannelInjector injector = new ChannelInjector(
+            plugin,
+            ((CraftPlayer) player).getHandle().connection.connection
         );
+
+        plugin.runTask(injector::inject);
 
         event.joinMessage(null);
 

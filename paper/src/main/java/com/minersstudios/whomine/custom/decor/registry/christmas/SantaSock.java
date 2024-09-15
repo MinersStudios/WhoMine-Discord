@@ -4,7 +4,7 @@ import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;
 import com.minersstudios.whomine.custom.decor.DecorHitBox;
 import com.minersstudios.whomine.custom.decor.DecorParameter;

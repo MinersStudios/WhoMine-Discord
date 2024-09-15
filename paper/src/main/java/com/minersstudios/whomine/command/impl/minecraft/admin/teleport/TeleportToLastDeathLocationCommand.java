@@ -5,7 +5,7 @@ import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.utility.MSPlayerUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import org.bukkit.command.Command;

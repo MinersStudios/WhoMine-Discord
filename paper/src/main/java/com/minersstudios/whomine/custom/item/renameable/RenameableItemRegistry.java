@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.renameable;
 
-import com.minersstudios.whomine.utility.ChatUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;

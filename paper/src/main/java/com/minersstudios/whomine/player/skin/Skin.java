@@ -2,7 +2,7 @@ package com.minersstudios.whomine.player.skin;
 
 import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

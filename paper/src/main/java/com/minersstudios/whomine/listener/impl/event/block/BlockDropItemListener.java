@@ -3,7 +3,7 @@ package com.minersstudios.whomine.listener.impl.event.block;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Tag;
 import org.bukkit.entity.Item;

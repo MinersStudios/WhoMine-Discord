@@ -21,7 +21,7 @@ import java.util.Locale;
 import java.util.regex.Pattern;
 
 import static com.minersstudios.whomine.locale.Translations.*;
-import static com.minersstudios.whomine.utility.ChatUtils.serializePlainComponent;
+import static com.minersstudios.whomine.api.utility.ChatUtils.serializePlainComponent;
 import static net.kyori.adventure.text.Component.text;
 
 public final class BotHandler {

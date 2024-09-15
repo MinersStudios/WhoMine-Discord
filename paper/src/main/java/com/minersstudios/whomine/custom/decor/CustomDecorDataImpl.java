@@ -1,7 +1,9 @@
 package com.minersstudios.whomine.custom.decor;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.decor.action.DecorBreakAction;
 import com.minersstudios.whomine.custom.decor.action.DecorClickAction;
 import com.minersstudios.whomine.custom.decor.action.DecorPlaceAction;
@@ -1442,8 +1444,8 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
             return this.namespacedKey;
         }
 
-        public @NotNull Builder key(final @Key @NotNull String key) throws InvalidRegexException {
-            Key.Validator.validate(key);
+        public @NotNull Builder key(final @Path @NotNull String key) throws InvalidRegexException {
+            Path.Validator.validate(key);
 
             this.namespacedKey = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, key);
 
@@ -1987,10 +1989,10 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
 
         public Type(
                 final @NotNull Builder builder,
-                final @Key @NotNull String key,
+                final @Path @NotNull String key,
                 final @NotNull ItemStack itemStack
         ) throws InvalidRegexException {
-            Key.Validator.validate(key);
+            Path.Validator.validate(key);
 
             final String typedKey = builder.namespacedKey.getKey() + ".type." + key;
             this.namespacedKey = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, typedKey);

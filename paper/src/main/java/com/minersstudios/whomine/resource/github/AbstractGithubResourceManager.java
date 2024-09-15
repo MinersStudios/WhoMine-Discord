@@ -3,7 +3,7 @@ package com.minersstudios.whomine.resource.github;
 import com.google.gson.Gson;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.resource.file.AbstractFileResourceManager;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

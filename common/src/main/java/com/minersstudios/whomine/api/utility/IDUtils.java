@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.utility;
+package com.minersstudios.whomine.api.utility;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;

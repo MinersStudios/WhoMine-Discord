@@ -4,7 +4,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.listener.api.EventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.utility.MessageUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;

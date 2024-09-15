@@ -4,7 +4,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.world.location.MSBoundingBox;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.utility.MSDecorUtils;
 import com.minersstudios.whomine.custom.decor.event.CustomDecorBreakEvent;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.decor;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.custom.decor.registry.christmas.*;
 import com.minersstudios.whomine.custom.decor.registry.decoration.home.*;
 import com.minersstudios.whomine.custom.decor.registry.furniture.chair.*;
@@ -25,8 +25,8 @@ import com.minersstudios.whomine.custom.decor.registry.furniture.table.SmallTabl
 import com.minersstudios.whomine.custom.decor.registry.other.Poop;
 import com.minersstudios.whomine.api.status.StatusHandler;
 import com.minersstudios.whomine.api.status.StatusWatcher;
-import com.minersstudios.whomine.utility.ChatUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
@@ -191,7 +191,7 @@ public enum CustomDecorType {
     public static final String TYPE_TAG_NAME = "type";
     public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, TYPE_TAG_NAME);
 
-    public static final String TYPED_KEY_REGEX = "(" + Key.REGEX + ")\\.type\\.(" + Key.REGEX + ")";
+    public static final String TYPED_KEY_REGEX = "(" + Path.REGEX + ")\\.type\\.(" + Path.REGEX + ")";
     public static final Pattern TYPED_KEY_PATTERN = Pattern.compile(TYPED_KEY_REGEX);
 
     private static final Map<String, CustomDecorType> KEY_TO_TYPE_MAP = new Object2ObjectOpenHashMap<>();

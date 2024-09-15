@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.custom.item.registry.cards;
 
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -22,7 +22,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.minersstudios.whomine.utility.ChatUtils.createDefaultStyledText;
+import static com.minersstudios.whomine.api.utility.ChatUtils.createDefaultStyledText;
 import static net.kyori.adventure.text.Component.text;
 
 public interface CardsBicycle {
@@ -125,7 +125,7 @@ public interface CardsBicycle {
         }
 
         public static final class First extends CustomItemImpl implements CardsBicycle {
-            private static final @Key String KEY;
+            private static final @Path String KEY;
             private static final ItemStack ITEM_STACK;
 
             static {
@@ -175,7 +175,7 @@ public interface CardsBicycle {
         }
 
         public static final class Second extends CustomItemImpl implements CardsBicycle {
-            private static final @Key String KEY;
+            private static final @Path String KEY;
             private static final ItemStack ITEM_STACK;
 
             static {
@@ -303,7 +303,7 @@ public interface CardsBicycle {
         }
         
         public static final class First extends CustomItemImpl implements CardsBicycle {
-            private static final @Key String KEY;
+            private static final @Path String KEY;
             private static final ItemStack ITEM_STACK;
 
             static {
@@ -353,7 +353,7 @@ public interface CardsBicycle {
         }
 
         public static final class Second extends CustomItemImpl implements CardsBicycle {
-            private static final @Key String KEY;
+            private static final @Path String KEY;
             private static final ItemStack ITEM_STACK;
 
             static {

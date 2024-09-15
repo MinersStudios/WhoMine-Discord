@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.registry;
 
-import com.minersstudios.whomine.api.annotation.Key;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import net.kyori.adventure.text.format.NamedTextColor;
 import org.bukkit.Material;
@@ -9,17 +9,14 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.UUID;
-
 @SuppressWarnings("UnstableApiUsage")
 public final class BanSword extends CustomItemImpl {
-    private static final @Key String KEY;
+    private static final @Path String KEY;
     private static final ItemStack ITEM_STACK;
 
     static {

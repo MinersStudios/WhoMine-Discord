@@ -4,7 +4,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.custom.decor.CustomDecor;
 import com.minersstudios.whomine.custom.decor.event.CustomDecorClickEvent;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemFrame;

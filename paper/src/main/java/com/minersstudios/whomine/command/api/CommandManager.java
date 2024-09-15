@@ -29,7 +29,7 @@ import com.minersstudios.whomine.command.impl.minecraft.player.ResourcePackComma
 import com.minersstudios.whomine.command.impl.minecraft.player.SkinsCommand;
 import com.minersstudios.whomine.command.impl.minecraft.player.roleplay.*;
 import com.minersstudios.whomine.api.status.StatusWatcher;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;

@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static com.minersstudios.whomine.locale.Translations.*;
-import static com.minersstudios.whomine.utility.ChatUtils.DEFAULT_STYLE;
+import static com.minersstudios.whomine.api.utility.ChatUtils.DEFAULT_STYLE;
 
 public final class CraftsMenu {
     public static final int RESULT_SLOT = 15;

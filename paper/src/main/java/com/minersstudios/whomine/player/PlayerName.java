@@ -7,7 +7,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.minersstudios.whomine.utility.ChatUtils.normalize;
+import static com.minersstudios.whomine.api.utility.ChatUtils.normalize;
 import static com.minersstudios.whomine.utility.MessageUtils.Colors.*;
 import static net.kyori.adventure.text.Component.text;
 

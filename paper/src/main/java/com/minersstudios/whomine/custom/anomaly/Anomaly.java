@@ -7,7 +7,7 @@ import com.minersstudios.whomine.custom.anomaly.action.AddPotionAction;
 import com.minersstudios.whomine.custom.anomaly.action.SpawnParticlesAction;
 import com.minersstudios.whomine.world.location.MSBoundingBox;
 import com.minersstudios.whomine.utility.BlockUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.doubles.Double2ObjectMap;
 import it.unimi.dsi.fastutil.doubles.Double2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

@@ -19,7 +19,7 @@ import javax.annotation.concurrent.Immutable;
 import java.util.EnumSet;
 import java.util.Set;
 
-import static com.minersstudios.whomine.utility.SharedConstants.MSDECOR_NAMESPACE;
+import static com.minersstudios.whomine.api.utility.SharedConstants.MSDECOR_NAMESPACE;
 
 /**
  * Represents a DecorHitBox, defining the hitbox properties for custom decor

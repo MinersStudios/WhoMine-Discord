@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.custom.item.registry;
 
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 public final class Dosimeter extends CustomItemImpl {
-    private static final @Key String KEY;
+    private static final @Path String KEY;
     private static final ItemStack ITEM_STACK;
 
     static {

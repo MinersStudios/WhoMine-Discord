@@ -2,7 +2,7 @@ package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.discord.BotHandler;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;

@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.custom.item.registry.hazmat;
 
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.custom.item.damageable.Damageable;
@@ -14,7 +14,6 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
-import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.EquipmentSlotGroup;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -25,11 +24,10 @@ import org.jetbrains.annotations.Unmodifiable;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.UUID;
 
 @SuppressWarnings("UnstableApiUsage")
 public final class HazmatLeggings extends CustomItemImpl implements Damageable {
-    private static final @Key String KEY;
+    private static final @Path String KEY;
     private static final ItemStack ITEM_STACK;
 
     /** Max durability of this item */

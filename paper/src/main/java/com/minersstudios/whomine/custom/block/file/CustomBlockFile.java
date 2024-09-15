@@ -11,7 +11,7 @@ import com.minersstudios.whomine.custom.block.params.ToolType;
 import com.minersstudios.whomine.custom.block.params.settings.Placing;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.throwable.ConfigurationException;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.world.sound.Sound;
 import com.minersstudios.whomine.world.sound.SoundAdapter;
 import org.bukkit.NamespacedKey;

@@ -5,7 +5,7 @@ import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.inventory.InventoryButton;
 import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
 import com.minersstudios.whomine.inventory.holder.InventoryHolder;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.Pronouns;

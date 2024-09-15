@@ -4,7 +4,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

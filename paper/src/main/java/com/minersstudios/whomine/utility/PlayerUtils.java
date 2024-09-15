@@ -3,6 +3,7 @@ package com.minersstudios.whomine.utility;
 import com.destroystokyo.paper.profile.CraftPlayerProfile;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.inventory.ShulkerBoxMenu;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.mojang.authlib.GameProfile;

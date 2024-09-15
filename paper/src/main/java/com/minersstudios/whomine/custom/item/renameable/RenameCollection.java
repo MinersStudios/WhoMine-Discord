@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.renameable;
 
 import com.google.common.collect.ImmutableSet;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.bukkit.inventory.ItemStack;

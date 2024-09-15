@@ -10,7 +10,7 @@ import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.collection.IDMap;
 import com.minersstudios.whomine.player.collection.MuteMap;
 import com.minersstudios.whomine.utility.DateUtils;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.OfflinePlayer;

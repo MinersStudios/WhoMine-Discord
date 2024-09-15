@@ -2,9 +2,9 @@ package com.minersstudios.whomine.custom.block;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.custom.block.params.PlacingType;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.block.params.NoteBlockData;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;

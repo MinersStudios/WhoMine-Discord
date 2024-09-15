@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.chat;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;

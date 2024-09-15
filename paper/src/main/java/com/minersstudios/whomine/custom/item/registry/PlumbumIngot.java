@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.custom.item.registry;
 
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.utility.ChatUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.utility.MSBlockUtils;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class PlumbumIngot extends CustomItemImpl {
-    private static final @Key String KEY;
+    private static final @Path String KEY;
     private static final ItemStack ITEM_STACK;
 
     static {

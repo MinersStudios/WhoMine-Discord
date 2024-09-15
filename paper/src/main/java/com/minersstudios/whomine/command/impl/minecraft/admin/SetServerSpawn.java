@@ -5,7 +5,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.commands.arguments.DimensionArgument;

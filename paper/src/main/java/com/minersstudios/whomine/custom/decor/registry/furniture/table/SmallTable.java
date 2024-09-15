@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.custom.decor.registry.furniture.table;
 
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.utility.ChatUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;
 import com.minersstudios.whomine.custom.decor.DecorHitBox;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 public abstract class SmallTable<C extends CustomDecorData<C>> extends CustomDecorDataImpl<C> {
 
     protected final @NotNull Builder createBuilder(
-            final @Key @NotNull String key,
+            final @Path @NotNull String key,
             final int customModelData,
             final @NotNull String displayName,
             final @NotNull Material planksMaterial

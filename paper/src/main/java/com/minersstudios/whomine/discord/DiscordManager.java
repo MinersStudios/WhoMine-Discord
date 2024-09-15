@@ -4,7 +4,7 @@ import com.minersstudios.whomine.Config;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.chat.ChatType;
 import com.minersstudios.whomine.api.status.StatusHandler;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;

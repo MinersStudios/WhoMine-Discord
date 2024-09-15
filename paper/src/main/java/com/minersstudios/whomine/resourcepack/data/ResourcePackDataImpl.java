@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.resourcepack.data;
 
 import com.minersstudios.whomine.resourcepack.resource.PackResourceManager;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.resourcepack.resource.GitHubPackResourceManager;
 import com.minersstudios.whomine.resource.github.Tag;
 import net.kyori.adventure.resource.ResourcePackInfo;

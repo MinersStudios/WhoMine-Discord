@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.utility;
 
 import com.google.common.base.Joiner;
+import io.papermc.paper.configuration.PaperConfigurations;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.MinecraftServer;
 import org.bukkit.Server;
@@ -20,6 +21,11 @@ import java.util.Map;
  * Utility class for paper
  */
 public final class PaperUtils {
+    public static final String PAPER_GLOBAL_CONFIG_FILE_NAME =         "paper-global.yml";
+    public static final String PAPER_WORLD_DEFAULTS_CONFIG_FILE_NAME = "paper-world-defaults.yml";
+    public static final String PAPER_WORLD_CONFIG_FILE_NAME =          "paper-world.yml";
+    public static final String PAPER_GLOBAL_CONFIG_PATH =              PaperConfigurations.CONFIG_DIR + '/' + PAPER_GLOBAL_CONFIG_FILE_NAME;
+    public static final String PAPER_WORLD_DEFAULTS_PATH =             PaperConfigurations.CONFIG_DIR + '/' + PAPER_WORLD_DEFAULTS_CONFIG_FILE_NAME;
 
     @Contract(" -> fail")
     private PaperUtils() throws AssertionError {
@@ -276,8 +282,8 @@ public final class PaperUtils {
     }
 
     public enum ConfigType {
-        GLOBAL(SharedConstants.PAPER_GLOBAL_CONFIG_PATH),
-        WORLD_DEFAULTS(SharedConstants.PAPER_WORLD_DEFAULTS_PATH);
+        GLOBAL(PAPER_GLOBAL_CONFIG_PATH),
+        WORLD_DEFAULTS(PAPER_WORLD_DEFAULTS_PATH);
 
         private final String filePath;
 

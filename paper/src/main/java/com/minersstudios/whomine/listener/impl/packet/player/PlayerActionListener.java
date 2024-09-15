@@ -12,7 +12,7 @@ import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import com.minersstudios.whomine.utility.BlockUtils;
 import com.minersstudios.whomine.utility.PlayerUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;

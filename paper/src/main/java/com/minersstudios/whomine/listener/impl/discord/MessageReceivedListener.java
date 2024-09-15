@@ -3,7 +3,7 @@ package com.minersstudios.whomine.listener.impl.discord;
 import com.minersstudios.whomine.listener.api.DiscordListener;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.Font;
+import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.discord.BotHandler;
 import com.minersstudios.whomine.utility.MessageUtils;
 import net.dv8tion.jda.api.entities.Message;

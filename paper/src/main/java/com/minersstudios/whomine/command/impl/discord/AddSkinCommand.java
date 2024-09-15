@@ -5,7 +5,7 @@ import com.minersstudios.whomine.command.api.SlashCommandExecutor;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.skin.Skin;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.utility.MSLogger;
 import net.dv8tion.jda.api.interactions.commands.OptionMapping;
 import net.dv8tion.jda.api.interactions.commands.OptionType;

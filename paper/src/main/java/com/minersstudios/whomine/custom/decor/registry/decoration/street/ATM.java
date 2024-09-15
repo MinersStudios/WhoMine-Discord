@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.custom.decor.registry.decoration.street;
 
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;
 import com.minersstudios.whomine.custom.decor.DecorHitBox;

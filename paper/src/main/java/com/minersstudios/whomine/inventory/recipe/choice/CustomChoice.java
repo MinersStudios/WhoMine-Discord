@@ -2,7 +2,7 @@ package com.minersstudios.whomine.inventory.recipe.choice;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.minersstudios.whomine.api.annotation.ResourceKey;
+import com.minersstudios.whomine.api.annotation.ResourcePath;
 import com.minersstudios.whomine.api.throwable.InvalidRegexException;
 import com.minersstudios.whomine.utility.MSCustomUtils;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
@@ -39,7 +39,7 @@ public final class CustomChoice implements RecipeChoice {
      * @param namespacedKey The namespaced key to use for the choice
      * @throws InvalidRegexException If the namespaced key is invalid
      */
-    public CustomChoice(final @ResourceKey @NotNull String namespacedKey) throws InvalidRegexException {
+    public CustomChoice(final @ResourcePath @NotNull String namespacedKey) throws InvalidRegexException {
         this(Collections.singletonList(namespacedKey));
     }
 
@@ -51,7 +51,7 @@ public final class CustomChoice implements RecipeChoice {
      * @throws InvalidRegexException If any of the namespaced keys are invalid
      */
     public CustomChoice(
-            final @ResourceKey @NotNull String first,
+            final @ResourcePath @NotNull String first,
             final String @NotNull ... rest
     ) throws InvalidRegexException {
         this(Lists.asList(first, rest));
@@ -72,8 +72,8 @@ public final class CustomChoice implements RecipeChoice {
 
         this.choiceMap = new Object2ObjectOpenHashMap<>(namespacedKeys.size());
 
-        for (final @ResourceKey var namespacedKey : namespacedKeys) {
-            ResourceKey.Validator.validate(namespacedKey);
+        for (final @ResourcePath var namespacedKey : namespacedKeys) {
+            ResourcePath.Validator.validate(namespacedKey);
             MSCustomUtils.getItemStack(namespacedKey)
             .ifPresent(itemStack -> this.choiceMap.put(namespacedKey, itemStack));
         }
@@ -98,7 +98,7 @@ public final class CustomChoice implements RecipeChoice {
      * @param namespacedKey The namespaced key to get the item stack for
      * @return A clone of the item stack for the specified namespaced key
      */
-    public @NotNull ItemStack getItemStack(final @ResourceKey @NotNull String namespacedKey) {
+    public @NotNull ItemStack getItemStack(final @ResourcePath @NotNull String namespacedKey) {
         return this.choiceMap.get(namespacedKey).clone();
     }
 
@@ -166,7 +166,7 @@ public final class CustomChoice implements RecipeChoice {
      * @param namespacedKey The namespaced key to test
      * @return True if the namespaced key is present in the choices
      */
-    public boolean test(final @ResourceKey @NotNull String namespacedKey) {
+    public boolean test(final @ResourcePath @NotNull String namespacedKey) {
         return this.choiceMap.containsKey(namespacedKey);
     }
 

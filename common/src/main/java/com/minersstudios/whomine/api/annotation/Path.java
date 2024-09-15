@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.api.annotation;
 
-import com.minersstudios.whomine.api.throwable.InvalidRegexException;
+import com.minersstudios.whomine.api.throwable.InvalidResourceException;
 import org.intellij.lang.annotations.RegExp;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
@@ -14,11 +14,11 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 
 /**
- * Annotation used to mark the key.
+ * Annotation used to mark the path.
  * <br>
- * The key must match the {@link #REGEX regex} pattern.
+ * The path must match the {@link #REGEX regex} pattern.
  *
- * @see Key.Validator
+ * @see Path.Validator
  */
 @Documented
 @Retention(RetentionPolicy.CLASS)
@@ -28,14 +28,14 @@ import static java.lang.annotation.ElementType.*;
         METHOD,
         PARAMETER
 })
-@org.intellij.lang.annotations.Pattern(Key.REGEX)
-public @interface Key {
-    /** The regex pattern that a valid key must match */
+@org.intellij.lang.annotations.Pattern(Path.REGEX)
+public @interface Path {
+    /** The regex pattern that a valid path must match */
     @RegExp String REGEX = "[a-z0-9/._-]*";
 
     /**
-     * Validator class for the {@link Key} annotation to check whether the
-     * key matches the {@link #REGEX regex}
+     * Validator class for the {@link Path} annotation to check whether the
+     * path matches the {@link #REGEX regex}
      *
      * @see #matches(String)
      * @see #validate(String)
@@ -48,18 +48,18 @@ public @interface Key {
         }
 
         /**
-         * Checks whether the key matches the {@link #REGEX regex}
+         * Checks whether the path matches the {@link #REGEX regex}
          *
-         * @param key The key
-         * @return Whether the key matches the {@link #REGEX regex}
+         * @param path The path
+         * @return Whether the path matches the {@link #REGEX regex}
          */
-        public static boolean matches(final @Subst("key") @Key @Nullable String key) {
-            if (key == null) {
+        public static boolean matches(final @Subst("path") @Path @Nullable String path) {
+            if (path == null) {
                 return true;
             }
 
-            for(int i = 0; i < key.length(); ++i) {
-                final char character = key.charAt(i);
+            for(int i = 0; i < path.length(); ++i) {
+                final char character = path.charAt(i);
 
                 switch (character) {
                     case '_', '-', '.', '/' -> {}
@@ -77,16 +77,16 @@ public @interface Key {
         }
 
         /**
-         * Validates the key
+         * Validates the path
          *
-         * @param key The key
-         * @throws InvalidRegexException If the key does not match the
-         *                               {@link #REGEX regex}
+         * @param path The path
+         * @throws InvalidResourceException If the path does not match the
+         *                                  {@link #REGEX regex}
          * @see #matches(String)
          */
-        public static void validate(final @Subst("key") @Key @Nullable String key) throws InvalidRegexException {
-            if (!matches(key)) {
-                throw new InvalidRegexException("Key must match regex: " + REGEX);
+        public static void validate(final @Subst("path") @Path @Nullable String path) throws InvalidResourceException {
+            if (!matches(path)) {
+                throw new InvalidResourceException("Path must match regex: " + REGEX);
             }
         }
     }

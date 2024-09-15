@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.player.collection;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.OfflinePlayer;

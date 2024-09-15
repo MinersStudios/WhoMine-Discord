@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.locale;
 
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import static com.minersstudios.whomine.locale.TranslationRegistry.registry;
-import static com.minersstudios.whomine.utility.Font.Chars.*;
+import static com.minersstudios.whomine.api.utility.Font.Chars.*;
 
 /**
  * This class stores all translations used in the WhoMine plugins

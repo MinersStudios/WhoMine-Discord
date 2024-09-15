@@ -2,7 +2,7 @@ package com.minersstudios.whomine.command.impl.discord;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.command.api.SlashCommandExecutor;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
 import com.minersstudios.whomine.discord.BotHandler;

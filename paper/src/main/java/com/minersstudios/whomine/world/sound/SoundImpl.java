@@ -3,7 +3,7 @@ package com.minersstudios.whomine.world.sound;
 import com.minersstudios.whomine.Config;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.world.location.MSPosition;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import net.minecraft.sounds.SoundEvent;
 import org.bukkit.Location;
 import org.bukkit.SoundCategory;

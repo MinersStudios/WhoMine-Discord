@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

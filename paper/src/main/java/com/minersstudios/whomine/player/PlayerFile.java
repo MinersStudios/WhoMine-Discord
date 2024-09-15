@@ -2,7 +2,7 @@ package com.minersstudios.whomine.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.player.skin.Skin;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

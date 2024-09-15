@@ -10,7 +10,7 @@ import com.minersstudios.whomine.custom.decor.event.CustomDecorPlaceEvent;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.world.sound.SoundGroup;
-import com.minersstudios.whomine.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.utility.MSDecorUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import net.kyori.adventure.text.Component;

@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.custom.item;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.annotation.Key;
+import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.throwable.InvalidRegexException;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
@@ -40,13 +40,13 @@ public abstract class CustomItemImpl implements CustomItem, Cloneable {
      * @param itemStack The {@link ItemStack} representing the custom item
      * @throws IllegalArgumentException If the key format is invalid or the item
      *                                  stack type is air
-     * @see Key.Validator#matches(String)
+     * @see Path.Validator#matches(String)
      */
     protected CustomItemImpl(
-            final @Key @NotNull String key,
+            final @Path @NotNull String key,
             final @NotNull ItemStack itemStack
     ) throws InvalidRegexException, IllegalArgumentException {
-        Key.Validator.validate(key);
+        Path.Validator.validate(key);
 
         if (itemStack.isEmpty()) {
             throw new IllegalArgumentException("Item type cannot be empty! Check " + key);

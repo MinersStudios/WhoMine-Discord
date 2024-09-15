@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.damageable;
 
-import com.minersstudios.whomine.utility.ChatUtils;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;

@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.utility;
+package com.minersstudios.whomine.api.utility;
 
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;

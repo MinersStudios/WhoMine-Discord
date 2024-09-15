@@ -1,9 +1,9 @@
-package com.minersstudios.whomine.utility;
+package com.minersstudios.whomine.api.utility;
 
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;
 
-import static com.minersstudios.whomine.utility.ChatUtils.createDefaultStyledText;
+import static com.minersstudios.whomine.api.utility.ChatUtils.createDefaultStyledText;
 
 /**
  * This class provides utility methods and constants for handling fonts. It

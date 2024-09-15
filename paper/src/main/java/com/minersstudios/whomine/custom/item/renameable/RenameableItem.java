@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.renameable;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.annotation.ResourceKey;
+import com.minersstudios.whomine.api.annotation.ResourcePath;
 import com.minersstudios.whomine.utility.MSCustomUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -198,7 +198,7 @@ public class RenameableItem {
             return null;
         }
 
-        for (final @ResourceKey var namespacedKey : itemString) {
+        for (final @ResourcePath var namespacedKey : itemString) {
             final ItemStack itemStack;
 
             if (namespacedKey.contains(":")) {

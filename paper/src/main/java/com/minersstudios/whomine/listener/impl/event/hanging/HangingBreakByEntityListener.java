@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.hanging;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.utility.SharedConstants;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
