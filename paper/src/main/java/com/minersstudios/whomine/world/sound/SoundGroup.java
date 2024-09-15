@@ -610,6 +610,7 @@ public final class SoundGroup {
      * @param obj The reference object with which to compare
      * @return True if this SoundGroup is the same as the obj argument
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

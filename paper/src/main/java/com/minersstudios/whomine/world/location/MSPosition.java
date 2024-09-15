@@ -1134,6 +1134,7 @@ public final class MSPosition implements Cloneable {
                 && Double.compare(z, this.z) == 0;
     }
 
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

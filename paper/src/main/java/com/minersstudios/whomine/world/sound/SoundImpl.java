@@ -138,6 +138,7 @@ final class SoundImpl implements Sound {
         );
     }
 
+    @Override
     public void play(final @NotNull Entity entity) {
         entity.getWorld().playSound(
                 entity,

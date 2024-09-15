@@ -1,5 +1,6 @@
 package com.minersstudios.whomine.api.packet;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -86,6 +87,7 @@ public abstract class PacketContainer<P> {
      * @param obj The object to compare
      * @return True if the given object is equal to this packet container
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

@@ -852,6 +852,7 @@ public final class MSVector {
         return hash;
     }
 
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

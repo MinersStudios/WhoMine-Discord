@@ -215,6 +215,7 @@ public final class NoteBlockData {
      *         {@link NoteBlock} and has the same instrument, note and powered
      *         state
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return obj == this

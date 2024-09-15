@@ -30,7 +30,7 @@ final class Class2PacketMapImpl extends PacketMapImpl<Class<?>> implements Class
     }
 
     public static final class Builder
-            extends PacketMapImpl.Builder<Class2PacketMap.Builder, Class2PacketMap, Class<?>>
+            extends BuilderImpl<Class2PacketMap.Builder, Class2PacketMap, Class<?>>
             implements Class2PacketMap.Builder {
 
         @Contract(" -> new")

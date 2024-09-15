@@ -1353,7 +1353,7 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
 
                 if (
                         this.isSittable()
-                        && this.sitHeight != this.sitHeight
+                        && Double.isNaN(this.sitHeight)
                 ) {
                     throw new IllegalStateException("Sit height is not set, but sittable parameter is set!");
                 }
@@ -2020,8 +2020,8 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
             return result;
         }
 
-        @Override
         @Contract("null -> false")
+        @Override
         public boolean equals(final @Nullable Object obj) {
             return obj == this
                     || (

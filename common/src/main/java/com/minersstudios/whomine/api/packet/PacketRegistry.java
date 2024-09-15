@@ -107,6 +107,7 @@ public final class PacketRegistry {
      * @param obj The object to compare
      * @return True if the given object is equal to this packet registry
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

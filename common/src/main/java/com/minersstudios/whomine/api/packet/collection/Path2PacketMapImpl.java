@@ -17,7 +17,7 @@ final class Path2PacketMapImpl extends PacketMapImpl<ResourcedPath> implements P
     }
 
     public static final class Builder
-            extends PacketMapImpl.Builder<Path2PacketMap.Builder, Path2PacketMap, ResourcedPath>
+            extends BuilderImpl<Path2PacketMap.Builder, Path2PacketMap, ResourcedPath>
             implements Path2PacketMap.Builder {
 
         @Contract("_ -> this")

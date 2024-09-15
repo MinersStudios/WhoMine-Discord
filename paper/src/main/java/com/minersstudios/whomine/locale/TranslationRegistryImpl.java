@@ -32,6 +32,7 @@ final class TranslationRegistryImpl implements TranslationRegistry {
         this.translationMap = new ConcurrentHashMap<>();
         this.renderer = new TranslatableComponentRenderer<>() {
 
+            @Override
             protected @Nullable MessageFormat translate(
                     final @NotNull String path,
                     final @NotNull Locale locale
@@ -39,6 +40,7 @@ final class TranslationRegistryImpl implements TranslationRegistry {
                 return this.translate(path, null, locale);
             }
 
+            @Override
             protected @Nullable MessageFormat translate(
                     final @NotNull String path,
                     final @Nullable String fallback,
@@ -51,6 +53,7 @@ final class TranslationRegistryImpl implements TranslationRegistry {
                         : translation.translateNullable(locale);
             }
 
+            @Override
             protected @NotNull Component renderTranslatable(
                     final @NotNull TranslatableComponent component,
                     final @NotNull Locale locale
@@ -82,10 +85,12 @@ final class TranslationRegistryImpl implements TranslationRegistry {
         return this.renderer;
     }
 
+    @Override
     public @Nullable Translation getTranslation(final @NotNull String path) {
         return this.translationMap.get(path);
     }
 
+    @Override
     public @NotNull Translation getTranslation(
             final @NotNull String path,
             final @Nullable String fallback

@@ -137,6 +137,7 @@ public interface ResourcePackData extends ResourcePackInfoLike {
      * @throws UnsupportedOperationException If the data {@link #isEmpty()}
      */
     @Contract(" -> new")
+    @Override
     @NotNull ResourcePackInfo asResourcePackInfo() throws UnsupportedOperationException;
 
     /**

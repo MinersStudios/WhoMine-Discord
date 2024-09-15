@@ -279,26 +279,17 @@ public interface RecipeBuilder<R extends Recipe> {
      */
     @Contract("_-> new")
     static @NotNull RecipeBuilder<? extends Recipe> unknown(final @NotNull Recipe recipe) throws UnsupportedOperationException {
-        if (recipe instanceof final ShapedRecipe shaped) {
-            return shaped(shaped);
-        } else if (recipe instanceof final ShapelessRecipe shapeless) {
-            return shapeless(shapeless);
-        } else if (recipe instanceof final FurnaceRecipe furnace) {
-            return furnace(furnace);
-        } else if (recipe instanceof final SmokingRecipe smoking) {
-            return smoking(smoking);
-        } else if (recipe instanceof final BlastingRecipe blasting) {
-            return blasting(blasting);
-        } else if (recipe instanceof final CampfireRecipe campfire) {
-            return campfire(campfire);
-        } else if (recipe instanceof final StonecuttingRecipe stonecutting) {
-            return stonecutting(stonecutting);
-        } else if (recipe instanceof final SmithingTransformRecipe smithingTransform) {
-            return smithingTransform(smithingTransform);
-        } else if (recipe instanceof final SmithingTrimRecipe smithingTrim) {
-            return smithingTrim(smithingTrim);
-        } else {
-            throw new UnsupportedOperationException("Unknown recipe type: " + recipe.getClass().getName());
-        }
+        return switch (recipe) {
+            case final ShapedRecipe                       shaped -> shaped(shaped);
+            case final ShapelessRecipe                 shapeless -> shapeless(shapeless);
+            case final FurnaceRecipe                     furnace -> furnace(furnace);
+            case final SmokingRecipe                     smoking -> smoking(smoking);
+            case final BlastingRecipe                   blasting -> blasting(blasting);
+            case final CampfireRecipe                   campfire -> campfire(campfire);
+            case final StonecuttingRecipe           stonecutting -> stonecutting(stonecutting);
+            case final SmithingTransformRecipe smithingTransform -> smithingTransform(smithingTransform);
+            case final SmithingTrimRecipe           smithingTrim -> smithingTrim(smithingTrim);
+            default -> throw new UnsupportedOperationException("Unknown recipe type: " + recipe.getClass().getName());
+        };
     }
 }

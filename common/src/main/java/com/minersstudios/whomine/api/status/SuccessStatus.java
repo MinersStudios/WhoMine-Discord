@@ -2,10 +2,12 @@ package com.minersstudios.whomine.api.status;
 
 import com.minersstudios.whomine.api.annotation.StatusKey;
 import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.concurrent.Immutable;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -52,6 +54,18 @@ public class SuccessStatus extends ImplStatus {
         return this.failureStatus == null
                ? super.hashCode()
                : 31 * super.hashCode() + this.failureStatus.hashCode();
+    }
+
+    @Contract("null -> false")
+    @Override
+    public boolean equals(final @Nullable Object obj) {
+        return this == obj
+                || (
+                        obj instanceof SuccessStatus that
+                        && this.getKey().equals(that.getKey())
+                        && this.getPriority() == that.getPriority()
+                        && Objects.equals(this.failureStatus, that.failureStatus)
+                );
     }
 
     @Override

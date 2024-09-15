@@ -1891,6 +1891,7 @@ public final class MSBoundingBox {
      * @param obj The object to compare this bounding box against
      * @return Whether the given object is equal to this bounding box
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

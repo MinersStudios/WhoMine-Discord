@@ -57,21 +57,12 @@ abstract class ImplStatus implements Status {
     @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (
-                obj == null
-                || this.getClass() != obj.getClass()
-        ) {
-            return false;
-        }
-
-        final ImplStatus that = (ImplStatus) obj;
-
-        return this.key.equals(that.key)
-                && this.priority == that.priority;
+        return this == obj
+                || (
+                        obj instanceof Status that
+                        && this.key.equals(that.getKey())
+                        && this.priority == that.getPriority()
+                );
     }
 
     @Override

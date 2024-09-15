@@ -82,13 +82,13 @@ abstract class PacketMapImpl<K> implements PacketMap<K> {
     }
 
     @SuppressWarnings("unchecked")
-    public static abstract class Builder<B extends PacketMap.Builder<B, M, K>, M extends PacketMap<K>, K>
+    public static abstract class BuilderImpl<B extends PacketMap.Builder<B, M, K>, M extends PacketMap<K>, K>
             implements PacketMap.Builder<B, M, K> {
 
         protected final Map<K, PacketType> clientMap;
         protected final Map<K, PacketType> serverMap;
 
-        Builder() {
+        BuilderImpl() {
             this.clientMap = new Object2ObjectOpenHashMap<>();
             this.serverMap = new Object2ObjectOpenHashMap<>();
         }

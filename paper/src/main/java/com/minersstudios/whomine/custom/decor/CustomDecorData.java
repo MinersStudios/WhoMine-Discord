@@ -793,6 +793,7 @@ public interface CustomDecorData<D extends CustomDecorData<D>> extends Keyed {
         /**
          * @return The unique namespaced key identifying the custom decor type
          */
+        @Override
         @NotNull NamespacedKey getKey();
 
         /**

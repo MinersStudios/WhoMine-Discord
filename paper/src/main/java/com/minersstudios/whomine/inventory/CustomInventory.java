@@ -229,13 +229,6 @@ public interface CustomInventory extends Inventory, Cloneable {
     @NotNull CustomInventory bottomClickAction(final @Nullable InventoryAction<InventoryClickEvent> bottomClickAction);
 
     /**
-     * Creates a clone of this inventory with all the contents copied into it
-     *
-     * @return Clone of this inventory
-     */
-    @NotNull CustomInventory clone();
-
-    /**
      * Performs the opening action when the inventory is opened if it is set
      *
      * @param event Event that triggered the action

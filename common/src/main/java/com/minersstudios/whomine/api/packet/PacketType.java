@@ -120,6 +120,7 @@ public final class PacketType {
      * @param obj The reference object with which to compare
      * @return True if this object is the same as the object argument
      */
+    @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
         return this == obj

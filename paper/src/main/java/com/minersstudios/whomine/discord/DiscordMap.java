@@ -396,6 +396,7 @@ public final class DiscordMap {
          * @param obj {@link Params} to compare
          * @return True if uuid and nickname are equals
          */
+        @Contract("null -> false")
         @Override
         public boolean equals(final @Nullable Object obj) {
             return this == obj

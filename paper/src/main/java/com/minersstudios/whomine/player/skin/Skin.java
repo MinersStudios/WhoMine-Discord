@@ -217,6 +217,7 @@ public final class Skin implements ConfigurationSerializable {
      * @return True if the skin's name, value, and signature are equal
      */
     @Contract("null -> false")
+    @Override
     public boolean equals(final @Nullable Object obj) {
         return obj == this
                 || (
