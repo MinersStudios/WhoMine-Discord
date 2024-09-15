@@ -1,5 +1,6 @@
 [versions]
 # libraries
+adventure-api         = "4.17.0"
 authme                = "5.6.0"
 coreprotect           = "22.4"
 fastutil              = "8.5.14"
@@ -9,6 +10,7 @@ google-jsr305         = "3.0.2"
 jetbrains-annotations = "24.1.0"
 jackson-annotations   = "2.17.2"
 jda                   = "5.1.0"
+netty-buffer          = "4.1.97.Final"
 
 # plugins
 paper-userdev = "1.7.2"
@@ -16,15 +18,22 @@ shadow        = "8.1.1"
 paper-run     = "2.3.1"
 
 [libraries]
-authme                = { group = "fr.xephi",                   name = "authme",              version.ref = "authme" }
-coreprotect           = { group = "net.coreprotect",            name = "coreprotect",         version.ref = "coreprotect" }
-fastutil              = { group = "it.unimi.dsi",               name = "fastutil",            version.ref = "fastutil" }
-google-guava          = { group = "com.google.guava",           name = "guava",               version.ref = "google-guava" }
-google-gson           = { group = "com.google.code.gson",       name = "gson",                version.ref = "google-gson" }
-google-jsr305         = { group = "com.google.code.findbugs",   name = "jsr305",              version.ref = "google-jsr305" }
-jetbrains-annotations = { group = "org.jetbrains",              name = "annotations",         version.ref = "jetbrains-annotations" }
-jackson-annotations   = { group = "com.fasterxml.jackson.core", name = "jackson-annotations", version.ref = "jackson-annotations" }
-jda                   = { group = "net.dv8tion",                name = "JDA",                 version.ref = "jda" }
+adventure-api         = { group = "net.kyori",                  name = "adventure-api",                    version.ref = "adventure-api" }
+adventure-ansi        = { group = "net.kyori",                  name = "adventure-text-serializer-ansi",   version.ref = "adventure-api" }
+adventure-gson        = { group = "net.kyori",                  name = "adventure-text-serializer-gson",   version.ref = "adventure-api" }
+adventure-legacy      = { group = "net.kyori",                  name = "adventure-text-serializer-legacy", version.ref = "adventure-api" }
+adventure-plain       = { group = "net.kyori",                  name = "adventure-text-serializer-plain",  version.ref = "adventure-api" }
+adventure-minimessage = { group = "net.kyori",                  name = "adventure-text-minimessage",       version.ref = "adventure-api" }
+authme                = { group = "fr.xephi",                   name = "authme",                           version.ref = "authme" }
+coreprotect           = { group = "net.coreprotect",            name = "coreprotect",                      version.ref = "coreprotect" }
+fastutil              = { group = "it.unimi.dsi",               name = "fastutil",                         version.ref = "fastutil" }
+google-guava          = { group = "com.google.guava",           name = "guava",                            version.ref = "google-guava" }
+google-gson           = { group = "com.google.code.gson",       name = "gson",                             version.ref = "google-gson" }
+google-jsr305         = { group = "com.google.code.findbugs",   name = "jsr305",                           version.ref = "google-jsr305" }
+jetbrains-annotations = { group = "org.jetbrains",              name = "annotations",                      version.ref = "jetbrains-annotations" }
+jackson-annotations   = { group = "com.fasterxml.jackson.core", name = "jackson-annotations",              version.ref = "jackson-annotations" }
+jda                   = { group = "net.dv8tion",                name = "JDA",                              version.ref = "jda" }
+netty-buffer          = { group = "io.netty",                   name = "netty-buffer",                     version.ref = "netty-buffer" }
 
 [plugins]
 paper-userdev = { id = "io.papermc.paperweight.userdev",  version.ref = "paper-userdev" }
