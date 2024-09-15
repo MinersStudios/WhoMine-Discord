@@ -40,7 +40,7 @@ public interface Class2PacketMap extends PacketMap<Class<?>> {
      */
     @Contract(" -> new")
     static @NotNull Builder builder() {
-        return new Class2PacketMapImpl.Builder();
+        return new Class2PacketMapImpl.Class2PacketBuilderImpl();
     }
 
     /**

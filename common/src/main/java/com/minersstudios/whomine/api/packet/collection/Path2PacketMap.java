@@ -28,7 +28,7 @@ public interface Path2PacketMap extends PacketMap<ResourcedPath> {
      */
     @Contract(" -> new")
     static @NotNull Builder builder() {
-        return new Path2PacketMapImpl.Builder();
+        return new Path2PacketMapImpl.Path2PacketBuilderImpl();
     }
 
     /**

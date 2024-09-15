@@ -29,7 +29,7 @@ final class Class2PacketMapImpl extends PacketMapImpl<Class<?>> implements Class
         return this;
     }
 
-    public static final class Builder
+    public static final class Class2PacketBuilderImpl
             extends BuilderImpl<Class2PacketMap.Builder, Class2PacketMap, Class<?>>
             implements Class2PacketMap.Builder {
 

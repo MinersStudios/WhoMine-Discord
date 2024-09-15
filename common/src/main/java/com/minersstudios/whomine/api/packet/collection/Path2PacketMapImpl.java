@@ -16,7 +16,7 @@ final class Path2PacketMapImpl extends PacketMapImpl<ResourcedPath> implements P
         super(clientMap, serverMap);
     }
 
-    public static final class Builder
+    public static final class Path2PacketBuilderImpl
             extends BuilderImpl<Path2PacketMap.Builder, Path2PacketMap, ResourcedPath>
             implements Path2PacketMap.Builder {
 
