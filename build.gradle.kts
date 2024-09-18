@@ -60,9 +60,8 @@ subprojects {
         }
 
         javadoc {
-            enabled = false
             options.encoding = utf8
-            setDestinationDir(file("$rootDir/builds/javadoc"))
+            setDestinationDir(file("$rootDir/build/javadoc"))
         }
 
         processResources {
@@ -74,7 +73,11 @@ subprojects {
 tasks {
     jar {
         doLast {
-            file("build").deleteRecursively()
+            file("build").listFiles()?.forEach {
+                if (it.name != "javadoc") {
+                    it.deleteRecursively()
+                }
+            }
         }
     }
     compileJava      { enabled = false }
