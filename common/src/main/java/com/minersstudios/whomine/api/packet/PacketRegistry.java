@@ -19,8 +19,8 @@ import org.jetbrains.annotations.Nullable;
  *         type</li>
  * </ul>
  * <p>
- * You can create a new packet registry using the following methods:
  * <table>
+ *     <caption>Available factory methods</caption>
  *     <tr>
  *         <th>Method</th>
  *         <th>Description</th>

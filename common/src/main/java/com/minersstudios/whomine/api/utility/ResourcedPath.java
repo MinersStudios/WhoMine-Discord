@@ -14,8 +14,8 @@ import javax.annotation.concurrent.Immutable;
 /**
  * Represents a resourced-path used in the plugin.
  * <p>
- * You can create a new resourced-path using the following methods:
  * <table>
+ *     <caption>Available factory methods</caption>
  *     <tr>
  *         <th>Method</th>
  *         <th>Description</th>

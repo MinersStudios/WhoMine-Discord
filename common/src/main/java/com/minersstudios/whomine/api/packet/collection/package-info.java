@@ -1,8 +1,8 @@
 /**
  * This package contains collection classes for packets.
  * <p>
- * Useful collection classes are:
  * <table>
+ *     <caption>Available Collections</caption>
  *     <tr>
  *         <th>Class</th>
  *         <th>Description</th>

@@ -19,8 +19,8 @@ import static java.lang.annotation.ElementType.*;
  * <p>
  * The resource must match the {@link #REGEX regex} pattern.
  * <p>
- * Available constants are:
  * <table>
+ *     <caption>Available Constants</caption>
  *     <tr>
  *         <th>Resource</th>
  *         <th>Value</th>

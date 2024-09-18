@@ -14,8 +14,8 @@ import java.util.Locale;
  * Each protocol corresponds to a specific phase in the network connection
  * process.
  * <p>
- * Available protocols:
  * <table>
+ *     <caption>Available Protocols</caption>
  *     <tr>
  *         <th>Protocol</th>
  *         <th>Registry</th>

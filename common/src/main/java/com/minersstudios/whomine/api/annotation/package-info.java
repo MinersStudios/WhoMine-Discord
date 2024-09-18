@@ -1,8 +1,8 @@
 /**
  * This package contains all the annotations used in the API.
  * <p>
- * Useful annotations are:
  * <table>
+ *     <caption>Available Annotations</caption>
  *     <tr>
  *         <th>Annotation</th>
  *         <th>Description</th>

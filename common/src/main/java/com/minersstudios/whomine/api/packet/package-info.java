@@ -1,8 +1,8 @@
 /**
  * This package contains classes for handling packets.
  * <p>
- * Useful classes are:
  * <table>
+ *     <caption>Available Classes</caption>
  *     <tr>
  *         <th>Class</th>
  *         <th>Description</th>
