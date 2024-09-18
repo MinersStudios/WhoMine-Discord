@@ -3,6 +3,7 @@ package com.minersstudios.whomine.api.packet.registry;
 import com.minersstudios.whomine.api.packet.PacketRegistry;
 import com.minersstudios.whomine.api.packet.collection.PacketMap;
 import com.minersstudios.whomine.api.packet.PacketType;
+import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Unmodifiable;
@@ -18,7 +19,8 @@ import static com.minersstudios.whomine.api.packet.PacketType.ofMC;
  * @see PacketRegistry
  * @see <a href="https://wiki.vg/Protocol#Play">Protocol Wiki - Play</a>
  *
- * @version Minecraft 1.21.1, Protocol 767
+ * @version Minecraft {@value SharedConstants#MINECRAFT_VERSION},
+ *          Protocol {@value SharedConstants#PROTOCOL_VERSION}
  */
 public final class PlayPackets {
     //<editor-fold desc="Play clientbound packets" defaultstate="collapsed">

@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.api.annotation;
 
 import com.minersstudios.whomine.api.throwable.InvalidRegexException;
+import org.intellij.lang.annotations.Pattern;
 import org.intellij.lang.annotations.RegExp;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
@@ -15,11 +16,17 @@ import static java.lang.annotation.ElementType.*;
 
 /**
  * Annotation used to mark the key of the status.
- * <br>
+ * <p>
  * The status key must match the {@link #REGEX regex} pattern.
+ * <p>
+ * Example of usage:
+ * <pre>
+ *     {@code @StatusKey String statusKey = "STATUS_KEY";}
+ * </pre>
  *
  * @see StatusKey.Validator
  */
+@SuppressWarnings("unused")
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({
@@ -28,7 +35,7 @@ import static java.lang.annotation.ElementType.*;
         METHOD,
         PARAMETER
 })
-@org.intellij.lang.annotations.Pattern(StatusKey.REGEX)
+@Pattern(StatusKey.REGEX)
 public @interface StatusKey {
     /** The regex pattern that a valid status key must match */
     @RegExp String REGEX = "^[A-Z][A-Z0-9_]*$";
@@ -53,6 +60,7 @@ public @interface StatusKey {
          * @param key Key of the status
          * @return Whether the key matches the {@link #REGEX regex}
          */
+        @Contract("null -> false")
         public static boolean matches(final @Subst("STATUS_KEY") @StatusKey @Nullable String key) {
             if (key == null) {
                 return false;
@@ -93,6 +101,7 @@ public @interface StatusKey {
          *                               {@link #REGEX regex}
          * @see #matches(String)
          */
+        @Contract("null -> fail")
         public static void validate(final @Subst("STATUS_KEY") @StatusKey @Nullable String key) throws InvalidRegexException {
             if (!matches(key)) {
                 throw new InvalidRegexException("Status key must match regex: " + REGEX);

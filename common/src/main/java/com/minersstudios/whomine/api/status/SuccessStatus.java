@@ -26,6 +26,7 @@ import java.util.function.Function;
  *
  * @see Status
  */
+@SuppressWarnings("unused")
 @Immutable
 public class SuccessStatus extends ImplStatus {
     private final FailureStatus failureStatus;

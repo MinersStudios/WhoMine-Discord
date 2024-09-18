@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.api.annotation;
 
 import com.minersstudios.whomine.api.throwable.InvalidResourceException;
+import org.intellij.lang.annotations.Pattern;
 import org.intellij.lang.annotations.RegExp;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
@@ -15,11 +16,19 @@ import static java.lang.annotation.ElementType.*;
 
 /**
  * Annotation used to mark the path.
- * <br>
+ * <p>
  * The path must match the {@link #REGEX regex} pattern.
+ * <p>
+ * Example of usage:
+ * <pre>
+ *     {@code @Path String path = "path";}
+ * </pre>
  *
  * @see Path.Validator
+ * @see ResourcePath
+ * @see Resource
  */
+@SuppressWarnings("unused")
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({
@@ -28,7 +37,7 @@ import static java.lang.annotation.ElementType.*;
         METHOD,
         PARAMETER
 })
-@org.intellij.lang.annotations.Pattern(Path.REGEX)
+@Pattern(Path.REGEX)
 public @interface Path {
     /** The regex pattern that a valid path must match */
     @RegExp String REGEX = "[a-z0-9/._-]*";
@@ -53,6 +62,7 @@ public @interface Path {
          * @param path The path
          * @return Whether the path matches the {@link #REGEX regex}
          */
+        @Contract("null -> true")
         public static boolean matches(final @Subst("path") @Path @Nullable String path) {
             if (path == null) {
                 return true;

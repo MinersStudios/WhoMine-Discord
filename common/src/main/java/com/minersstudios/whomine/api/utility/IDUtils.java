@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 /**
  * Utility class for IDs
  */
+@SuppressWarnings("unused")
 public final class IDUtils {
     public static final String ID_REGEX = "-?\\d+";
     public static final Pattern ID_PATTERN = Pattern.compile(ID_REGEX);

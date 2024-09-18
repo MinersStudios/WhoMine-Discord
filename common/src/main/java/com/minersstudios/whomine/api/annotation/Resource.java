@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.api.annotation;
 
 import com.minersstudios.whomine.api.throwable.InvalidResourceException;
+import org.intellij.lang.annotations.Pattern;
 import org.intellij.lang.annotations.RegExp;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
@@ -15,11 +16,47 @@ import static java.lang.annotation.ElementType.*;
 
 /**
  * Annotation used to mark the resource.
- * <br>
+ * <p>
  * The resource must match the {@link #REGEX regex} pattern.
+ * <p>
+ * Available constants are:
+ * <table>
+ *     <tr>
+ *         <th>Resource</th>
+ *         <th>Value</th>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #EMPTY}</td>
+ *         <td>{@value #EMPTY}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #MINECRAFT}</td>
+ *         <td>{@value #MINECRAFT}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #REALMS}</td>
+ *         <td>{@value #REALMS}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #PAPER}</td>
+ *         <td>{@value #PAPER}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #WHOMINE}</td>
+ *         <td>{@value #WHOMINE}</td>
+ *     </tr>
+ * </table>
+ * <p>
+ * Example of usage:
+ * <pre>
+ *     {@code @Resource String resource = "resource";}
+ * </pre>
  *
  * @see Resource.Validator
+ * @see ResourcePath
+ * @see Path
  */
+@SuppressWarnings("unused")
 @Documented
 @Retention(RetentionPolicy.CLASS)
 @Target({
@@ -28,7 +65,7 @@ import static java.lang.annotation.ElementType.*;
         METHOD,
         PARAMETER
 })
-@org.intellij.lang.annotations.Pattern(Resource.REGEX)
+@Pattern(Resource.REGEX)
 public @interface Resource {
     /** The regex pattern that a valid resource must match */
     @RegExp String REGEX = "[a-z0-9._-]*";
@@ -64,6 +101,7 @@ public @interface Resource {
          * @param resource The resource
          * @return Whether the resource matches the {@link #REGEX regex}
          */
+        @Contract("null -> false")
         public static boolean matches(final @Subst("resource") @Resource @Nullable String resource) {
             if (resource == null) {
                 return false;
@@ -95,6 +133,7 @@ public @interface Resource {
          *                                  {@link #REGEX regex}
          * @see #matches(String)
          */
+        @Contract("null -> fail")
         public static void validate(final @Subst("resource") @Resource @Nullable String resource) throws InvalidResourceException {
             if (!matches(resource)) {
                 throw new InvalidResourceException("Resource must match regex: " + REGEX);

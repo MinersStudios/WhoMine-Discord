@@ -22,6 +22,7 @@ import static net.kyori.adventure.text.format.TextDecoration.*;
 /**
  * Utility class for text-related operations
  */
+@SuppressWarnings("unused")
 public final class ChatUtils {
     /**
      * Default style for components.

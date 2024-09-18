@@ -22,6 +22,7 @@ import java.util.Set;
  *
  * @see StatusHandler
  */
+@SuppressWarnings("unused")
 @ThreadSafe
 public final class StatusWatcher {
     private final Set<SuccessStatus> successStatusSet;

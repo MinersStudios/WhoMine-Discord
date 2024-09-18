@@ -14,6 +14,7 @@ import static com.minersstudios.whomine.api.utility.ChatUtils.createDefaultStyle
  * <b>NOTE:</b> PUA characters - "Private Use Area" characters, in range
  * from <code>0xE000</code> to <code>0xF8FF</code>.
  */
+@SuppressWarnings("unused")
 public final class Font {
 
     @Contract(" -> fail")

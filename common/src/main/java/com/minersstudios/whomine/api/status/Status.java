@@ -20,6 +20,7 @@ import static com.minersstudios.whomine.api.annotation.StatusKey.Validator.valid
  *     <li>{@link FailureStatus Failure Status}</li>
  * </ul>
  */
+@SuppressWarnings("unused")
 public interface Status {
 
     /**
