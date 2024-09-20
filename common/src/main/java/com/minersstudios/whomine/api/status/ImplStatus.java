@@ -11,6 +11,7 @@ import java.util.function.Function;
 
 @Immutable
 abstract class ImplStatus implements Status {
+
     private final String key;
     private final Status.Priority priority;
 

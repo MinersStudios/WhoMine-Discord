@@ -23,6 +23,7 @@ import java.util.concurrent.atomic.AtomicReference;
 @SuppressWarnings("unused")
 @ThreadSafe
 public final class StatusHandler {
+
     private final AtomicReference<Status> highStatus;
     private final Set<Status> lowStatusSet;
     private final List<StatusWatcher> watcherList;

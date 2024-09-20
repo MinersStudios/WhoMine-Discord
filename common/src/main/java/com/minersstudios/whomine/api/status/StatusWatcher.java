@@ -25,13 +25,6 @@ import java.util.Set;
 @SuppressWarnings("unused")
 @ThreadSafe
 public final class StatusWatcher {
-    private final Set<SuccessStatus> successStatusSet;
-    private final Set<FailureStatus> failureStatusSet;
-    private final Runnable successRunnable;
-    private final Runnable failureRunnable;
-    private final boolean isAnySuccess;
-    private final boolean isAnyFailure;
-
     private static final String FORMAT = "%s{" +
             "successStatusSet=[%s], " +
             "failureStatusSet=[%s], " +
@@ -40,6 +33,13 @@ public final class StatusWatcher {
             "isAnySuccess=%s, " +
             "isAnyFailure=%s" +
             '}';
+
+    private final Set<SuccessStatus> successStatusSet;
+    private final Set<FailureStatus> failureStatusSet;
+    private final Runnable successRunnable;
+    private final Runnable failureRunnable;
+    private final boolean isAnySuccess;
+    private final boolean isAnyFailure;
 
     private StatusWatcher(final @NotNull Builder builder) {
         this.successStatusSet = builder.successStatusSet;
