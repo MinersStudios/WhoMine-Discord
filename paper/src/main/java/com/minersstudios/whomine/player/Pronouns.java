@@ -1,15 +1,15 @@
 package com.minersstudios.whomine.player;
 
 
-import com.minersstudios.whomine.locale.LanguageFile;
+import com.minersstudios.whomine.locale.LangFileFabric;
 import net.kyori.adventure.text.TranslatableComponent;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 
 /**
  * Pronouns enum with custom messages. All messages stored in the
- * {@link LanguageFile}.
+ * {@link LangFileFabric}.
  *
  * @see PlayerFile
  */

@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Range;
 
 import java.util.List;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class EditSkinCommand extends SlashCommandExecutor {

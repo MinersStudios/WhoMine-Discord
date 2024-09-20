@@ -5,7 +5,7 @@ import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.api.utility.Font;

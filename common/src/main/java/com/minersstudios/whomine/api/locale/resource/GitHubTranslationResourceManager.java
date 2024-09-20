@@ -1,6 +1,6 @@
-package com.minersstudios.whomine.locale.resource;
+package com.minersstudios.whomine.api.locale.resource;
 
-import com.minersstudios.whomine.resource.github.AbstractGithubResourceManager;
+import com.minersstudios.whomine.api.resource.github.AbstractGithubResourceManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -8,9 +8,9 @@ import java.io.File;
 import java.net.URI;
 
 public final class GitHubTranslationResourceManager extends AbstractGithubResourceManager implements TranslationResourceManager {
-    private final String folderPath;
-
     private static final String DOWNLOAD_TRANSLATION_URL = "https://raw.githubusercontent.com/%s/%s/%s/%s";
+
+    private final String folderPath;
 
     GitHubTranslationResourceManager(
             final @NotNull File file,

@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.SecureRandom;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.ME;
 import static com.minersstudios.whomine.utility.MessageUtils.sendRPEventMessage;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;

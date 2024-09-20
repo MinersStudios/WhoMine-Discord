@@ -7,7 +7,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.command.UnknownCommandEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.ERROR_UNKNOWN_COMMAND;
+import static com.minersstudios.whomine.api.locale.Translations.ERROR_UNKNOWN_COMMAND;
 
 public class UnknownCommandListener extends EventListener {
 

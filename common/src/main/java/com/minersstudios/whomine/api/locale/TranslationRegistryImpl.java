@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.locale;
+package com.minersstudios.whomine.api.locale;
 
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -16,12 +16,12 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 final class TranslationRegistryImpl implements TranslationRegistry {
+    static volatile TranslationRegistryImpl registry;
+
     private final Key name;
     private final Locale defaultLocale;
     private final Map<String, Translation> translationMap;
     private final TranslatableComponentRenderer<Locale> renderer;
-
-    static volatile TranslationRegistryImpl registry;
 
     TranslationRegistryImpl(
             final @NotNull Key name,

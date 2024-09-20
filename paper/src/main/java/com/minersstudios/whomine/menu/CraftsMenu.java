@@ -17,7 +17,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.api.utility.ChatUtils.DEFAULT_STYLE;
 
 public final class CraftsMenu {

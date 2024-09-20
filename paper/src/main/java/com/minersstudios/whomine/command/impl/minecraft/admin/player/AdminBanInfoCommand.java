@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Locale;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class AdminBanInfoCommand {

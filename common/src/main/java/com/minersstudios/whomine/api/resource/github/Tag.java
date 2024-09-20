@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.resource.github;
+package com.minersstudios.whomine.api.resource.github;
 
 import com.google.gson.annotations.SerializedName;
 import org.jetbrains.annotations.Contract;
@@ -10,8 +10,10 @@ import javax.annotation.concurrent.Immutable;
 /**
  * Represents a tag in a GitHub repository
  */
+@SuppressWarnings("unused")
 @Immutable
 public final class Tag {
+
     private final String name;
     @SerializedName("zipball_url")
     private final String zipballUrl;

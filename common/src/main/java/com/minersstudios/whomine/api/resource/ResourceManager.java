@@ -1,10 +1,11 @@
-package com.minersstudios.whomine.resource;
+package com.minersstudios.whomine.api.resource;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 
+@SuppressWarnings("unused")
 public interface ResourceManager {
 
     /**

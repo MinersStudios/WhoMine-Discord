@@ -1,11 +1,12 @@
-package com.minersstudios.whomine.resource.uri;
+package com.minersstudios.whomine.api.resource.uri;
 
-import com.minersstudios.whomine.resource.ResourceManager;
+import com.minersstudios.whomine.api.resource.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unused")
 public interface URIResourceManager extends ResourceManager {
 
     /**

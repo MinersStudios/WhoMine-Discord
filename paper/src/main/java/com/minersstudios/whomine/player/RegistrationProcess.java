@@ -2,7 +2,7 @@ package com.minersstudios.whomine.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.inventory.SignMenu;
-import com.minersstudios.whomine.locale.LanguageFile;
+import com.minersstudios.whomine.locale.LangFileFabric;
 import com.minersstudios.whomine.menu.PronounMenu;
 import com.minersstudios.whomine.utility.MSPlayerUtils;
 import com.minersstudios.whomine.utility.MessageUtils;
@@ -16,12 +16,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 /**
  * Registration process class. It is used to register a player on the server on
- * the first join. All messages stored in the {@link LanguageFile}.
+ * the first join. All messages stored in the {@link LangFileFabric}.
  */
 public final class RegistrationProcess {
     private final WhoMine plugin;

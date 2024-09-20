@@ -19,7 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.api.utility.ChatUtils.COLORLESS_DEFAULT_STYLE;
 import static com.minersstudios.whomine.api.utility.ChatUtils.DEFAULT_STYLE;
 import static net.kyori.adventure.text.format.NamedTextColor.GRAY;

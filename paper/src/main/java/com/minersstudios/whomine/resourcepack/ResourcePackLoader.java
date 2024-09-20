@@ -6,7 +6,7 @@ import com.minersstudios.whomine.resourcepack.throwable.PackLoadException;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.resourcepack.data.ResourcePackData;
 import com.minersstudios.whomine.resourcepack.resource.GitHubPackResourceManager;
-import com.minersstudios.whomine.resource.github.Tag;
+import com.minersstudios.whomine.api.resource.github.Tag;
 import com.minersstudios.whomine.resourcepack.throwable.FatalPackLoadException;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;

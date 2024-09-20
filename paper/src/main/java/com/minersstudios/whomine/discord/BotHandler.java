@@ -20,7 +20,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 import java.util.regex.Pattern;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.api.utility.ChatUtils.serializePlainComponent;
 import static net.kyori.adventure.text.Component.text;
 

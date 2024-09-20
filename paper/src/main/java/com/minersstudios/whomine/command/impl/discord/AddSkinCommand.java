@@ -14,7 +14,7 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class AddSkinCommand extends SlashCommandExecutor {

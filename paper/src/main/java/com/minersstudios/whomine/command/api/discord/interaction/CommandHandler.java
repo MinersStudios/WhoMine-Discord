@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.api.discord.interaction;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.discord.BotHandler;
 import com.minersstudios.whomine.player.PlayerInfo;
 import net.dv8tion.jda.api.entities.MessageEmbed;

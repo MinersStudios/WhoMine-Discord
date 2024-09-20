@@ -1,10 +1,11 @@
-package com.minersstudios.whomine.resource.file;
+package com.minersstudios.whomine.api.resource.file;
 
-import com.minersstudios.whomine.resource.ResourceManager;
+import com.minersstudios.whomine.api.resource.ResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 
+@SuppressWarnings("unused")
 public interface FileResourceManager extends ResourceManager {
 
     /**

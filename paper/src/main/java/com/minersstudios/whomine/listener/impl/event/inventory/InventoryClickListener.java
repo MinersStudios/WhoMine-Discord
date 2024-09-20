@@ -7,7 +7,7 @@ import com.minersstudios.whomine.custom.item.Wearable;
 import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.inventory.InventoryButton;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

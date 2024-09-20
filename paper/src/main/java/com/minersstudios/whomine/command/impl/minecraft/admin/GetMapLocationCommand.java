@@ -17,7 +17,7 @@ import org.bukkit.map.MapView;
 import org.bukkit.permissions.PermissionDefault;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class GetMapLocationCommand extends PluginCommandExecutor {

@@ -1,11 +1,11 @@
-package com.minersstudios.whomine.locale;
+package com.minersstudios.whomine.api.locale;
 
 import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static com.minersstudios.whomine.locale.TranslationRegistry.registry;
+import static com.minersstudios.whomine.api.locale.TranslationRegistry.registry;
 import static com.minersstudios.whomine.api.utility.Font.Chars.*;
 
 /**
@@ -372,13 +372,13 @@ public final class Translations {
     }
 
     private static @NotNull Translation register(
-            final @NotNull String key,
+            final @NotNull String path,
             final @Nullable String translation
     ) {
         return translation == null
-               ? registry().registerPath(key)
+               ? registry().registerPath(path)
                : registry().register(
-                       key,
+                       path,
                        SharedConstants.DEFAULT_LOCALE,
                        translation
                );

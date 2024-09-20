@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.msessentials;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;

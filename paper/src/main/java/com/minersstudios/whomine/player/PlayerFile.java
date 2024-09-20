@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.*;
 import java.util.logging.Level;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 
 /**
  * Player file with player data, settings, etc.

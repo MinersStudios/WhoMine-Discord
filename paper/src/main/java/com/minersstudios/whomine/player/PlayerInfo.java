@@ -4,7 +4,7 @@ import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.Cache;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.player.collection.MuteMap;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.player.skin.Skin;
@@ -52,7 +52,7 @@ import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeoutException;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.ME;
 import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.TODO;
 import static com.minersstudios.whomine.utility.MessageUtils.*;

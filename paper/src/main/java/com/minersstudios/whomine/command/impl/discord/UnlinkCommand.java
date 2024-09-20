@@ -11,8 +11,8 @@ import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.COMMAND_DISCORD_UNLINK_DISCORD_SUCCESS;
-import static com.minersstudios.whomine.locale.Translations.COMMAND_DISCORD_UNLINK_MINECRAFT_SUCCESS;
+import static com.minersstudios.whomine.api.locale.Translations.COMMAND_DISCORD_UNLINK_DISCORD_SUCCESS;
+import static com.minersstudios.whomine.api.locale.Translations.COMMAND_DISCORD_UNLINK_MINECRAFT_SUCCESS;
 import static net.kyori.adventure.text.Component.text;
 
 public final class UnlinkCommand extends SlashCommandExecutor {

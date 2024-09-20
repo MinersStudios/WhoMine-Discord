@@ -1,7 +1,7 @@
-package com.minersstudios.whomine.resource.github;
+package com.minersstudios.whomine.api.resource.github;
 
-import com.minersstudios.whomine.resource.file.FileResourceManager;
-import com.minersstudios.whomine.resource.uri.URIResourceManager;
+import com.minersstudios.whomine.api.resource.file.FileResourceManager;
+import com.minersstudios.whomine.api.resource.uri.URIResourceManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -10,6 +10,7 @@ import java.io.File;
 import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unused")
 public interface GithubResourceManager extends FileResourceManager, URIResourceManager {
     /**
      * The URL to get the tags of a GitHub repository.

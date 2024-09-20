@@ -1,6 +1,6 @@
-package com.minersstudios.whomine.locale.resource;
+package com.minersstudios.whomine.api.locale.resource;
 
-import com.minersstudios.whomine.resource.uri.AbstractURIResourceManager;
+import com.minersstudios.whomine.api.resource.uri.AbstractURIResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.net.URI;

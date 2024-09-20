@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.item;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.custom.item.CustomItem;

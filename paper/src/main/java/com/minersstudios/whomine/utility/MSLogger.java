@@ -2,7 +2,7 @@ package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.locale.TranslationRegistry;
+import com.minersstudios.whomine.api.locale.TranslationRegistry;
 import io.papermc.paper.adventure.PaperAdventure;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;

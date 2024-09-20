@@ -1,6 +1,6 @@
-package com.minersstudios.whomine.locale.resource;
+package com.minersstudios.whomine.api.locale.resource;
 
-import com.minersstudios.whomine.resource.file.AbstractFileResourceManager;
+import com.minersstudios.whomine.api.resource.file.AbstractFileResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

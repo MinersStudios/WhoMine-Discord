@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.resource.uri;
+package com.minersstudios.whomine.api.resource.uri;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -8,6 +8,7 @@ import java.net.URI;
 import java.util.concurrent.CompletableFuture;
 
 public abstract class AbstractURIResourceManager implements URIResourceManager {
+
     private final URI uri;
 
     protected AbstractURIResourceManager(final @NotNull URI uri) {

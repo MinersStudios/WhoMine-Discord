@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 
-import static com.minersstudios.whomine.locale.Translations.COMMAND_MUTE_ALREADY_RECEIVER;
-import static com.minersstudios.whomine.locale.Translations.WARNING_YOU_CANT_DO_THIS_NOW;
+import static com.minersstudios.whomine.api.locale.Translations.COMMAND_MUTE_ALREADY_RECEIVER;
+import static com.minersstudios.whomine.api.locale.Translations.WARNING_YOU_CANT_DO_THIS_NOW;
 import static net.kyori.adventure.text.Component.text;
 
 public final class AsyncChatListener extends EventListener {

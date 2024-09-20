@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.resource.file;
+package com.minersstudios.whomine.api.resource.file;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public abstract class AbstractFileResourceManager implements FileResourceManager {
+
     private final File file;
 
     protected AbstractFileResourceManager(final @NotNull File file) {

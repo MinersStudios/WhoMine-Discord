@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.locale;
+package com.minersstudios.whomine.api.locale;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.ComponentLike;
@@ -12,12 +12,14 @@ import java.text.MessageFormat;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.minersstudios.whomine.locale.TranslationRegistry.registry;
+import static com.minersstudios.whomine.api.locale.TranslationRegistry.registry;
 
 /**
  * Represents a translation
  */
+@SuppressWarnings("unused")
 public final class Translation {
+
     private final String path;
     private final MessageFormat fallback;
     private final Map<Locale, MessageFormat> map;
@@ -251,7 +253,7 @@ public final class Translation {
             builder.setLength(builder.length() - 2);
         }
 
-        return "Translation{" +
+        return this.getClass().getSimpleName() + '{' +
                 "path=" + this.path +
                 ", fallback=" + this.fallback +
                 ", translations=[" + builder + ']' +

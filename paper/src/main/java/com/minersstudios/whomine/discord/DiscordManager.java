@@ -22,8 +22,8 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.minersstudios.whomine.locale.Translations.DISCORD_BOT_STATUS;
-import static com.minersstudios.whomine.locale.Translations.DISCORD_SERVER_ENABLED;
+import static com.minersstudios.whomine.api.locale.Translations.DISCORD_BOT_STATUS;
+import static com.minersstudios.whomine.api.locale.Translations.DISCORD_SERVER_ENABLED;
 
 /**
  * This class handles the Discord integration for the MSEssentials plugin. It

@@ -8,8 +8,8 @@ import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItem;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
-import com.minersstudios.whomine.locale.LanguageFile;
-import com.minersstudios.whomine.locale.TranslationRegistry;
+import com.minersstudios.whomine.locale.LangFileFabric;
+import com.minersstudios.whomine.api.locale.TranslationRegistry;
 import com.minersstudios.whomine.menu.CraftsMenu;
 import com.minersstudios.whomine.menu.RenamesMenu;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -725,7 +725,7 @@ public final class Config {
 
         CompletableFuture
         .allOf(
-                LanguageFile
+                LangFileFabric
                 .allFromSection(
                         this.getFile(),
                         yaml,

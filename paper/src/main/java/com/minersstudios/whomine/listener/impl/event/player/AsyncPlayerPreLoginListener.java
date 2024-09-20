@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.locale.TranslationRegistry;
+import com.minersstudios.whomine.api.locale.TranslationRegistry;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.utility.MSLogger;
@@ -16,7 +16,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.*;
 

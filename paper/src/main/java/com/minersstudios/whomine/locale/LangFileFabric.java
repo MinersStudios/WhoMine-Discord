@@ -1,13 +1,13 @@
 package com.minersstudios.whomine.locale;
 
-import com.google.common.base.Joiner;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonSyntaxException;
-import com.minersstudios.whomine.locale.resource.GitHubTranslationResourceManager;
-import com.minersstudios.whomine.locale.resource.TranslationResourceManager;
-import com.minersstudios.whomine.locale.resource.URITranslationResourceManager;
+import com.minersstudios.whomine.api.locale.LanguageFile;
+import com.minersstudios.whomine.api.locale.resource.GitHubTranslationResourceManager;
+import com.minersstudios.whomine.api.locale.resource.TranslationResourceManager;
+import com.minersstudios.whomine.api.locale.resource.URITranslationResourceManager;
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.resource.github.Tag;
+import com.minersstudios.whomine.api.resource.github.Tag;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
@@ -21,7 +21,6 @@ import javax.annotation.concurrent.Immutable;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collections;
 import java.util.Locale;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -40,10 +39,7 @@ import static java.util.concurrent.CompletableFuture.failedFuture;
  * </ul>
  */
 @Immutable
-public final class LanguageFile {
-    private final Locale locale;
-    private final Map<String, String> translationMap;
-
+public final class LangFileFabric {
     //<editor-fold desc="Config keys">
     private static final String KEY_URL =         "url";
     private static final String KEY_TOKEN =       "token";
@@ -52,141 +48,6 @@ public final class LanguageFile {
     private static final String KEY_TAG =         "tag";
     private static final String KEY_FOLDER_PATH = "folder-path";
     //</editor-fold>
-
-    private LanguageFile(final @NotNull Locale locale) {
-        this.locale = locale;
-        this.translationMap = new Object2ObjectOpenHashMap<>();
-    }
-
-    /**
-     * Returns the locale of this language file
-     *
-     * @return The locale of this language file
-     */
-    public @NotNull Locale getLocale() {
-        return this.locale;
-    }
-
-    /**
-     * Returns the unmodifiable map of translations in this language file
-     *
-     * @return The unmodifiable map of translations in this language file
-     */
-    public @NotNull @Unmodifiable Map<String, String> getTranslationMap() {
-        return Collections.unmodifiableMap(this.translationMap);
-    }
-
-    /**
-     * Gets the translation for the given path
-     *
-     * @param path The path to get the translation for
-     * @return The translation for the given path, or null if it doesn't exist
-     */
-    public @Nullable String get(final @NotNull String path) {
-        return this.getOrDefault(path, null);
-    }
-
-    /**
-     * Gets the translation for the given path, or the fallback if it doesn't
-     * exist
-     *
-     * @param path     The path to get the translation for
-     * @param fallback The fallback to return if the translation doesn't exist
-     * @return The translation for the given path, or the fallback if it doesn't
-     *         exist
-     */
-    public @UnknownNullability String getOrDefault(
-            final @NotNull String path,
-            final @Nullable String fallback
-    ) {
-        return this.translationMap.getOrDefault(path, fallback);
-    }
-
-    /**
-     * Returns the number of translations in this language file
-     *
-     * @return The number of translations in this language file
-     */
-    public int size() {
-        return this.translationMap.size();
-    }
-
-    /**
-     * Returns a hash code based on the locale and translations
-     *
-     * @return A hash code based on the locale and translations
-     */
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-
-        result = prime * result + this.locale.hashCode();
-        result = prime * result + this.translationMap.hashCode();
-
-        return result;
-    }
-
-    /**
-     * Compares the specified object with this language file for equality
-     *
-     * @param obj The object to compare
-     * @return True if the object is a language file and has the same locale and
-     *         translations
-     */
-    @Contract("null -> false")
-    @Override
-    public boolean equals(final @Nullable Object obj) {
-        return this == obj
-                || (
-                        obj instanceof LanguageFile that
-                        && this.locale.equals(that.locale)
-                        && this.translationMap.equals(that.translationMap)
-                );
-    }
-
-    /**
-     * Checks whether the given path exists in this language file
-     *
-     * @param path The path to check for
-     * @return Whether the given path exists in this language file
-     */
-    public boolean containsPath(final @NotNull String path) {
-        return this.translationMap.containsKey(path);
-    }
-
-    /**
-     * Returns whether this language file contains the given translation
-     *
-     * @param translation The translation to check for
-     * @return True if this language file contains the given translation
-     */
-    public boolean containsTranslation(final @NotNull String translation) {
-        return this.translationMap.containsValue(translation);
-    }
-
-    /**
-     * Returns whether this language file contains no translations
-     *
-     * @return True if this language file contains no translations
-     */
-    public boolean isEmpty() {
-        return this.translationMap.isEmpty();
-    }
-
-    /**
-     * Returns a string representation of this language file
-     *
-     * @return A string representation of this language file containing the
-     *         translations
-     */
-    @Override
-    public @NotNull String toString() {
-        return "LanguageFile{" +
-                "locale=" + this.locale +
-                ", translations=[" + Joiner.on(", ").withKeyValueSeparator("=").join(this.translationMap) + ']' +
-                '}';
-    }
 
     /**
      * Creates and loads all languages.yml from the given configuration section.
@@ -372,7 +233,7 @@ public final class LanguageFile {
                     if (latestTag != null) {
                         section.set(KEY_TAG, latestTag.getName());
 
-                        synchronized (LanguageFile.class) {
+                        synchronized (LangFileFabric.class) {
                             try {
                                 config.save(file);
                             } catch (final Throwable e) {
@@ -480,7 +341,7 @@ public final class LanguageFile {
         try (inputStream) {
             Language.loadFromJson(
                     inputStream,
-                    file.translationMap::put
+                    file.getTranslationMap()::put
             );
         } catch (final IOException e) {
             throw new JsonIOException(e);

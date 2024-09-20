@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.resourcepack.resource;
 
-import com.minersstudios.whomine.resource.github.AbstractGithubResourceManager;
+import com.minersstudios.whomine.api.resource.github.AbstractGithubResourceManager;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

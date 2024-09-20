@@ -1,8 +1,7 @@
-package com.minersstudios.whomine.resource.github;
+package com.minersstudios.whomine.api.resource.github;
 
 import com.google.gson.Gson;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.resource.file.AbstractFileResourceManager;
+import com.minersstudios.whomine.api.resource.file.AbstractFileResourceManager;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -15,23 +14,24 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.atomic.AtomicReference;
+import java.util.logging.Logger;
 
 import static java.net.HttpURLConnection.*;
 
 public abstract class AbstractGithubResourceManager extends AbstractFileResourceManager implements GithubResourceManager {
+    private static final Logger LOGGER = Logger.getLogger("ResourceManager");
+    private static final Gson GSON = new Gson();
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String AUTHORIZATION_VALUE =  "Bearer %s";
+
     private final String user;
     private final String repo;
     private final AtomicReference<Tag[]> tags;
     private final String currentTag;
     private transient final String token;
-
-    private static final Gson GSON = new Gson();
-    private static final String AUTHORIZATION_HEADER = "Authorization";
-    private static final String AUTHORIZATION_VALUE =  "Bearer %s";
 
     protected AbstractGithubResourceManager(
             final @NotNull File file,
@@ -139,20 +139,18 @@ public abstract class AbstractGithubResourceManager extends AbstractFileResource
                                          !directory.exists()
                                          && !directory.mkdirs()
                                  ) {
-                                     MSLogger.warning("Failed to create a new directory: " + directory.getAbsolutePath());
+                                     LOGGER.warning("Failed to create a new directory: " + directory.getAbsolutePath());
                                  }
 
-                                 final Path path = file.toPath();
-                                 final HttpClient client =
-                                         HttpClient.newBuilder()
-                                         .followRedirects(HttpClient.Redirect.ALWAYS)
-                                         .build();
-
-                                 try {
+                                 try (
+                                         final var client = HttpClient.newBuilder()
+                                                           .followRedirects(HttpClient.Redirect.ALWAYS)
+                                                           .build()
+                                 ) {
                                      final int statusCode =
                                              client.send(
                                                      HttpRequest.newBuilder(uri).build(),
-                                                     HttpResponse.BodyHandlers.ofFile(path)
+                                                     HttpResponse.BodyHandlers.ofFile(file.toPath())
                                              ).statusCode();
 
                                      if (statusCode != HTTP_OK) {
@@ -187,8 +185,8 @@ public abstract class AbstractGithubResourceManager extends AbstractFileResource
                 );
             }
 
-            try {
-                response = HttpClient.newHttpClient().send(
+            try (final var client = HttpClient.newHttpClient()) {
+                response = client.send(
                         builder.build(),
                         HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8)
                 );

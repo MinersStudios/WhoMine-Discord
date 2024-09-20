@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.resourcepack.resource;
 
-import com.minersstudios.whomine.resource.uri.AbstractURIResourceManager;
+import com.minersstudios.whomine.api.resource.uri.AbstractURIResourceManager;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.concurrent.Immutable;

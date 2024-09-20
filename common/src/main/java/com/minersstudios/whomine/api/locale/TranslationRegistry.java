@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.locale;
+package com.minersstudios.whomine.api.locale;
 
 import com.minersstudios.whomine.api.utility.SharedConstants;
 import net.kyori.adventure.key.Key;
@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public interface TranslationRegistry extends Translator {
 
     /**

@@ -3,7 +3,7 @@ package com.minersstudios.whomine.resourcepack.data;
 import com.minersstudios.whomine.resourcepack.resource.PackResourceManager;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.resourcepack.resource.GitHubPackResourceManager;
-import com.minersstudios.whomine.resource.github.Tag;
+import com.minersstudios.whomine.api.resource.github.Tag;
 import net.kyori.adventure.resource.ResourcePackInfo;
 import net.kyori.adventure.text.Component;
 import org.jetbrains.annotations.Contract;

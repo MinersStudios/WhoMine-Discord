@@ -12,8 +12,8 @@ import com.minersstudios.whomine.discord.DiscordManager;
 import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
 import com.minersstudios.whomine.listener.api.ListenerManager;
 import com.minersstudios.whomine.listener.impl.event.mechanic.DosimeterMechanic;
-import com.minersstudios.whomine.locale.TranslationRegistry;
-import com.minersstudios.whomine.locale.Translations;
+import com.minersstudios.whomine.api.locale.TranslationRegistry;
+import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.menu.DiscordLinkCodeMenu;
 import com.minersstudios.whomine.menu.PronounMenu;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
@@ -59,7 +59,7 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.minersstudios.whomine.locale.Translations.*;
+import static com.minersstudios.whomine.api.locale.Translations.*;
 import static com.minersstudios.whomine.api.utility.Font.Chars.RED_EXCLAMATION_MARK;
 import static net.kyori.adventure.text.Component.text;
 
