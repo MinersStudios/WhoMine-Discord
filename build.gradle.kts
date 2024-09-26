@@ -31,13 +31,13 @@ subprojects {
     }
 
     dependencies {
-        compileOnly(rootProject.libs.fastutil)
-        compileOnly(rootProject.libs.google.guava)
-        compileOnly(rootProject.libs.google.gson)
-        compileOnly(rootProject.libs.google.jsr305)
-        compileOnly(rootProject.libs.jetbrains.annotations)
-        compileOnly(rootProject.libs.jackson.annotations)
-        compileOnly(rootProject.libs.jda)
+        implementation(rootProject.libs.fastutil)
+        implementation(rootProject.libs.google.guava)
+        implementation(rootProject.libs.google.gson)
+        implementation(rootProject.libs.google.jsr305)
+        implementation(rootProject.libs.jetbrains.annotations)
+        implementation(rootProject.libs.jackson.annotations)
+        implementation(rootProject.libs.jda)
     }
 
     sourceSets {
