@@ -25,21 +25,21 @@ import static com.minersstudios.whomine.api.packet.PacketType.ofMC;
 public final class LoginPackets {
     //<editor-fold desc="Login clientbound packets" defaultstate="collapsed">
 
-    public static PacketType CLIENT_DISCONNECT            = ofMC(CLIENTBOUND, 0x00, "login_disconnect");     // Disconnect (login)
-    public static PacketType CLIENT_ENCRYPTION_REQUEST    = ofMC(CLIENTBOUND, 0x01, "hello");                // Encryption Request
-    public static PacketType CLIENT_LOGIN_SUCCESS         = ofMC(CLIENTBOUND, 0x02, "game_profile");         // Login Success
-    public static PacketType CLIENT_SET_COMPRESSION       = ofMC(CLIENTBOUND, 0x03, "login_compression");    // Set Compression
-    public static PacketType CLIENT_LOGIN_PLUGIN_REQUEST  = ofMC(CLIENTBOUND, 0x04, "custom_query");         // Login Plugin Request
-    public static PacketType CLIENT_COOKIE_REQUEST        = ofMC(CLIENTBOUND, 0x05, "cookie_request");       // Cookie Request (login)
+    public static final PacketType CLIENT_DISCONNECT            = ofMC(CLIENTBOUND, 0x00, "login_disconnect");     // Disconnect (login)
+    public static final PacketType CLIENT_ENCRYPTION_REQUEST    = ofMC(CLIENTBOUND, 0x01, "hello");                // Encryption Request
+    public static final PacketType CLIENT_LOGIN_SUCCESS         = ofMC(CLIENTBOUND, 0x02, "game_profile");         // Login Success
+    public static final PacketType CLIENT_SET_COMPRESSION       = ofMC(CLIENTBOUND, 0x03, "login_compression");    // Set Compression
+    public static final PacketType CLIENT_LOGIN_PLUGIN_REQUEST  = ofMC(CLIENTBOUND, 0x04, "custom_query");         // Login Plugin Request
+    public static final PacketType CLIENT_COOKIE_REQUEST        = ofMC(CLIENTBOUND, 0x05, "cookie_request");       // Cookie Request (login)
 
     //</editor-fold>
     //<editor-fold desc="Login serverbound packets" defaultstate="collapsed>
 
-    public static PacketType SERVER_LOGIN_START           = ofMC(SERVERBOUND, 0x00, "hello");                // Login Start
-    public static PacketType SERVER_ENCRYPTION_RESPONSE   = ofMC(SERVERBOUND, 0x01, "key");                  // Encryption Response
-    public static PacketType SERVER_LOGIN_PLUGIN_RESPONSE = ofMC(SERVERBOUND, 0x02, "custom_query_answer");  // Login Plugin Response
-    public static PacketType SERVER_LOGIN_ACKNOWLEDGED    = ofMC(SERVERBOUND, 0x03, "login_acknowledged");   // Login Acknowledged
-    public static PacketType SERVER_COOKIE_RESPONSE       = ofMC(SERVERBOUND, 0x04, "cookie_response");      // Cookie Response (login)
+    public static final PacketType SERVER_LOGIN_START           = ofMC(SERVERBOUND, 0x00, "hello");                // Login Start
+    public static final PacketType SERVER_ENCRYPTION_RESPONSE   = ofMC(SERVERBOUND, 0x01, "key");                  // Encryption Response
+    public static final PacketType SERVER_LOGIN_PLUGIN_RESPONSE = ofMC(SERVERBOUND, 0x02, "custom_query_answer");  // Login Plugin Response
+    public static final PacketType SERVER_LOGIN_ACKNOWLEDGED    = ofMC(SERVERBOUND, 0x03, "login_acknowledged");   // Login Acknowledged
+    public static final PacketType SERVER_COOKIE_RESPONSE       = ofMC(SERVERBOUND, 0x04, "cookie_response");      // Cookie Response (login)
 
     //</editor-fold>
 

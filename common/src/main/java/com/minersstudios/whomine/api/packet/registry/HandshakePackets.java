@@ -33,8 +33,8 @@ public final class HandshakePackets {
     //</editor-fold>
     //<editor-fold desc="Handshaking serverbound packets" defaultstate="collapsed">
 
-    public static PacketType SERVER_HANDSHAKE               = ofMC(SERVERBOUND, 0x00, "intention"); // Handshake
-    public static PacketType SERVER_LEGACY_SERVER_LIST_PING = ofMC(SERVERBOUND, 0xFE, "");          // Legacy Server List Ping
+    public static final PacketType SERVER_HANDSHAKE               = ofMC(SERVERBOUND, 0x00, "intention"); // Handshake
+    public static final PacketType SERVER_LEGACY_SERVER_LIST_PING = ofMC(SERVERBOUND, 0xFE, "");          // Legacy Server List Ping
 
     //</editor-fold>
 

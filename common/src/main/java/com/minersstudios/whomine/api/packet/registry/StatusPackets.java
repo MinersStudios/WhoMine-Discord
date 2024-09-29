@@ -25,14 +25,14 @@ import static com.minersstudios.whomine.api.packet.PacketType.ofMC;
 public final class StatusPackets {
     //<editor-fold desc="Status clientbound packets" defaultstate="collapsed">
 
-    public static PacketType CLIENT_STATUS_RESPONSE = ofMC(CLIENTBOUND, 0x00, "status_response"); // Status Response
-    public static PacketType CLIENT_PONG_RESPONSE   = ofMC(CLIENTBOUND, 0x01, "pong_response");   // Pong Response (status)
+    public static final PacketType CLIENT_STATUS_RESPONSE = ofMC(CLIENTBOUND, 0x00, "status_response"); // Status Response
+    public static final PacketType CLIENT_PONG_RESPONSE   = ofMC(CLIENTBOUND, 0x01, "pong_response");   // Pong Response (status)
 
     //</editor-fold>
     //<editor-fold desc="Status serverbound packets" defaultstate="collapsed">
 
-    public static PacketType SERVER_STATUS_REQUEST  = ofMC(SERVERBOUND, 0x00, "status_request");  // Status Request
-    public static PacketType SERVER_PING_REQUEST    = ofMC(SERVERBOUND, 0x01, "ping_request");    // Ping Request (status)
+    public static final PacketType SERVER_STATUS_REQUEST  = ofMC(SERVERBOUND, 0x00, "status_request");  // Status Request
+    public static final PacketType SERVER_PING_REQUEST    = ofMC(SERVERBOUND, 0x01, "ping_request");    // Ping Request (status)
 
     //</editor-fold>
 
