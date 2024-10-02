@@ -19,6 +19,10 @@ import static java.lang.annotation.ElementType.*;
  * <p>
  * The resource must match the {@link #REGEX regex} pattern.
  * <p>
+ * Example of usage:
+ * <pre>
+ *     {@code @Resource String resource = "resource";}
+ * </pre>
  * <table>
  *     <caption>Available Constants</caption>
  *     <tr>
@@ -45,12 +49,23 @@ import static java.lang.annotation.ElementType.*;
  *         <td>{@link #WHOMINE}</td>
  *         <td>{@value #WHOMINE}</td>
  *     </tr>
+ *     <tr>
+ *         <td>{@link #WMBLOCK}</td>
+ *         <td>{@value #WMBLOCK}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #WMITEM}</td>
+ *         <td>{@value #WMITEM}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #WMDECOR}</td>
+ *         <td>{@value #WMDECOR}</td>
+ *     </tr>
+ *     <tr>
+ *         <td>{@link #WMENTITY}</td>
+ *         <td>{@value #WMENTITY}</td>
+ *     </tr>
  * </table>
- * <p>
- * Example of usage:
- * <pre>
- *     {@code @Resource String resource = "resource";}
- * </pre>
  *
  * @see Resource.Validator
  * @see ResourcePath
@@ -78,8 +93,18 @@ public @interface Resource {
     @Resource String REALMS = "realms";
     /** The Paper resource */
     @Resource String PAPER = "paper";
+    /** The Velocity resource */
+    @Resource String VELOCITY = "velocity";
     /** The WhoMine resource */
     @Resource String WHOMINE = "whomine";
+    /** The WhoMine's block resource */
+    @Resource String WMBLOCK = "wmblock";
+    /** The WhoMine's item resource */
+    @Resource String WMITEM = "wmitem";
+    /** The WhoMine's decor resource */
+    @Resource String WMDECOR = "wmdecor";
+    /** The WhoMine's entity resource */
+    @Resource String WMENTITY = "wmentity";
 
     /**
      * Validator class for the {@link Resource} annotation to check whether the
