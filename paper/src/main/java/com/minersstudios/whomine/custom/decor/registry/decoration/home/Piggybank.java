@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.custom.decor.registry.decoration.home;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;
 import com.minersstudios.whomine.custom.decor.DecorHitBox;
@@ -46,7 +46,7 @@ public abstract class Piggybank<C extends CustomDecorData<C>> extends CustomDeco
                 .recipes(
                         unused -> RecipeEntry.fromBuilder(
                                 RecipeBuilder.shaped()
-                                .group(SharedConstants.MSDECOR_NAMESPACE + ":piggybank")
+                                .group(Resource.WMDECOR + ":piggybank")
                                 .category(CraftingBookCategory.BUILDING)
                                 .shape(
                                         "  P",

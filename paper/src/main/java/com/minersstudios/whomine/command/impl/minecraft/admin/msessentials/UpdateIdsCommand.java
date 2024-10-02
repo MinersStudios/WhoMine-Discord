@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.msessentials;
 
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
@@ -17,7 +17,7 @@ public final class UpdateIdsCommand {
             final @NotNull CommandSender sender
     ) {
         final long time = System.currentTimeMillis();
-        final Cache cache = plugin.getCache();
+        final PaperCache cache = plugin.getCache();
 
         cache.getIdMap().reloadIds();
         cache.getPlayerInfoMap().playerInfos().forEach(PlayerInfo::initNames);

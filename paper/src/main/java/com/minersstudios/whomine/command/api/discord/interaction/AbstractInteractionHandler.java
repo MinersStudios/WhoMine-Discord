@@ -35,9 +35,9 @@ abstract class AbstractInteractionHandler<T extends Interaction> {
 
         final User user = this.interaction.getUser();
 
-        if (this.plugin.getDiscordManager().isVerified(user)) {
-            this.playerInfo = PlayerInfo.fromDiscord(this.plugin, user.getIdLong());
-        }
+        //if (this.plugin.getDiscordModule().isVerified(user)) {
+        //    this.playerInfo = PlayerInfo.fromDiscord(this.plugin, user.getIdLong());
+        //}
 
         return this.playerInfo;
     }

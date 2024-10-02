@@ -61,7 +61,7 @@ public final class TodoCommand extends PluginCommandExecutor {
         }
 
         final Player player = (Player) sender;
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getModule(), player);
 
         if (playerInfo.isMuted()) {
             MSLogger.warning(

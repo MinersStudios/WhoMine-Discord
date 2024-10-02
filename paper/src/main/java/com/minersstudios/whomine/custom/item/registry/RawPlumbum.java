@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.custom.item.registry;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.utility.MSBlockUtils;
 import org.bukkit.Material;
@@ -70,7 +70,7 @@ public final class RawPlumbum extends CustomItemImpl {
                 RecipeEntry.fromBuilder(shapedBuilder, true),
                 RecipeEntry.fromBuilder(
                         RecipeBuilder.shaped()
-                        .namespacedKey(new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, "raw_plumbum_from_block"))
+                        .namespacedKey(new NamespacedKey(Resource.WMITEM, "raw_plumbum_from_block"))
                         .result(this.itemStack.clone().add(8))
                         .shape("I")
                         .ingredients(

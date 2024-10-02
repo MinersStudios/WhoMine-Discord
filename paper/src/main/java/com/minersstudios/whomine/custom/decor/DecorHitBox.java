@@ -19,7 +19,7 @@ import javax.annotation.concurrent.Immutable;
 import java.util.EnumSet;
 import java.util.Set;
 
-import static com.minersstudios.whomine.api.utility.SharedConstants.MSDECOR_NAMESPACE;
+import static com.minersstudios.whomine.api.annotation.Resource.WMDECOR;
 
 /**
  * Represents a DecorHitBox, defining the hitbox properties for custom decor
@@ -41,10 +41,10 @@ public final class DecorHitBox {
     public static final String HITBOX_INTERACTIONS_KEY = "hitbox_interactions";
     public static final String HITBOX_BOUNDING_BOX_KEY = "hitbox_bounding_box";
 
-    public static final NamespacedKey HITBOX_CHILD_NAMESPACED_KEY =        new NamespacedKey(MSDECOR_NAMESPACE, HITBOX_CHILD_KEY);
-    public static final NamespacedKey HITBOX_DISPLAY_NAMESPACED_KEY =      new NamespacedKey(MSDECOR_NAMESPACE, HITBOX_DISPLAY_KEY);
-    public static final NamespacedKey HITBOX_INTERACTIONS_NAMESPACED_KEY = new NamespacedKey(MSDECOR_NAMESPACE, HITBOX_INTERACTIONS_KEY);
-    public static final NamespacedKey HITBOX_BOUNDING_BOX_NAMESPACED_KEY = new NamespacedKey(MSDECOR_NAMESPACE, HITBOX_BOUNDING_BOX_KEY);
+    public static final NamespacedKey HITBOX_CHILD_NAMESPACED_KEY =        new NamespacedKey(WMDECOR, HITBOX_CHILD_KEY);
+    public static final NamespacedKey HITBOX_DISPLAY_NAMESPACED_KEY =      new NamespacedKey(WMDECOR, HITBOX_DISPLAY_KEY);
+    public static final NamespacedKey HITBOX_INTERACTIONS_NAMESPACED_KEY = new NamespacedKey(WMDECOR, HITBOX_INTERACTIONS_KEY);
+    public static final NamespacedKey HITBOX_BOUNDING_BOX_NAMESPACED_KEY = new NamespacedKey(WMDECOR, HITBOX_BOUNDING_BOX_KEY);
 
     /**
      * Constructs a DecorHitBox based on the provided Builder

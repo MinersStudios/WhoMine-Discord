@@ -12,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * Represents a resourced-path used in the plugin.
+ * Represents a resourced-path used in the API.
  * <p>
  * <table>
  *     <caption>Available factory methods</caption>

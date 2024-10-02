@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
@@ -63,7 +63,7 @@ public final class SetServerSpawn extends PluginCommandExecutor {
             final @NotNull String label,
             final String @NotNull ... args
     ) {
-        final Config config = this.getPlugin().getConfiguration();
+        final PaperConfig config = this.getModule().getConfiguration();
         final Server server = sender.getServer();
 
         switch (args.length) {
@@ -196,7 +196,7 @@ public final class SetServerSpawn extends PluginCommandExecutor {
                 final var names = new ObjectArrayList<String>();
 
                 for (final var world : sender.getServer().getWorlds()) {
-                    if (!this.getPlugin().getCache().getWorldDark().isWorldDark(world)) {
+                    if (!this.getModule().getCache().getWorldDark().isWorldDark(world)) {
                         names.add(world.getName());
                     }
                 }
@@ -250,7 +250,7 @@ public final class SetServerSpawn extends PluginCommandExecutor {
     }
 
     private static void setNewLocation(
-            final @NotNull Config config,
+            final @NotNull PaperConfig config,
             final @NotNull CommandSender sender,
             final @NotNull Location location
     ) {

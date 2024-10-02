@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.Config;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.PlayerName;
@@ -18,7 +18,7 @@ public final class AdminInfoCommand {
             final @NotNull CommandSender sender,
             final @NotNull PlayerInfo playerInfo
     ) {
-        final Config config = plugin.getConfiguration();
+        final PaperConfig config = plugin.getConfiguration();
         final PlayerFile playerFile = playerInfo.getPlayerFile();
         final PlayerName playerName = playerFile.getPlayerName();
         final PlayerSettings playerSettings = playerFile.getPlayerSettings();

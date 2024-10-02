@@ -143,7 +143,6 @@ public final class Brazier extends CustomDecorDataImpl<Brazier> {
 
                             final ItemDisplay itemDisplay = customDecor.getDisplay();
                             final ItemStack displayItem = itemDisplay.getItemStack();
-                            assert displayItem != null;
                             final ItemStack typeItem = nextType.getItem();
                             final ItemMeta typeMeta = typeItem.getItemMeta();
 

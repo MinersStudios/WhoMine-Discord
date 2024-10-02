@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.player;
 
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.api.locale.Translations;
@@ -60,7 +60,7 @@ public final class PrivateMessageCommand extends PluginCommandExecutor {
             return false;
         }
 
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine plugin = this.getModule();
         final PlayerInfo senderInfo =
                 sender instanceof Player player
                 ? PlayerInfo.fromOnlinePlayer(plugin, player)
@@ -115,7 +115,7 @@ public final class PrivateMessageCommand extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         return args.length == 1
-                ? MSPlayerUtils.getLocalPlayerNames(this.getPlugin())
+                ? MSPlayerUtils.getLocalPlayerNames(this.getModule())
                 : EMPTY_TAB;
     }
 }

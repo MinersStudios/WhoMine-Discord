@@ -1,22 +1,22 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.decor.CustomDecor;
 import com.minersstudios.whomine.custom.decor.event.CustomDecorClickEvent;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import org.bukkit.entity.Interaction;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerInteractAtEntityListener extends EventListener {
-
-    public PlayerInteractAtEntityListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerInteractAtEntityEvent.class)
+public final class PlayerInteractAtEntityListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerInteractAtEntity(final @NotNull PlayerInteractAtEntityEvent event) {
+    public void onPlayerInteractAtEntity(final @NotNull PaperEventContainer<PlayerInteractAtEntityEvent> container) {
+        final PlayerInteractAtEntityEvent event = container.getEvent();
+
         if (!(event.getRightClicked() instanceof final Interaction interaction)) {
             return;
         }
@@ -37,7 +37,7 @@ public final class PlayerInteractAtEntityListener extends EventListener {
                     interaction.getServer().getPluginManager().callEvent(clickEvent);
 
                     if (!clickEvent.isCancelled()) {
-                        customDecor.getData().doClickAction(this.getPlugin(), clickEvent);
+                        customDecor.getData().doClickAction(container.getModule(), clickEvent);
                     }
                 }
         );

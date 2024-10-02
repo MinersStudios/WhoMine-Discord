@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.player;
 
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.discord.BotHandler;
@@ -65,7 +65,7 @@ public final class DiscordCommand extends PluginCommandExecutor {
             final @NotNull String label,
             final String @NotNull ... args
     ) {
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine plugin = this.getModule();
         final Player player = (Player) sender;
 
         if (args.length > 0) {
@@ -84,11 +84,11 @@ public final class DiscordCommand extends PluginCommandExecutor {
                         return true;
                     }
 
-                    final DiscordManager discordManager = plugin.getDiscordManager();
+                    final DiscordManager discordModule = plugin.getDiscordModule();
 
-                    discordManager.retrieveUser(id)
+                    discordModule.retrieveUser(id)
                     .ifPresent(user -> {
-                        discordManager.sendEmbeds(
+                        discordModule.sendEmbeds(
                                 user,
                                 BotHandler.craftEmbed(
                                         ChatUtils.serializePlainComponent(

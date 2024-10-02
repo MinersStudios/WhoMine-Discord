@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.custom.decor.registry.furniture.chair;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.custom.decor.*;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +43,7 @@ public abstract class Chair<C extends CustomDecorData<C>> extends CustomDecorDat
                 .recipes(
                         unused -> RecipeEntry.fromBuilder(
                                 RecipeBuilder.shaped()
-                                .group(SharedConstants.MSDECOR_NAMESPACE + ":chair")
+                                .group(Resource.WMDECOR + ":chair")
                                 .category(CraftingBookCategory.BUILDING)
                                 .shape(
                                         "P  ",

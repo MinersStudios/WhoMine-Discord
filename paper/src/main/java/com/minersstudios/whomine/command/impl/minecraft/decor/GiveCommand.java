@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.decor;
 
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.command.CommandSender;

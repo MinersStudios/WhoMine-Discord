@@ -47,7 +47,7 @@ public final class SitCommand extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         final Player player = (Player) sender;
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getModule(), player);
 
         if (!player.getLocation().subtract(0.0d, 0.2d, 0.0d).getBlock().getType().isSolid()) {
             MSLogger.warning(

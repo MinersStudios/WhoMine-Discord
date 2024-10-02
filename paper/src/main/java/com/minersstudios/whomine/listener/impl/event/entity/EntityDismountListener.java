@@ -1,24 +1,22 @@
 package com.minersstudios.whomine.listener.impl.event.entity;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class EntityDismountListener extends EventListener {
-
-    public EntityDismountListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = EntityDismountEvent.class)
+public final class EntityDismountListener extends PaperEventListener {
 
     @EventHandler
-    public void onEntityDismount(final @NotNull EntityDismountEvent event) {
-        if (event.getEntity() instanceof final Player player) {
+    public void onEntityDismount(final @NotNull PaperEventContainer<EntityDismountEvent> container) {
+        if (container.getEvent().getEntity() instanceof final Player player) {
             PlayerInfo
-            .fromOnlinePlayer(this.getPlugin(), player)
+            .fromOnlinePlayer(container.getModule(), player)
             .unsetSitting();
         }
     }

@@ -1,29 +1,28 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.BlockUtils;
 import com.minersstudios.whomine.utility.MSDecorUtils;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class BlockPlaceListener extends EventListener {
+@ListenFor(eventClass = BlockPlaceEvent.class)
+public final class BlockPlaceListener extends PaperEventListener {
 
-    public BlockPlaceListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(final @NotNull BlockPlaceEvent event) {
+    @EventHandler(priority = EventOrder.CUSTOM)
+    public void onBlockPlace(final @NotNull PaperEventContainer<BlockPlaceEvent> container) {
+        final BlockPlaceEvent event = container.getEvent();
         final Player player = event.getPlayer();
         final Block block = event.getBlockPlaced();
         final Material blockType = block.getType();
@@ -54,7 +53,7 @@ public final class BlockPlaceListener extends EventListener {
 
         if (blockType == Material.NOTE_BLOCK) {
             new CustomBlock(block, CustomBlockData.defaultData())
-                    .place(this.getPlugin(), player, event.getHand());
+                    .place(container.getModule(), player, event.getHand());
         }
     }
 }

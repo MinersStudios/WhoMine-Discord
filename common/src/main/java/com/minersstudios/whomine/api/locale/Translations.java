@@ -9,7 +9,7 @@ import static com.minersstudios.whomine.api.locale.TranslationRegistry.registry;
 import static com.minersstudios.whomine.api.utility.Font.Chars.*;
 
 /**
- * This class stores all translations used in the WhoMine plugins
+ * This class stores all translations used in the API
  *
  * @see Translation
  * @see <a href="https://whomine.net/lang">Default translation repository</a>

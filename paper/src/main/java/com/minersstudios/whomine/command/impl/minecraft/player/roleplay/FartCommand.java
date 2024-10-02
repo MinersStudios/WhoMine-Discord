@@ -59,7 +59,7 @@ public final class FartCommand extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         final Player player = (Player) sender;
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getModule(), player);
 
         if (playerInfo.isMuted()) {
             MSLogger.warning(
@@ -96,7 +96,7 @@ public final class FartCommand extends PluginCommandExecutor {
         if (withPoop) {
             CustomDecorType.POOP.getCustomDecorData()
             .place(
-                    this.getPlugin(),
+                    this.getModule(),
                     MSPosition.of(location.toBlockLocation()),
                     player,
                     BlockFace.UP,

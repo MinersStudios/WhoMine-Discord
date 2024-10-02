@@ -55,7 +55,7 @@ public final class SpitCommand extends PluginCommandExecutor {
         final Player player = (Player) sender;
         final World world = player.getWorld();
         final Location location = player.getLocation();
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getModule(), player);
 
         if (playerInfo.isMuted()) {
             MSLogger.warning(

@@ -1,25 +1,27 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerTeleportListener extends EventListener {
-
-    public PlayerTeleportListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerTeleportEvent.class)
+public final class PlayerTeleportListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerTeleport(final @NotNull PlayerTeleportEvent event) {
+    public void onPlayerTeleport(final @NotNull PaperEventContainer<PlayerTeleportEvent> container) {
+        final PlayerTeleportEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
+
         final Player player = event.getPlayer();
-        final Cache cache = this.getPlugin().getCache();
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PaperCache cache = module.getCache();
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(module, player);
 
         cache.getDiggingMap().removeAll(player);
         cache.getStepMap().put(player, 0.0d);

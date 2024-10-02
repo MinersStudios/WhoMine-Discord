@@ -34,6 +34,7 @@ import org.jetbrains.annotations.Nullable;
  * @see #destroy(WhoMine, Player)
  */
 public final class CustomBlock {
+
     private final Block block;
     private final CustomBlockData customBlockData;
 
@@ -127,22 +128,27 @@ public final class CustomBlock {
             final NoteBlock noteBlock;
             final PlacingType placingType = this.customBlockData.getBlockSettings().getPlacing().getType();
 
-            if (placingType instanceof final PlacingType.Default normal) {
-                noteBlock = normal.getNoteBlockData().craftNoteBlock(blockData);
-            } else if (placingType instanceof final PlacingType.Directional directional) {
-                if (blockFace == null) {
-                    throw new IllegalArgumentException("Block face is null, but placing type is directional! " + key);
-                }
+            switch (placingType) {
+                case final PlacingType.Default normal -> noteBlock = normal.getNoteBlockData().craftNoteBlock(blockData);
+                case final PlacingType.Directional directional -> {
+                    if (blockFace == null) {
+                        throw new IllegalArgumentException(
+                                "Block face is null, but placing type is directional! " + key
+                        );
+                    }
 
-                noteBlock = directional.getNoteBlockData(blockFace).craftNoteBlock(blockData);
-            } else if (placingType instanceof final PlacingType.Orientable orientable) {
-                if (axis == null) {
-                    throw new IllegalArgumentException("Axis is null, but placing type is orientable! " + key);
+                    noteBlock = directional.getNoteBlockData(blockFace).craftNoteBlock(blockData);
                 }
+                case final PlacingType.Orientable orientable -> {
+                    if (axis == null) {
+                        throw new IllegalArgumentException("Axis is null, but placing type is orientable! " + key);
+                    }
 
-                noteBlock = orientable.getNoteBlockData(axis).craftNoteBlock(blockData);
-            } else {
-                throw new IllegalArgumentException("Unknown placing type: " + placingType.getClass().getName());
+                    noteBlock = orientable.getNoteBlockData(axis).craftNoteBlock(blockData);
+                }
+                default -> throw new IllegalArgumentException(
+                        "Unknown placing type: " + placingType.getClass().getName()
+                );
             }
 
             this.block.setBlockData(noteBlock);

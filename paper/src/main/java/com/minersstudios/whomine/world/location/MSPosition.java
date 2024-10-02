@@ -1091,9 +1091,9 @@ public final class MSPosition implements Cloneable {
         int hash = 3;
 
         hash = 19 * hash + Objects.hashCode(this.world());
-        hash = 19 * hash + (int) (Double.doubleToLongBits(this.x) ^ (Double.doubleToLongBits(this.x) >>> 32));
-        hash = 19 * hash + (int) (Double.doubleToLongBits(this.y) ^ (Double.doubleToLongBits(this.y) >>> 32));
-        hash = 19 * hash + (int) (Double.doubleToLongBits(this.z) ^ (Double.doubleToLongBits(this.z) >>> 32));
+        hash = 19 * hash + Long.hashCode(Double.doubleToLongBits(this.x));
+        hash = 19 * hash + Long.hashCode(Double.doubleToLongBits(this.y));
+        hash = 19 * hash + Long.hashCode(Double.doubleToLongBits(this.z));
         hash = 19 * hash + Float.floatToIntBits(this.pitch);
         hash = 19 * hash + Float.floatToIntBits(this.yaw);
 

@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.world.location.MSBoundingBox;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
  * Utility class for {@link CustomDecorData}
  */
 public final class MSDecorUtils {
-    public static final String NAMESPACED_KEY_REGEX = '(' + SharedConstants.MSDECOR_NAMESPACE + "):(" + Path.REGEX + ")";
+    public static final String NAMESPACED_KEY_REGEX = '(' + Resource.WMDECOR + "):(" + Path.REGEX + ")";
     public static final Pattern NAMESPACED_KEY_PATTERN = Pattern.compile(NAMESPACED_KEY_REGEX);
 
     @Contract(" -> fail")
@@ -105,7 +105,7 @@ public final class MSDecorUtils {
                 );
         return entities.isEmpty()
                 ? null
-                : (Interaction) entities.get(0).getBukkitEntity();
+                : (Interaction) entities.getFirst().getBukkitEntity();
     }
 
     /**

@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.world.sound;
 
 import com.minersstudios.whomine.world.location.MSPosition;
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import net.minecraft.sounds.SoundEvent;
 import org.bukkit.Location;
 import org.bukkit.SoundCategory;
@@ -121,7 +121,7 @@ public interface Sound {
      * Plays this Sound to the specified player.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param player The player to play this sound to
      * @param entity The entity source of this sound
@@ -135,7 +135,7 @@ public interface Sound {
      * Plays this Sound to the specified player.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param player   The player to play this sound to
      * @param position The position to play this sound at
@@ -149,7 +149,7 @@ public interface Sound {
      * Plays this Sound to the specified player.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param player   The player to play this sound to
      * @param location The location to play this sound at
@@ -163,7 +163,7 @@ public interface Sound {
      * Plays this sound at the specified entity in the world.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param entity The entity source of this sound
      */
@@ -173,7 +173,7 @@ public interface Sound {
      * Plays this Sound at the specified position in the world.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param position The position to play this sound at
      * @throws IllegalStateException If the world of the position is null
@@ -184,7 +184,7 @@ public interface Sound {
      * Plays this Sound at the specified location in the world.
      * <br>
      * If the place sound is {@link SoundGroup#WOOD}, the wood place sound from
-     * the {@link Config} will be played instead.
+     * the {@link PaperConfig} will be played instead.
      *
      * @param location The location to play this sound at
      * @throws IllegalStateException If the world of the location is null

@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.api;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.WhoMineImpl;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.command.api.minecraft.Commodore;
@@ -201,7 +201,7 @@ public final class CommandManager {
         //<editor-fold desc="Discord commands">
         this.plugin.getStatusHandler().addWatcher(
                 StatusWatcher.builder()
-                .statuses(WhoMine.LOADED_DISCORD)
+                .statuses(MainModule.LOADED_DISCORD)
                 .successRunnable(
                         () -> {
                             new AddSkinCommand(this.plugin).register();
@@ -255,7 +255,7 @@ public final class CommandManager {
             throw new IllegalStateException("Command already registered : " + executor);
         }
 
-        this.plugin.getDiscordManager().getJda()
+        this.plugin.getDiscordModule().getJda()
         .ifPresent(
                 jda -> jda.upsertCommand(executor.getData())
                           .onSuccess(

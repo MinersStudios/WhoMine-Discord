@@ -2,6 +2,7 @@ package com.minersstudios.whomine.custom.decor;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.decor.action.DecorBreakAction;
@@ -1447,7 +1448,7 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
         public @NotNull Builder key(final @Path @NotNull String key) throws InvalidRegexException {
             Path.Validator.validate(key);
 
-            this.namespacedKey = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, key);
+            this.namespacedKey = new NamespacedKey(Resource.WMDECOR, key);
 
             return this;
         }
@@ -1495,6 +1496,10 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
             }
 
             this.itemStack = setTypeKey(itemStack, this.namespacedKey.getKey());
+            final ItemMeta meta = this.itemStack.getItemMeta();
+
+            meta.setMaxStackSize(SharedConstants.DECOR_MAX_STACK_SIZE);
+            this.itemStack.setItemMeta(meta);
 
             return this;
         }
@@ -1995,7 +2000,7 @@ public abstract class CustomDecorDataImpl<D extends CustomDecorData<D>> implemen
             Path.Validator.validate(key);
 
             final String typedKey = builder.namespacedKey.getKey() + ".type." + key;
-            this.namespacedKey = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, typedKey);
+            this.namespacedKey = new NamespacedKey(Resource.WMDECOR, typedKey);
             this.itemStack = setTypeKey(itemStack, typedKey);
         }
 

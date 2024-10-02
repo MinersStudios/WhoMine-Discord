@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.utility;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.api.utility.Font;
@@ -81,8 +81,8 @@ public final class MessageUtils {
             final @NotNull Component message
     ) {
         final WhoMine plugin = WhoMine.singleton();
-        final Config config = plugin.getConfiguration();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final PaperConfig config = plugin.getConfiguration();
+        final DiscordManager discordManager = plugin.getDiscordModule();
 
         if (chatType == ChatType.LOCAL && location != null) {
             final Component localMessage = space()
@@ -142,7 +142,7 @@ public final class MessageUtils {
             final @NotNull Component message
     ) {
         final WhoMine plugin = WhoMine.singleton();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final DiscordManager discordManager = plugin.getDiscordModule();
         final CommandSender commandSender = sender == plugin.getCache().getConsolePlayerInfo()
                 ? plugin.getServer().getConsoleSender()
                 : sender.getOnlinePlayer();
@@ -202,8 +202,8 @@ public final class MessageUtils {
             final @NotNull RolePlayActionType rolePlayActionType
     ) {
         final WhoMine plugin = WhoMine.singleton();
-        final Config config = plugin.getConfiguration();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final PaperConfig config = plugin.getConfiguration();
+        final DiscordManager discordManager = plugin.getDiscordModule();
         final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, sender);
         final Component fullMessage = switch (rolePlayActionType) {
             case DO ->
@@ -270,7 +270,7 @@ public final class MessageUtils {
             final @Nullable Player killer
     ) {
         final WhoMine plugin = WhoMine.singleton();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final DiscordManager discordManager = plugin.getDiscordModule();
         final Location deathLocation = killed.getLocation();
         final PlayerInfo killedInfo = PlayerInfo.fromOnlinePlayer(plugin, killed);
         final PlayerInfo killerInfo = killer != null
@@ -334,7 +334,7 @@ public final class MessageUtils {
         }
 
         final WhoMine plugin = WhoMine.singleton();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final DiscordManager discordManager = plugin.getDiscordModule();
         final Component joinMessage = space()
                 .append(playerInfo.getGoldenName()
                 .append(space()))
@@ -368,7 +368,7 @@ public final class MessageUtils {
         }
 
         final WhoMine plugin = WhoMine.singleton();
-        final DiscordManager discordManager = plugin.getDiscordManager();
+        final DiscordManager discordManager = plugin.getDiscordModule();
         final Component quitMessage = space()
                 .append(playerInfo.getGoldenName()
                 .append(space()))

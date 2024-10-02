@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.custom.item.registry;
 
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.item.CustomItemImpl;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.utility.MSBlockUtils;
@@ -46,14 +46,14 @@ public final class PlumbumIngot extends CustomItemImpl {
         final ItemStack input = CustomItemType.RAW_PLUMBUM.getCustomItem().getItem();
         final var furnaceBuilder =
                 RecipeBuilder.furnace()
-                .namespacedKey(new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, "plumbum_ingot_furnace"))
+                .namespacedKey(new NamespacedKey(Resource.WMITEM, "plumbum_ingot_furnace"))
                 .result(this.itemStack)
                 .ingredient(new RecipeChoice.ExactChoice(input))
                 .experience(0.7f)
                 .cookingTime(200);
         final var blastingBuilder =
                 RecipeBuilder.blasting()
-                .namespacedKey(new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, "plumbum_ingot_blast"))
+                .namespacedKey(new NamespacedKey(Resource.WMITEM, "plumbum_ingot_blast"))
                 .result(this.itemStack)
                 .ingredient(new RecipeChoice.ExactChoice(input))
                 .experience(0.7f)
@@ -77,7 +77,7 @@ public final class PlumbumIngot extends CustomItemImpl {
                 RecipeEntry.fromBuilder(blastingBuilder),
                 RecipeEntry.fromBuilder(
                         RecipeBuilder.shaped()
-                        .namespacedKey(new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, "plumbum_ingot_from_block"))
+                        .namespacedKey(new NamespacedKey(Resource.WMITEM, "plumbum_ingot_from_block"))
                         .result(this.itemStack.clone().add(8))
                         .shape("I")
                         .ingredients(

@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.api.locale;
 
-import com.minersstudios.whomine.api.utility.SharedConstants;
+import com.minersstudios.whomine.api.annotation.Resource;
 import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
@@ -302,7 +302,7 @@ public interface TranslationRegistry extends Translator {
 
         TranslationRegistryImpl.registry =
                 new TranslationRegistryImpl(
-                        Key.key(SharedConstants.WHOMINE_NAMESPACE, "translations"),
+                        Key.key(Resource.WHOMINE, "translations"),
                         defaultLocale
                 );
     }

@@ -1,7 +1,10 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.TranslationRegistry;
 import com.minersstudios.whomine.player.PlayerFile;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -11,8 +14,7 @@ import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,7 +22,8 @@ import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.*;
 
-public final class AsyncPlayerPreLoginListener extends EventListener {
+@ListenFor(eventClass = AsyncPlayerPreLoginEvent.class)
+public final class AsyncPlayerPreLoginListener extends PaperEventListener {
     //<editor-fold desc="Component Messages" defaultstate="collapsed">
     private static final Style TITLE_STYLE = Style.style(NamedTextColor.RED, TextDecoration.BOLD);
     private static final Style SUBTITLE_STYLE = Style.style(NamedTextColor.GRAY);
@@ -50,15 +53,13 @@ public final class AsyncPlayerPreLoginListener extends EventListener {
             );
     //</editor-fold>
 
-    public AsyncPlayerPreLoginListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    public void onAsyncPlayerPreLogin(final @NotNull PaperEventContainer<AsyncPlayerPreLoginEvent> container) {
+        final AsyncPlayerPreLoginEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onAsyncPlayerPreLogin(final @NotNull AsyncPlayerPreLoginEvent event) {
         final String nickname = event.getName();
-        final WhoMine plugin = this.getPlugin();
-        final PlayerInfo playerInfo = PlayerInfo.fromProfile(plugin, event.getUniqueId(), nickname);
+        final PlayerInfo playerInfo = PlayerInfo.fromProfile(module, event.getUniqueId(), nickname);
 
         if (!playerInfo.isWhiteListed()) {
             event.disallow(
@@ -76,13 +77,13 @@ public final class AsyncPlayerPreLoginListener extends EventListener {
                             )
                     )
             );
-        } else if (!plugin.isFullyLoaded()) {
+        } else if (!module.isFullyLoaded()) {
             event.disallow(
                     KICK_OTHER,
                     MESSAGE_SERVER_NOT_FULLY_LOADED
             );
         } else if (
-                plugin.getConfiguration().isDeveloperMode()
+                module.getConfiguration().isDeveloperMode()
                 && !playerInfo.getOfflinePlayer().isOp()
         ) {
             event.disallow(

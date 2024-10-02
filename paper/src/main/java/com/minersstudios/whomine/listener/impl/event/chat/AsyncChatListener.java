@@ -1,16 +1,18 @@
 package com.minersstudios.whomine.listener.impl.event.chat;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.chat.ChatType;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.utility.MessageUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
@@ -19,19 +21,18 @@ import static com.minersstudios.whomine.api.locale.Translations.COMMAND_MUTE_ALR
 import static com.minersstudios.whomine.api.locale.Translations.WARNING_YOU_CANT_DO_THIS_NOW;
 import static net.kyori.adventure.text.Component.text;
 
-public final class AsyncChatListener extends EventListener {
+@ListenFor(eventClass = AsyncChatEvent.class)
+public final class AsyncChatListener extends PaperEventListener {
 
-    public AsyncChatListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.LOW, ignoreCancelled = true)
+    public void onAsyncChat(final @NotNull PaperEventContainer<AsyncChatEvent> container) {
+        final AsyncChatEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
-    public void onAsyncChat(final @NotNull AsyncChatEvent event) {
         event.setCancelled(true);
 
-        final WhoMine plugin = this.getPlugin();
         final Player player = event.getPlayer();
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(module, player);
 
         if (
                 playerInfo.isInWorldDark()
@@ -98,7 +99,7 @@ public final class AsyncChatListener extends EventListener {
             }
         } else {
             MessageUtils.sendMessageToChat(playerInfo, player.getLocation(), ChatType.LOCAL, text(message));
-            plugin.getCache().getChatBuffer().receiveMessage(player, message + " ");
+            module.getCache().getChatBuffer().receiveMessage(player, message + " ");
         }
     }
 }

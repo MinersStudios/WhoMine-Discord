@@ -57,7 +57,7 @@ public final class TeleportToLastDeathLocationCommand extends PluginCommandExecu
             return false;
         }
 
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -99,7 +99,7 @@ public final class TeleportToLastDeathLocationCommand extends PluginCommandExecu
             final String @NotNull ... args
     ) {
         return args.length == 1
-                ? MSPlayerUtils.getLocalPlayerNames(this.getPlugin())
+                ? MSPlayerUtils.getLocalPlayerNames(this.getModule())
                 : EMPTY_TAB;
     }
 }

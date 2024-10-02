@@ -1,19 +1,21 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.Wearable;
+import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.inventory.InventoryButton;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -27,7 +29,8 @@ import java.util.Set;
 
 import static net.kyori.adventure.text.Component.text;
 
-public final class InventoryClickListener extends EventListener {
+@ListenFor(eventClass = InventoryClickEvent.class)
+public final class InventoryClickListener extends PaperEventListener {
     private static final int HELMET_SLOT = 39;
     private static final Set<InventoryType> IGNORABLE_INVENTORY_TYPES = EnumSet.of(
             //<editor-fold desc="Ignorable inventory types" defaultstate="collapsed">
@@ -46,12 +49,11 @@ public final class InventoryClickListener extends EventListener {
             //</editor-fold>
     );
 
-    public InventoryClickListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.CUSTOM)
+    public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
+        final InventoryClickEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onInventoryClick(final @NotNull InventoryClickEvent event) {
         final Inventory clickedInventory = event.getClickedInventory();
         final ClickType clickType = event.getClick();
         final ItemStack currentItem = event.getCurrentItem();
@@ -86,10 +88,9 @@ public final class InventoryClickListener extends EventListener {
                 }
             }
 
-            final WhoMine plugin = this.getPlugin();
             final Player player = (Player) event.getWhoClicked();
 
-            if (plugin.getCache().getWorldDark().isInWorldDark(player)) {
+            if (module.getCache().getWorldDark().isInWorldDark(player)) {
                 event.setCancelled(true);
             }
 
@@ -104,7 +105,7 @@ public final class InventoryClickListener extends EventListener {
                         && !cursorItem.isEmpty()
                 ) {
                     player.setItemOnCursor(null);
-                    plugin.runTask(
+                    module.runTask(
                             () -> player.getInventory().setHelmet(cursorItem)
                     );
                 }
@@ -158,7 +159,7 @@ public final class InventoryClickListener extends EventListener {
                     return;
                 }
 
-                this.getPlugin().runTask(() -> {
+                module.runTask(() -> {
                     inventory.setHelmet(cursorItem);
                     player.setItemOnCursor(currentItem);
                 });
@@ -176,7 +177,7 @@ public final class InventoryClickListener extends EventListener {
             CustomItem.fromItemStack(currentItem, Wearable.class)
             .ifPresent(w -> {
                 event.setCancelled(true);
-                this.getPlugin().runTask(() -> {
+                module.runTask(() -> {
                     inventory.setHelmet(currentItem);
                     currentItem.setAmount(0);
                 });

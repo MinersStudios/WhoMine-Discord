@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.inventory.holder;
 
-import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.inventory.CustomInventory;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;

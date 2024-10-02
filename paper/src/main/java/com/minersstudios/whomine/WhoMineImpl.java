@@ -1,6 +1,7 @@
 package com.minersstudios.whomine;
 
 import com.google.common.base.Charsets;
+import com.minersstudios.whomine.api.gui.GuiManager;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.api.utility.SharedConstants;
@@ -10,7 +11,7 @@ import com.minersstudios.whomine.custom.decor.CustomDecorType;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.discord.DiscordManager;
 import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
-import com.minersstudios.whomine.listener.api.ListenerManager;
+import com.minersstudios.whomine.listener.api.PaperListenerManager;
 import com.minersstudios.whomine.listener.impl.event.mechanic.DosimeterMechanic;
 import com.minersstudios.whomine.api.locale.TranslationRegistry;
 import com.minersstudios.whomine.api.locale.Translations;
@@ -34,7 +35,10 @@ import fr.xephi.authme.api.v3.AuthMeApi;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.coreprotect.CoreProtect;
 import net.kyori.adventure.text.format.NamedTextColor;
-import org.bukkit.Material;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -42,15 +46,14 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
-import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.UnknownNullability;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.io.*;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
@@ -67,17 +70,15 @@ import static net.kyori.adventure.text.Component.text;
 public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     static WhoMine singleton;
 
-    private final File configFile;
-    private final Cache cache;
-    private final Config config;
     private final StatusHandler statusHandler;
-    private final ListenerManager listenerManager;
+    private final PaperCache cache;
+    private final PaperConfig config;
+    private final PaperListenerManager listenerManager;
     private final CommandManager commandManager;
     private final DiscordManager discordManager;
     private final Map<Class<? extends AbstractInventoryHolder>, AbstractInventoryHolder> inventoryHolderMap;
+    private final File configFile;
     private FileConfiguration newConfig;
-    private Scoreboard scoreboardHideTags;
-    private Team scoreboardHideTagsTeam;
 
     static {
         initClass(Font.class);
@@ -95,27 +96,22 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         this.setupDataFolder();
 
         this.configFile = new File(this.getDataFolder(), "config.yml");
-        this.cache = new Cache(this);
-        this.config = new Config(this);
+        this.cache = new PaperCache(this);
+        this.config = new PaperConfig(this);
         this.statusHandler = new StatusHandler();
-        this.listenerManager = new ListenerManager(this);
+        this.listenerManager = new PaperListenerManager(this);
         this.commandManager = new CommandManager(this);
         this.discordManager = new DiscordManager(this);
         this.inventoryHolderMap = new Object2ObjectOpenHashMap<>();
     }
 
     @Override
-    public @NotNull File getConfigFile() {
-        return this.configFile;
-    }
-
-    @Override
-    public @NotNull Cache getCache() {
+    public @NotNull PaperCache getCache() {
         return this.cache;
     }
 
     @Override
-    public @NotNull Config getConfiguration() {
+    public @NotNull PaperConfig getConfiguration() {
         return this.config;
     }
 
@@ -125,17 +121,17 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     }
 
     @Override
-    public @NotNull ListenerManager getListenerManager() {
+    public @NotNull PaperListenerManager getListenerManager() {
         return this.listenerManager;
     }
 
     @Override
-    public @NotNull CommandManager getCommandManager() {
-        return this.commandManager;
+    public @NotNull GuiManager<WhoMine> getGuiManager() {
+        return null;
     }
 
     @Override
-    public @NotNull DiscordManager getDiscordManager() {
+    public @NotNull DiscordManager getDiscordModule() {
         return this.discordManager;
     }
 
@@ -147,16 +143,6 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     @Override
     public @NotNull Optional<AbstractInventoryHolder> getInventoryHolder(final @NotNull Class<? extends AbstractInventoryHolder> clazz) {
         return Optional.ofNullable(this.inventoryHolderMap.get(clazz));
-    }
-
-    @Override
-    public @UnknownNullability Scoreboard getScoreboardHideTags() {
-        return this.scoreboardHideTags;
-    }
-
-    @Override
-    public @UnknownNullability Team getScoreboardHideTagsTeam() {
-        return this.scoreboardHideTagsTeam;
     }
 
     @Override
@@ -181,6 +167,36 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         );
     }
 
+    private void editBlockStrength(
+            final @NotNull Block block,
+            final float hardness,
+            final float resistance
+    ) {
+        block.properties().strength(hardness, resistance);
+
+        final BlockState newNoteBlockState = block.defaultBlockState();
+
+        try {
+            final Field destroySpeedField = BlockBehaviour.BlockStateBase.class.getDeclaredField("destroySpeed");
+
+            destroySpeedField.setAccessible(true);
+            destroySpeedField.set(newNoteBlockState, -1.0f);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            final Method registerDefaultState = Block.class.getDeclaredMethod("registerDefaultState", BlockState.class);
+
+            registerDefaultState.setAccessible(true);
+            registerDefaultState.invoke(block, newNoteBlockState);
+        } catch (final NoSuchMethodException e) {
+            MSLogger.severe("Could not find Block#registerDefaultState method", e);
+        } catch (final InvocationTargetException | IllegalAccessException e) {
+            MSLogger.severe("Could not invoke Block#registerDefaultState method", e);
+        }
+    }
+
     @Override
     public void onLoad() {
         final long time = System.currentTimeMillis();
@@ -194,10 +210,8 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         TranslationRegistry.bootstrap(this.config.getDefaultLocale());
         initClass(Translations.class);
 
-        ItemUtils.setMaxStackSize(
-                Material.LEATHER_HORSE_ARMOR,
-                SharedConstants.LEATHER_HORSE_ARMOR_MAX_STACK_SIZE
-        );
+        this.editBlockStrength(Blocks.NOTE_BLOCK, -1.0f, 3600000.8F);
+        this.editBlockStrength(Blocks.ACACIA_PLANKS, -1.0f, 3600000.8F);
 
         PaperUtils
         .editConfig(PaperUtils.ConfigType.GLOBAL, this.getServer())
@@ -247,7 +261,6 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
 
         this.setupCoreProtect();
         this.setupAuthMe();
-        this.setupHideTags();
 
         this.runTask(() -> this.cache.worldDark = new WorldDark());
         this.runTaskTimer(new SeatsTask(this), 0L, 1L);            // 0.05 seconds
@@ -260,6 +273,13 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         );
 
         this.config.onEnable();
+
+        MSLogger.info(
+                "Note block strength: " + Blocks.NOTE_BLOCK.defaultDestroyTime() + ", " +
+                "Acacia planks strength: " + Blocks.ACACIA_PLANKS.defaultDestroyTime() + ", " +
+                "Note block getDestroySpeed: " + Blocks.NOTE_BLOCK.defaultBlockState().destroySpeed + ", " +
+                "Acacia planks getDestroySpeed: " + Blocks.ACACIA_PLANKS.defaultBlockState().destroySpeed
+        );
 
         this.statusHandler.assignStatus(ENABLED);
         if (this.isEnabled()) {
@@ -483,6 +503,10 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         );
     }
 
+    @NotNull File getConfigFile() {
+        return this.configFile;
+    }
+
     private void setupCoreProtect() {
         try {
             final CoreProtect coreProtect = CoreProtect.getInstance();
@@ -500,14 +524,6 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         } catch (final NoClassDefFoundError e) {
             MSLogger.warning("CoreProtect is not installed, actions logging will not be available");
         }
-    }
-
-    private void setupHideTags() {
-        this.scoreboardHideTags = this.getServer().getScoreboardManager().getNewScoreboard();
-        this.scoreboardHideTagsTeam = this.scoreboardHideTags.registerNewTeam(SharedConstants.HIDE_TAGS_TEAM_NAME);
-
-        this.scoreboardHideTagsTeam.setOption(Team.Option.NAME_TAG_VISIBILITY, Team.OptionStatus.NEVER);
-        this.scoreboardHideTagsTeam.setCanSeeFriendlyInvisibles(false);
     }
 
     private void setupAuthMe() {

@@ -86,7 +86,7 @@ public final class EditSkinCommand extends SlashCommandExecutor {
                 && signatureOption == null
         ) {
             try {
-                final Skin skin = Skin.create(this.getPlugin(), name, urlOption.getAsString());
+                final Skin skin = Skin.create(this.getModule(), name, urlOption.getAsString());
 
                 if (skin == null) {
                     handler.send(DISCORD_SKIN_SERVICE_UNAVAILABLE.asString());

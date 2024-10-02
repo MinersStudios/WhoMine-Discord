@@ -2,6 +2,7 @@ package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.api.packet.PacketContainer;
 import com.minersstudios.whomine.api.packet.PacketEvent;
+import com.minersstudios.whomine.api.packet.PacketType;
 import net.minecraft.network.Connection;
 import net.minecraft.network.protocol.Packet;
 import org.jetbrains.annotations.NotNull;
@@ -13,16 +14,20 @@ import org.jetbrains.annotations.NotNull;
  *
  * @see PacketContainer
  */
-public final class PaperPacketEvent extends PacketEvent<PaperPacketContainer, Connection> {
+public final class PaperPacketEvent extends PacketEvent<Packet<?>, Connection> {
 
     /**
-     * @param packetContainer The packet container
-     * @param connection      The connection
+     * Creates a new packet event with the given type, packet and connection
+     *
+     * @param type       The packet type
+     * @param packet     The packet
+     * @param connection The connection
      */
     public PaperPacketEvent(
-            final @NotNull PaperPacketContainer packetContainer,
+            final @NotNull PacketType type,
+            final @NotNull Packet<?> packet,
             final @NotNull Connection connection
     ) {
-        super(packetContainer, connection);
+        super(type, packet, connection);
     }
 }

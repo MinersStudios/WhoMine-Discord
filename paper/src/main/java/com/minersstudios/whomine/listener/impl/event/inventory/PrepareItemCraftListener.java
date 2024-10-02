@@ -1,10 +1,11 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.ItemUtils;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -12,14 +13,12 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
-public final class PrepareItemCraftListener extends EventListener {
-
-    public PrepareItemCraftListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PrepareItemCraftEvent.class)
+public final class PrepareItemCraftListener extends PaperEventListener {
 
     @EventHandler
-    public void onPrepareItemCraft(final @NotNull PrepareItemCraftEvent event) {
+    public void onPrepareItemCraft(final @NotNull PaperEventContainer<PrepareItemCraftEvent> container) {
+        final PrepareItemCraftEvent event = container.getEvent();
         final Recipe recipe = event.getRecipe();
 
         if (recipe == null) {

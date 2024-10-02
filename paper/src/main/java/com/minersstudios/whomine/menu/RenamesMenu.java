@@ -167,7 +167,7 @@ public final class RenamesMenu {
                                 5
                         );
 
-                renameInventory.setItem(RENAMEABLE_ITEM_SLOT, renameableItemStacks.get(0));
+                renameInventory.setItem(RENAMEABLE_ITEM_SLOT, renameableItemStacks.getFirst());
                 renameInventory.setItem(RENAMED_ITEM_SLOT, resultItem);
                 renameInventory.buttonAt(
                         QUIT_RENAME_BUTTON_SLOT,
@@ -320,7 +320,7 @@ public final class RenamesMenu {
 
         if (
                 renameableItem != null
-                && renameableItem.isWhiteListed((OfflinePlayer) inventory.getViewers().get(0))
+                && renameableItem.isWhiteListed((OfflinePlayer) inventory.getViewers().getFirst())
         ) {
             inventory.setItem(CURRENT_RENAMED_ITEM_SLOT, renameableItem.craftRenamed(itemStack, renameText));
 

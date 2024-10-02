@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.chat;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import com.minersstudios.whomine.api.utility.Font;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.kyori.adventure.text.Component;
@@ -18,12 +19,13 @@ import java.util.*;
 import static net.kyori.adventure.text.Component.space;
 import static net.kyori.adventure.text.Component.text;
 
-public final class ChatBuffer {
-    private final @NotNull WhoMine plugin;
+public final class ChatBuffer extends AbstractModuleComponent<WhoMine> {
+
     private final @NotNull Map<UUID, Queue<String>> chatQueue;
 
-    public ChatBuffer(final @NotNull WhoMine plugin) {
-        this.plugin = plugin;
+    public ChatBuffer(final @NotNull WhoMine module) {
+        super(module);
+
         this.chatQueue = new Object2ObjectOpenHashMap<>();
     }
 
@@ -112,7 +114,7 @@ public final class ChatBuffer {
             final @NotNull UUID uuid,
             final int delay
     ) {
-        this.plugin.runTaskLater(() -> {
+        this.getModule().runTaskLater(() -> {
             if (
                     !player.isOnline()
                     || this.chatQueue.get(uuid).isEmpty()

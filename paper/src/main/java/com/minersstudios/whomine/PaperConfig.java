@@ -1,6 +1,9 @@
 package com.minersstudios.whomine;
 
 import com.google.common.base.Joiner;
+import com.minersstudios.whomine.api.module.AbstractModuleComponent;
+import com.minersstudios.whomine.api.module.components.Configuration;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.custom.anomaly.Anomaly;
 import com.minersstudios.whomine.custom.anomaly.task.AnomalyParticleTask;
 import com.minersstudios.whomine.custom.anomaly.task.MainAnomalyActionTask;
@@ -49,8 +52,8 @@ import java.util.logging.Logger;
 
 import static net.kyori.adventure.text.Component.text;
 
-public final class Config {
-    private final WhoMine plugin;
+public final class PaperConfig extends AbstractModuleComponent<WhoMine> implements Configuration<WhoMine> {
+
     private final File file;
     private final YamlConfiguration yaml;
     private final Logger logger;
@@ -165,13 +168,15 @@ public final class Config {
     public static final char DEFAULT_MINE_SKIN_API_KEY =            ' ';
     //</editor-fold>
 
-    Config(final @NotNull WhoMine plugin) {
-        this.plugin = plugin;
-        this.file = plugin.getConfigFile();
+    PaperConfig(final @NotNull WhoMineImpl module) {
+        super(module);
+
+        this.file = module.getConfigFile();
         this.yaml = new YamlConfiguration();
         this.logger = Logger.getLogger(this.getClass().getSimpleName());
     }
 
+    @Override
     public @NotNull File getFile() {
         return this.file;
     }
@@ -194,18 +199,18 @@ public final class Config {
     }
 
     public boolean reload() {
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
+        final StatusHandler statusHandler = this.getModule().getStatusHandler();
 
-        statusHandler.assignStatus(WhoMine.LOADING_CONFIG);
+        statusHandler.assignStatus(MainModule.LOADING_CONFIG);
 
         try {
             this.saveDefaultConfig();
             this.reloadVariables();
-            statusHandler.assignStatus(WhoMine.LOADED_CONFIG);
+            statusHandler.assignStatus(MainModule.LOADED_CONFIG);
 
             return true;
         } catch (final ConfigurationException e) {
-            statusHandler.assignStatus(WhoMine.FAILED_LOAD_CONFIG);
+            statusHandler.assignStatus(MainModule.FAILED_LOAD_CONFIG);
             MSLogger.severe("An error occurred while loading the config!", e);
 
             return false;
@@ -220,7 +225,9 @@ public final class Config {
         this.parseDiscord();
         this.parseSkins();
 
+        final WhoMine module = this.getModule();
         final YamlConfiguration yaml = this.getYaml();
+
         this.isChristmas = yaml.getBoolean(KEY_IS_CHRISTMAS);
         this.isHalloween = yaml.getBoolean(KEY_IS_HALLOWEEN);
         this.dateFormat = yaml.getString(KEY_DATE_FORMAT, SharedConstants.DATE_FORMAT);
@@ -230,7 +237,7 @@ public final class Config {
         this.anomalyCheckRate = yaml.getLong(KEY_ANOMALY_CHECK_RATE);
         this.anomalyParticlesCheckRate = yaml.getLong(KEY_ANOMALY_PARTICLES_CHECK_RATE);
 
-        final Cache cache = this.plugin.getCache();
+        final PaperCache cache = module.getCache();
 
         if (cache.isLoaded()) {
             for (final var task : cache.getBukkitTasks()) {
@@ -242,22 +249,22 @@ public final class Config {
             cache.getAnomalies().clear();
         }
 
-        this.plugin.getStatusHandler().addWatcher(
+        module.getStatusHandler().addWatcher(
                 StatusWatcher.builder()
                 .successStatuses(
-                        WhoMine.LOADED_BLOCKS,
-                        WhoMine.LOADED_ITEMS,
-                        WhoMine.LOADED_DECORATIONS
+                        MainModule.LOADED_BLOCKS,
+                        MainModule.LOADED_ITEMS,
+                        MainModule.LOADED_DECORATIONS
                 )
                 .successRunnable(
                         () -> {
-                            this.plugin.runTaskAsync(this::loadRenames);
-                            this.plugin.runTask(() -> {
-                                final var list = this.plugin.getCache().getBlockDataRecipes();
+                            module.runTaskAsync(this::loadRenames);
+                            module.runTask(() -> {
+                                final var list = module.getCache().getBlockDataRecipes();
 
                                 for (final var entry : list) {
                                     entry.getKey().registerRecipes(
-                                            this.plugin,
+                                            module,
                                             entry.getValue()
                                     );
                                 }
@@ -265,7 +272,7 @@ public final class Config {
                                 list.clear();
                                 CraftsMenu.putCrafts(
                                         CraftsMenu.Type.BLOCKS,
-                                        this.plugin.getCache().customBlockRecipes
+                                        module.getCache().customBlockRecipes
                                 );
                             });
                         }
@@ -303,8 +310,9 @@ public final class Config {
     }
 
     public void onEnable() {
-        final Cache cache = this.plugin.getCache();
-        final Location mainWorldSpawn = this.plugin.getServer().getWorlds().get(0).getSpawnLocation();
+        final WhoMine module = this.getModule();
+        final PaperCache cache = module.getCache();
+        final Location mainWorldSpawn = module.getServer().getWorlds().getFirst().getSpawnLocation();
 
         this.setIfNotExists(KEY_SPAWN_LOCATION_SECTION + '.' + KEY_WORLD, mainWorldSpawn.getWorld().getName());
         this.setIfNotExists(KEY_SPAWN_LOCATION_SECTION + '.' + KEY_X, mainWorldSpawn.x());
@@ -315,12 +323,12 @@ public final class Config {
 
         this.parseSpawnLocation();
 
-        cache.getBukkitTasks().add(this.plugin.runTaskTimer(new MainAnomalyActionTask(this.plugin), 0L, this.anomalyCheckRate));
-        cache.getBukkitTasks().add(this.plugin.runTaskTimer(new AnomalyParticleTask(this.plugin), 0L, this.anomalyParticlesCheckRate));
+        cache.getBukkitTasks().add(module.runTaskTimer(new MainAnomalyActionTask(module), 0L, this.anomalyCheckRate));
+        cache.getBukkitTasks().add(module.runTaskTimer(new AnomalyParticleTask(module), 0L, this.anomalyParticlesCheckRate));
 
-        this.plugin.runTaskAsync(this::loadResourcePacks);
-        this.plugin.runTaskAsync(this::loadAnomalies);
-        this.plugin.runTaskAsync(this::loadBlocks);
+        module.runTaskAsync(this::loadResourcePacks);
+        module.runTaskAsync(this::loadAnomalies);
+        module.runTaskAsync(this::loadBlocks);
     }
 
     public void reloadYaml() throws ConfigurationException {
@@ -378,10 +386,6 @@ public final class Config {
         return "Config{file=" + path +
                 ", config=[" + configValues +
                 "]}";
-    }
-
-    public @NotNull WhoMine getPlugin() {
-        return this.plugin;
     }
 
     public @Nullable String getDateFormat() {
@@ -566,13 +570,14 @@ public final class Config {
     }
 
     private void createDirectory(final @NotNull String directoryPath) {
-        final File directory = new File(this.plugin.getDataFolder(), directoryPath);
+        final WhoMine module = this.getModule();
+        final File directory = new File(module.getDataFolder(), directoryPath);
 
         if (
                 !directory.exists()
                 && !directory.mkdirs()
         ) {
-            this.plugin.getLogger().warning("Failed to create directory: " + directoryPath);
+            module.getLogger().warning("Failed to create directory: " + directoryPath);
         }
     }
 
@@ -640,8 +645,9 @@ public final class Config {
     }
 
     private void parseSpawnLocation() {
+        final WhoMine module = this.getModule();
         final YamlConfiguration yaml = this.getYaml();
-        final Server server = this.plugin.getServer();
+        final Server server = module.getServer();
         final String spawnLocationWorldName = yaml.getString(KEY_SPAWN_LOCATION_SECTION + '.' + KEY_WORLD, "");
         final World spawnLocationWorld = server.getWorld(spawnLocationWorldName);
         final double spawnLocationX = yaml.getDouble(KEY_SPAWN_LOCATION_SECTION + '.' + KEY_X);
@@ -651,9 +657,9 @@ public final class Config {
         final float spawnLocationPitch = (float) yaml.getDouble(KEY_SPAWN_LOCATION_SECTION + '.' + KEY_PITCH);
 
         if (spawnLocationWorld == null) {
-            this.plugin.getLogger().warning("World \"" + spawnLocationWorldName + "\" not found!\nUsing default spawn location!");
+            module.getLogger().warning("World \"" + spawnLocationWorldName + "\" not found!\nUsing default spawn location!");
 
-            this.spawnLocation = server.getWorlds().get(0).getSpawnLocation();
+            this.spawnLocation = server.getWorlds().getFirst().getSpawnLocation();
         } else {
             this.spawnLocation = new Location(
                     spawnLocationWorld,
@@ -667,13 +673,14 @@ public final class Config {
     }
 
     private void parseConsoleInfo() {
-        final File consoleDataFile = new File(this.plugin.getDataFolder(), CONSOLE_FILE_PATH);
+        final WhoMine module = this.getModule();
+        final File consoleDataFile = new File(module.getDataFolder(), CONSOLE_FILE_PATH);
 
         if (!consoleDataFile.exists()) {
-            this.plugin.saveResource(CONSOLE_FILE_PATH, false);
+            module.saveResource(CONSOLE_FILE_PATH, false);
         }
 
-        this.plugin.getCache().consolePlayerInfo = new PlayerInfo(this.plugin, UUID.randomUUID(), SharedConstants.CONSOLE_NICKNAME);
+        module.getCache().consolePlayerInfo = new PlayerInfo(module, UUID.randomUUID(), SharedConstants.CONSOLE_NICKNAME);
     }
 
     private void parseLanguages() throws IllegalStateException {
@@ -690,6 +697,7 @@ public final class Config {
             this.defaultLocale = SharedConstants.DEFAULT_LOCALE;
         }
 
+        final WhoMine module = this.getModule();
         this.locales = new ObjectArrayList<>();
 
         this.locales.add(this.defaultLocale);
@@ -698,7 +706,7 @@ public final class Config {
             final Locale locale = Translator.parseLocale(tag);
 
             if (locale == null) {
-                this.plugin.getLogger().warning("Invalid language tag: " + tag);
+                module.getLogger().warning("Invalid language tag: " + tag);
             } else {
                 this.locales.add(locale);
             }
@@ -708,15 +716,15 @@ public final class Config {
     }
 
     private void loadLanguages() {
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
+        final StatusHandler statusHandler = this.getModule().getStatusHandler();
         final YamlConfiguration yaml = this.getYaml();
         final ConfigurationSection languageSection =
                 yaml.getConfigurationSection(KEY_LANGUAGE_SECTION + '.' + KEY_CODES);
 
-        statusHandler.assignStatus(WhoMine.LOADING_LANGUAGES);
+        statusHandler.assignStatus(MainModule.LOADING_LANGUAGES);
 
         if (languageSection == null) {
-            statusHandler.assignStatus(WhoMine.LOADED_LANGUAGES);
+            statusHandler.assignStatus(MainModule.LOADED_LANGUAGES);
 
             return;
         }
@@ -755,24 +763,25 @@ public final class Config {
         )
         .thenRun(() -> {
             TranslationRegistry.registerGlobal();
-            statusHandler.assignStatus(WhoMine.LOADED_LANGUAGES);
+            statusHandler.assignStatus(MainModule.LOADED_LANGUAGES);
         });
     }
 
     private void loadResourcePacks() {
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
+        final WhoMine module = this.getModule();
+        final StatusHandler statusHandler = module.getStatusHandler();
         final YamlConfiguration yaml = this.getYaml();
         final ConfigurationSection resourcePacksSection = yaml.getConfigurationSection(KEY_RESOURCE_PACKS_SECTION);
 
-        statusHandler.assignStatus(WhoMine.LOADING_RESOURCE_PACKS);
+        statusHandler.assignStatus(MainModule.LOADING_RESOURCE_PACKS);
 
         if (resourcePacksSection == null) {
-            statusHandler.assignStatus(WhoMine.LOADED_RESOURCE_PACKS);
+            statusHandler.assignStatus(MainModule.LOADED_RESOURCE_PACKS);
 
             return;
         }
 
-        final ComponentLogger logger = this.plugin.getComponentLogger();
+        final ComponentLogger logger = module.getComponentLogger();
         final long start = System.currentTimeMillis();
         final Map<String, CompletableFuture<ResourcePack>> futureMap;
 
@@ -805,7 +814,7 @@ public final class Config {
                     }
             );
         } catch (final FatalPackLoadException e) {
-            statusHandler.assignStatus(WhoMine.FAILED_LOAD_RESOURCE_PACKS);
+            statusHandler.assignStatus(MainModule.FAILED_LOAD_RESOURCE_PACKS);
             logger.error(
                     "Failed to load resource packs due to a fatal error!",
                     e
@@ -820,15 +829,16 @@ public final class Config {
                 .values()
                 .toArray(CompletableFuture[]::new)
         )
-        .thenRun(() -> statusHandler.assignStatus(WhoMine.LOADED_RESOURCE_PACKS));
+        .thenRun(() -> statusHandler.assignStatus(MainModule.LOADED_RESOURCE_PACKS));
     }
 
     private void loadAnomalies() {
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
-        final Cache cache = this.plugin.getCache();
-        final Logger logger = this.plugin.getLogger();
+        final WhoMine module = this.getModule();
+        final StatusHandler statusHandler = module.getStatusHandler();
+        final PaperCache cache = module.getCache();
+        final Logger logger = module.getLogger();
 
-        statusHandler.assignStatus(WhoMine.LOADING_ANOMALIES);
+        statusHandler.assignStatus(MainModule.LOADING_ANOMALIES);
 
         try (final var path = Files.walk(Paths.get(this.getFile().getParent() + '/' + ANOMALIES_FOLDER))) {
             path.parallel()
@@ -836,7 +846,7 @@ public final class Config {
             .map(Path::toFile)
             .forEach(file -> {
                 try {
-                    final Anomaly anomaly = Anomaly.fromConfig(this.plugin, file);
+                    final Anomaly anomaly = Anomaly.fromConfig(module, file);
 
                     cache.getAnomalies().put(anomaly.getNamespacedKey(), anomaly);
                 } catch (final IllegalArgumentException e) {
@@ -848,9 +858,9 @@ public final class Config {
                 }
             });
 
-            statusHandler.assignStatus(WhoMine.LOADED_ANOMALIES);
+            statusHandler.assignStatus(MainModule.LOADED_ANOMALIES);
         } catch (final IOException e) {
-            statusHandler.assignStatus(WhoMine.FAILED_LOAD_ANOMALIES);
+            statusHandler.assignStatus(MainModule.FAILED_LOAD_ANOMALIES);
             logger.log(
                     Level.SEVERE,
                     "An error occurred while loading anomalies!",
@@ -861,27 +871,29 @@ public final class Config {
 
     private void loadBlocks() {
         final long start = System.currentTimeMillis();
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
 
-        statusHandler.assignStatus(WhoMine.LOADING_BLOCKS);
+        final WhoMine module = this.getModule();
+        final StatusHandler statusHandler = module.getStatusHandler();
+
+        statusHandler.assignStatus(MainModule.LOADING_BLOCKS);
 
         try (final var pathStream = Files.walk(Paths.get(this.getFile().getParent() + '/' + BLOCKS_FOLDER))) {
             pathStream.parallel()
             .filter(file -> file.getFileName().toString().endsWith(JSON_EXTENSION))
-            .map(path -> CustomBlockData.fromFile(this.plugin, path.toFile()))
+            .map(path -> CustomBlockData.fromFile(module, path.toFile()))
             .filter(Objects::nonNull)
             .forEach(CustomBlockRegistry::register);
 
-            statusHandler.assignStatus(WhoMine.LOADED_BLOCKS);
-            this.plugin.getComponentLogger().info(
+            statusHandler.assignStatus(MainModule.LOADED_BLOCKS);
+            module.getComponentLogger().info(
                     Component.text(
                             "Loaded " + CustomBlockRegistry.size() + " custom blocks in " + (System.currentTimeMillis() - start) + "ms",
                             NamedTextColor.GREEN
                     )
             );
         } catch (final IOException e) {
-            statusHandler.assignStatus(WhoMine.FAILED_LOAD_BLOCKS);
-            this.plugin.getLogger().log(
+            statusHandler.assignStatus(MainModule.FAILED_LOAD_BLOCKS);
+            module.getLogger().log(
                     Level.SEVERE,
                     "An error occurred while loading blocks",
                     e
@@ -891,29 +903,31 @@ public final class Config {
 
     private void loadRenames() {
         final long start = System.currentTimeMillis();
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
 
-        statusHandler.assignStatus(WhoMine.LOADING_RENAMEABLES);
+        final WhoMine module = this.getModule();
+        final StatusHandler statusHandler = module.getStatusHandler();
+
+        statusHandler.assignStatus(MainModule.LOADING_RENAMEABLES);
 
         try (final var pathStream = Files.walk(Paths.get(this.getFile().getParent() + '/' + ITEMS_FOLDER))) {
             pathStream.parallel()
             .filter(file -> file.getFileName().toString().endsWith(YAML_EXTENSION))
-            .map(path -> RenameableItem.fromFile(this.plugin, path.toFile()))
+            .map(path -> RenameableItem.fromFile(module, path.toFile()))
             .filter(Objects::nonNull)
             .forEach(RenameableItemRegistry::register);
 
-            statusHandler.assignStatus(WhoMine.LOADED_RENAMEABLES);
-            this.plugin.getComponentLogger().info(
+            statusHandler.assignStatus(MainModule.LOADED_RENAMEABLES);
+            module.getComponentLogger().info(
                     Component.text(
                             "Loaded " + RenameableItemRegistry.keysSize() + " renameable items in " + (System.currentTimeMillis() - start) + "ms",
                             NamedTextColor.GREEN
                     )
             );
 
-            RenamesMenu.update(this.plugin);
+            RenamesMenu.update(module);
         } catch (final IOException e) {
-            statusHandler.assignStatus(WhoMine.FAILED_LOAD_RENAMEABLES);
-            this.plugin.getLogger().log(
+            statusHandler.assignStatus(MainModule.FAILED_LOAD_RENAMEABLES);
+            module.getLogger().log(
                     Level.SEVERE,
                     "An error occurred while loading renameable items",
                     e

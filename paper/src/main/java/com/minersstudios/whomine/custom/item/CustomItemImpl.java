@@ -2,9 +2,9 @@ package com.minersstudios.whomine.custom.item;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.throwable.InvalidRegexException;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Keyed;
 import org.bukkit.NamespacedKey;
@@ -52,7 +52,7 @@ public abstract class CustomItemImpl implements CustomItem, Cloneable {
             throw new IllegalArgumentException("Item type cannot be empty! Check " + key);
         }
 
-        this.namespacedKey = new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, key);
+        this.namespacedKey = new NamespacedKey(Resource.WMITEM, key);
         this.itemStack = itemStack;
         this.recipeEntries = new ObjectArrayList<>();
 

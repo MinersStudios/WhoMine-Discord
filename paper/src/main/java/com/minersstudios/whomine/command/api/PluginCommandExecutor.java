@@ -2,7 +2,7 @@ package com.minersstudios.whomine.command.api;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.plugin.AbstractPluginComponent;
+import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Represents a class which contains a bunch of methods for handling commands
  */
-public abstract class PluginCommandExecutor extends AbstractPluginComponent implements CommandExecutor, TabCompleter {
+public abstract class PluginCommandExecutor extends AbstractModuleComponent<WhoMine> implements CommandExecutor, TabCompleter {
     private final CommandData data;
 
     /**
@@ -51,15 +51,14 @@ public abstract class PluginCommandExecutor extends AbstractPluginComponent impl
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{' +
-                "plugin=" + this.getPlugin() +
+                "plugin=" + this.getModule() +
                 ", commandData=" + this.data +
                 '}';
     }
 
-    @Override
     public void register() throws IllegalStateException {
-        this.getPlugin().getCommandManager().registerMinecraft(this);
-        this.onRegister();
+        //this.getModule().getCommandManager().registerMinecraft(this);
+        //this.onRegister();
     }
 
     /**

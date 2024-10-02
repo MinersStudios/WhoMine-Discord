@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-import static com.minersstudios.whomine.api.utility.SharedConstants.*;
+import static com.minersstudios.whomine.api.annotation.Resource.*;
 
 /**
  * Utility class for custom items / blocks / decor.
@@ -109,9 +109,9 @@ public final class MSCustomUtils {
         return namespace == null || key == null
                 ? Optional.empty()
                 : switch (namespace) {
-                    case MSBLOCK_NAMESPACE -> MSBlockUtils.getItemStack(key);
-                    case MSDECOR_NAMESPACE -> MSDecorUtils.getItemStack(key);
-                    case MSITEMS_NAMESPACE -> MSItemUtils.getItemStack(key);
+                    case WMBLOCK -> MSBlockUtils.getItemStack(key);
+                    case WMDECOR -> MSDecorUtils.getItemStack(key);
+                    case WMITEM -> MSItemUtils.getItemStack(key);
                     default -> Optional.empty();
                 };
     }
@@ -225,12 +225,12 @@ public final class MSCustomUtils {
         return ChatUtils.isBlank(namespace) || ChatUtils.isBlank(key)
                 ? Optional.empty()
                 : switch (namespace) {
-                    case MSBLOCK_NAMESPACE,
-                         MSBLOCK_NAMESPACE + ":type" -> CustomBlockRegistry.fromKey(key);
-                    case MSDECOR_NAMESPACE,
-                         MSDECOR_NAMESPACE + ":type" -> CustomDecorData.fromKey(key);
-                    case MSITEMS_NAMESPACE,
-                         MSITEMS_NAMESPACE + ":type" -> CustomItem.fromKey(key);
+                    case WMBLOCK,
+                         WMBLOCK + ":type" -> CustomBlockRegistry.fromKey(key);
+                    case WMDECOR,
+                         WMDECOR + ":type" -> CustomDecorData.fromKey(key);
+                    case WMITEM,
+                         WMITEM + ":type" -> CustomItem.fromKey(key);
                     default -> Optional.empty();
                 };
     }

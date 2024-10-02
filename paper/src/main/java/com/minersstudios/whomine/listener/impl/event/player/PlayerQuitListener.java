@@ -1,31 +1,33 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerQuitListener extends EventListener {
-
-    public PlayerQuitListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerQuitEvent.class)
+public final class PlayerQuitListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
+    public void onPlayerQuit(final @NotNull PaperEventContainer<PlayerQuitEvent> container) {
+        final PlayerQuitEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
+
         final Player player = event.getPlayer();
-        final Cache cache = this.getPlugin().getCache();
+        final PaperCache cache = module.getCache();
 
         cache.getDiggingMap().removeAll(player);
         cache.getStepMap().remove(player);
 
         event.quitMessage(null);
         PlayerInfo
-        .fromOnlinePlayer(this.getPlugin(), event.getPlayer())
+        .fromOnlinePlayer(module, event.getPlayer())
         .handleQuit();
     }
 }

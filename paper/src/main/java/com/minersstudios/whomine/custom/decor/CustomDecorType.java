@@ -1,6 +1,8 @@
 package com.minersstudios.whomine.custom.decor;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.api.annotation.Path;
 import com.minersstudios.whomine.custom.decor.registry.christmas.*;
 import com.minersstudios.whomine.custom.decor.registry.decoration.home.*;
@@ -26,7 +28,6 @@ import com.minersstudios.whomine.custom.decor.registry.other.Poop;
 import com.minersstudios.whomine.api.status.StatusHandler;
 import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
@@ -189,7 +190,7 @@ public enum CustomDecorType {
     private final Class<? extends CustomDecorData<?>> clazz;
 
     public static final String TYPE_TAG_NAME = "type";
-    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSDECOR_NAMESPACE, TYPE_TAG_NAME);
+    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(Resource.WMDECOR, TYPE_TAG_NAME);
 
     public static final String TYPED_KEY_REGEX = "(" + Path.REGEX + ")\\.type\\.(" + Path.REGEX + ")";
     public static final Pattern TYPED_KEY_PATTERN = Pattern.compile(TYPED_KEY_REGEX);
@@ -229,9 +230,9 @@ public enum CustomDecorType {
         statusHandler.addWatcher(
                 StatusWatcher.builder()
                 .successStatuses(
-                        WhoMine.LOADED_BLOCKS,
-                        WhoMine.LOADED_ITEMS,
-                        WhoMine.LOADED_DECORATIONS
+                        MainModule.LOADED_BLOCKS,
+                        MainModule.LOADED_ITEMS,
+                        MainModule.LOADED_DECORATIONS
                 )
                 .successRunnable(
                         () -> plugin.runTask(() -> {
@@ -248,7 +249,7 @@ public enum CustomDecorType {
                 .build()
         );
 
-        statusHandler.assignStatus(WhoMine.LOADING_DECORATIONS);
+        statusHandler.assignStatus(MainModule.LOADING_DECORATIONS);
         Stream.of(values()).parallel()
         .forEach(type -> {
             final CustomDecorData<?> data;
@@ -295,7 +296,7 @@ public enum CustomDecorType {
         });
         typesWithRecipes.sort(Comparator.comparingInt(CustomDecorType::ordinal));
 
-        statusHandler.assignStatus(WhoMine.LOADED_DECORATIONS);
+        statusHandler.assignStatus(MainModule.LOADED_DECORATIONS);
         plugin.getComponentLogger().info(
                 Component.text(
                         "Loaded " + loaded.get() + " custom decors in " + (System.currentTimeMillis() - startTime) + "ms",

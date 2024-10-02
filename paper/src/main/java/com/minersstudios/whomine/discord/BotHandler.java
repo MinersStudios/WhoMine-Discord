@@ -93,7 +93,7 @@ public final class BotHandler {
         final int attachmentSize = attachments.size();
         short code = 0;
 
-        if (!this.plugin.getDiscordManager().isVerified(this.user)) {
+        if (!this.plugin.getDiscordModule().isVerified(this.user)) {
             this.reply(DISCORD_NOT_A_USER.asString());
 
             return;
@@ -157,7 +157,7 @@ public final class BotHandler {
 
             return;
         } else if (attachmentSize == 1) {
-            final Message.Attachment attachment = attachments.get(0);
+            final Message.Attachment attachment = attachments.getFirst();
             final String link = attachment.getUrl();
 
             try {
@@ -503,7 +503,7 @@ public final class BotHandler {
                         final Skin skin = Skin.create(
                                 this.plugin,
                                 skinName,
-                                attachments.get(0).getUrl()
+                                attachments.getFirst().getUrl()
                         );
 
                         return skin != null

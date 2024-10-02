@@ -41,6 +41,7 @@ import java.util.logging.Level;
  */
 @Immutable
 public final class CustomBlockData {
+
     private final String key;
     private final BlockSettings blockSettings;
     private final DropSettings dropSettings;

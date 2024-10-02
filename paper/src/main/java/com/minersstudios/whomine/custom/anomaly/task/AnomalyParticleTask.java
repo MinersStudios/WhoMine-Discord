@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.custom.anomaly.task;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.custom.anomaly.Anomaly;
 import com.minersstudios.whomine.custom.anomaly.AnomalyAction;
@@ -18,8 +18,8 @@ import java.util.Map;
  * performed and particles will be spawned. Otherwise, the action will be
  * removed.
  * <br>
- * The task is registered in {@link Config#reload()} with
- * {@link Config#getAnomalyParticlesCheckRate()}.
+ * The task is registered in {@link PaperConfig#reload()} with
+ * {@link PaperConfig#getAnomalyParticlesCheckRate()}.
  *
  * @see SpawnParticlesAction
  * @see AnomalyBoundingBox

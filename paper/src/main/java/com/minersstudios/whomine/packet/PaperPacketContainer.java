@@ -1,29 +1,50 @@
 package com.minersstudios.whomine.packet;
 
+import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.packet.PacketContainer;
-import com.minersstudios.whomine.api.packet.PacketType;
-import net.minecraft.network.protocol.Packet;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents a packet container. It contains the packet and the packet type.
- * The packet type contains the id, flow, name and class of the packet. The
- * packet can be modified, but the packet type cannot be changed.
+ * Represents a paper packet container.
+ * <p>
+ * <b>It contains :</b>
+ * <ul>
+ *     <li>The main module that registers and handles the packet event</li>
+ *     <li>The packet event itself</li>
+ * </ul>
  *
- * @see PacketType
+ * @see PaperPacketEvent
+ * @see PaperPacketListener
  */
-public final class PaperPacketContainer extends PacketContainer<Packet<?>> {
+@SuppressWarnings("unused")
+public final class PaperPacketContainer
+        extends PacketContainer<WhoMine, PaperPacketEvent> {
+
+    private PaperPacketContainer(
+            final @NotNull WhoMine module,
+            final @NotNull PaperPacketEvent packet
+    ) {
+        super(module, packet);
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return this.getEvent().isCancelled();
+    }
 
     /**
-     * Packet container constructor
+     * Creates a new paper packet container with the given module and event
      *
-     * @param packet The packet to contain
-     * @param type   The packet type of the packet
+     * @param module The main module that registers and handles the event
+     * @param packet The packet event associated with this container
+     * @return A new container instance
      */
-    public PaperPacketContainer(
-            final @NotNull Packet<?> packet,
-            final @NotNull PacketType type
+    @Contract("_, _ -> new")
+    public static @NotNull PaperPacketContainer of(
+            final @NotNull WhoMine module,
+            final @NotNull PaperPacketEvent packet
     ) {
-        super(packet, type);
+        return new PaperPacketContainer(module, packet);
     }
 }

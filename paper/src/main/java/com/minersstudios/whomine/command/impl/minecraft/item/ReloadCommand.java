@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.command.impl.minecraft.item;
 
+import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
 import org.bukkit.Keyed;
 import org.bukkit.Server;
@@ -28,7 +28,7 @@ public final class ReloadCommand {
 
             if (
                     recipe instanceof final Keyed keyed
-                    && SharedConstants.MSITEMS_NAMESPACE.equals(keyed.getKey().getNamespace())
+                    && Resource.WMITEM.equals(keyed.getKey().getNamespace())
             ) {
                 server.removeRecipe(keyed.getKey());
             }

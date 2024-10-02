@@ -1,8 +1,9 @@
 package com.minersstudios.whomine.custom.block.file;
 
 import com.google.gson.*;
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.file.adapter.*;
 import com.minersstudios.whomine.custom.block.params.NoteBlockData;
@@ -11,7 +12,6 @@ import com.minersstudios.whomine.custom.block.params.ToolType;
 import com.minersstudios.whomine.custom.block.params.settings.Placing;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.throwable.ConfigurationException;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.world.sound.Sound;
 import com.minersstudios.whomine.world.sound.SoundAdapter;
 import org.bukkit.NamespacedKey;
@@ -51,7 +51,7 @@ public final class CustomBlockFile {
 
     private static final Gson GSON =
             new GsonBuilder()
-            .registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter(SharedConstants.MSBLOCK_NAMESPACE))
+            .registerTypeAdapter(NamespacedKey.class, new NamespacedKeyAdapter(Resource.WMBLOCK))
             .registerTypeAdapter(ItemStack.class,     new ItemStackAdapter())
             .registerTypeAdapter(Recipe.class,        new RecipeAdapter())
             .registerTypeAdapter(RecipeChoice.class,  new RecipeChoiceAdapter())

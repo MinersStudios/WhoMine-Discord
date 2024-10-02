@@ -36,7 +36,7 @@ public final class ResourcePackCommand extends PluginCommandExecutor {
             final @NotNull String label,
             final String @NotNull ... args
     ) {
-        this.getPlugin().openCustomInventory(
+        this.getModule().openCustomInventory(
                 ResourcePackMenu.class,
                 (Player) sender
         );

@@ -1,7 +1,9 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.utility.MessageUtils;
 import com.minersstudios.whomine.api.utility.SharedConstants;
@@ -10,27 +12,24 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.security.SecureRandom;
 
-public final class PlayerInteractEntityListener extends EventListener {
+@ListenFor(eventClass = PlayerInteractEntityEvent.class)
+public final class PlayerInteractEntityListener extends PaperEventListener {
     private final SecureRandom random = new SecureRandom();
 
-    public PlayerInteractEntityListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerInteractEntity(final @NotNull PlayerInteractEntityEvent event) {
+    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    public void onPlayerInteractEntity(final @NotNull PaperEventContainer<PlayerInteractEntityEvent> container) {
+        final PlayerInteractEntityEvent event = container.getEvent();
         final Player whoClicked = event.getPlayer();
 
         if (event.getRightClicked() instanceof final Player clickedPlayer) {
-            final PlayerInfo clickedInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), clickedPlayer);
+            final PlayerInfo clickedInfo = PlayerInfo.fromOnlinePlayer(container.getModule(), clickedPlayer);
             final ItemStack helmet = clickedPlayer.getInventory().getHelmet();
             final float pitch = whoClicked.getEyeLocation().getPitch();
 
@@ -62,7 +61,7 @@ public final class PlayerInteractEntityListener extends EventListener {
                 if (passengers.isEmpty()) {
                     clickedPlayer.addPassenger(whoClicked);
                 } else {
-                    passengers.get(passengers.size() - 1).addPassenger(whoClicked);
+                    passengers.getLast().addPassenger(whoClicked);
                 }
             }
         } else if (event.getRightClicked() instanceof final ItemFrame itemFrame) {

@@ -1,6 +1,8 @@
 package com.minersstudios.whomine;
 
 import com.google.gson.JsonElement;
+import com.minersstudios.whomine.api.module.components.Cache;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.chat.ChatBuffer;
 import com.minersstudios.whomine.collection.DiggingMap;
 import com.minersstudios.whomine.collection.StepMap;
@@ -33,8 +35,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class Cache {
-    private final WhoMine plugin;
+public final class PaperCache implements Cache<WhoMine> {
+
+    private final WhoMine module;
     private boolean isLoaded;
 
     public List<Recipe> customDecorRecipes;
@@ -58,12 +61,13 @@ public final class Cache {
     PlayerInfo consolePlayerInfo;
     WorldDark worldDark;
 
-    Cache(final @NotNull WhoMine plugin) {
-        this.plugin = plugin;
+    PaperCache(final @NotNull WhoMine module) {
+        this.module = module;
     }
 
-    public @NotNull WhoMine getPlugin() {
-        return this.plugin;
+    @Override
+    public @NotNull WhoMine getModule() {
+        return this.module;
     }
 
     public @UnknownNullability StepMap getStepMap() {
@@ -150,9 +154,9 @@ public final class Cache {
         }
 
         this.isLoaded = true;
-        final StatusHandler statusHandler = this.plugin.getStatusHandler();
+        final StatusHandler statusHandler = this.module.getStatusHandler();
 
-        statusHandler.assignStatus(WhoMine.LOADING_CACHE);
+        statusHandler.assignStatus(MainModule.LOADING_CACHE);
 
         this.customDecorRecipes = new ObjectArrayList<>();
         this.customItemRecipes = new ObjectArrayList<>();
@@ -162,21 +166,21 @@ public final class Cache {
         this.dosimeterPlayers = new ConcurrentHashMap<>();
         this.renameableMenuItems = new ObjectArrayList<>();
         this.blockDataRecipes = new ObjectArrayList<>();
-        this.playerInfoMap = new PlayerInfoMap(this.plugin);
-        this.muteMap = new MuteMap(this.plugin);
-        this.discordMap = new DiscordMap(this.plugin);
-        this.idMap = new IDMap(this.plugin);
+        this.playerInfoMap = new PlayerInfoMap(this.module);
+        this.muteMap = new MuteMap(this.module);
+        this.discordMap = new DiscordMap(this.module);
+        this.idMap = new IDMap(this.module);
         this.seats = new ConcurrentHashMap<>();
         this.anomalies = new ConcurrentHashMap<>();
         this.playerAnomalyActionMap = new ConcurrentHashMap<>();
-        this.chatBuffer = new ChatBuffer(this.plugin);
+        this.chatBuffer = new ChatBuffer(this.module);
         this.bukkitTasks = new ObjectArrayList<>();
         this.botHandlers = new Long2ObjectOpenHashMap<>();
 
         statusHandler.assignStatus(
                 this.isLoaded()
-                ? WhoMine.LOADED_CACHE
-                : WhoMine.FAILED_LOAD_CACHE
+                ? MainModule.LOADED_CACHE
+                : MainModule.FAILED_LOAD_CACHE
         );
     }
 

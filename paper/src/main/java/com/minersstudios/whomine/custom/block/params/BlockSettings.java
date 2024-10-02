@@ -69,19 +69,15 @@ public final class BlockSettings {
      *
      * @param player               The player whose dig speed is being
      *                             calculated
-     * @param slowDiggingAmplifier The amplifier of the slow digging effect,
-     *                             or -1 if the player doesn't have the effect
      * @return The calculated dig speed of the custom block for the player using
      *         magic numbers
      */
     public float calculateDigSpeed(
-            final @NotNull Player player,
-            final int slowDiggingAmplifier
+            final @NotNull Player player
     ) {
         float base = 1.0f;
         final ItemStack itemInMainHand = player.getInventory().getItemInMainHand();
         final Material material = itemInMainHand.getType();
-        final PotionEffect fastDigging = player.getPotionEffect(PotionEffectType.HASTE);
         final ToolType toolType = this.tool.getToolType();
 
         if (toolType == ToolType.fromMaterial(material)) {
@@ -96,12 +92,16 @@ public final class BlockSettings {
             base /= 5.0f;
         }
 
+        final PotionEffect fastDigging = player.getPotionEffect(PotionEffectType.HASTE);
+
         if (fastDigging != null) {
             base *= (fastDigging.getAmplifier() + 1) * 1.8f;
         }
 
-        if (slowDiggingAmplifier != -1) {
-            base /= (slowDiggingAmplifier + 1) * 3.6f;
+        final PotionEffect slowDigging = player.getPotionEffect(PotionEffectType.MINING_FATIGUE);
+
+        if (slowDigging != null) {
+            base /= (slowDigging.getAmplifier() + 1) * 3.6f;
         }
 
         return base / this.hardness;

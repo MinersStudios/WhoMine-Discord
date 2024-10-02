@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.custom.decor.registry.furniture.table;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;
 import com.minersstudios.whomine.custom.decor.DecorHitBox;
@@ -46,7 +46,7 @@ public abstract class SmallTable<C extends CustomDecorData<C>> extends CustomDec
                 .recipes(
                         unused -> RecipeEntry.fromBuilder(
                                 RecipeBuilder.shaped()
-                                .group(SharedConstants.MSDECOR_NAMESPACE + ":small_table")
+                                .group(Resource.WMDECOR + ":small_table")
                                 .category(CraftingBookCategory.BUILDING)
                                 .shape(
                                         "PPP",

@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.custom.decor.registry.christmas;
 
+import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
-import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.custom.decor.CustomDecorDataImpl;

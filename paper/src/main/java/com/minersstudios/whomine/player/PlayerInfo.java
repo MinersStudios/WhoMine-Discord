@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.player;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.api.locale.Translations;
@@ -106,7 +106,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by nickname and
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by nickname and
      * {@link UUID}.
      * <br>
      * If the player info is not cached, new player info is created with the
@@ -116,7 +116,7 @@ public final class PlayerInfo {
      *
      * @param uuid     The player UUID
      * @param nickname The player nickname
-     * @return Player info from {@link Cache#getPlayerInfoMap()}
+     * @return Player info from {@link PaperCache#getPlayerInfoMap()}
      */
     public static @NotNull PlayerInfo fromProfile(
             final @NotNull WhoMine plugin,
@@ -127,7 +127,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by {@link Player}
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by {@link Player}
      * object.
      * <br>
      * If the player info is not cached, new player info is created with the
@@ -136,7 +136,7 @@ public final class PlayerInfo {
      * to the map.
      *
      * @param player The player
-     * @return Player info from {@link Cache#getPlayerInfoMap()}
+     * @return Player info from {@link PaperCache#getPlayerInfoMap()}
      */
     public static @NotNull PlayerInfo fromOnlinePlayer(
             final @NotNull WhoMine plugin,
@@ -146,7 +146,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by
      * {@link OfflinePlayer} object.
      * <br>
      * If the player info is not cached, new player info is created with the
@@ -155,7 +155,7 @@ public final class PlayerInfo {
      * to the map.
      *
      * @param offlinePlayer The offline player
-     * @return Player info from {@link Cache#getPlayerInfoMap()}, or null if
+     * @return Player info from {@link PaperCache#getPlayerInfoMap()}, or null if
      *         player nickname is blank
      */
     @Contract("_, null -> null")
@@ -167,9 +167,9 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by
      * {@link OfflinePlayer} object, which was retrieved by the specified player
-     * ID from {@link Cache#getIdMap()}.
+     * ID from {@link PaperCache#getIdMap()}.
      * <br>
      * If the player info is not cached, new player info is created with the
      * player file and settings if the file exists, or new player information is
@@ -189,7 +189,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by
      * {@link OfflinePlayer} object, which was retrieved by the specified player
      * nickname with {@link Server#getOfflinePlayer(String)}.
      * <br>
@@ -215,7 +215,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by
      * {@link OfflinePlayer} object, which was retrieved by the specified player
      * {@link UUID} with {@link Server#getOfflinePlayer(UUID)}.
      * <br>
@@ -240,7 +240,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by
      * {@link OfflinePlayer} object, which was retrieved by the specified player
      * ID or nickname.
      * <br>
@@ -273,8 +273,8 @@ public final class PlayerInfo {
     }
 
     /**
-     * Gets player info from {@link Cache#getPlayerInfoMap()} by discord ID with
-     * {@link Cache#getDiscordMap()}, then gets the player info from its uuid
+     * Gets player info from {@link PaperCache#getPlayerInfoMap()} by discord ID with
+     * {@link PaperCache#getDiscordMap()}, then gets the player info from its uuid
      * and nickname with {@link #fromProfile(WhoMine, UUID, String)}.
      * <br>
      * If the player info is not cached, new player info is created with the
@@ -395,7 +395,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Player's id from {@link Cache#getIdMap()}
+     * @return Player's id from {@link PaperCache#getIdMap()}
      * @see #getID(boolean, boolean)
      */
     public int getID() {
@@ -405,13 +405,13 @@ public final class PlayerInfo {
     /**
      * @param addPlayer  If true, the next available ID is added
      * @param zeroIfNull If true, returns 0 if the id is null
-     * @return Player's id from {@link Cache#getIdMap()}
+     * @return Player's id from {@link PaperCache#getIdMap()}
      */
     public int getID(
             final boolean addPlayer,
             final boolean zeroIfNull
     ) {
-        final Cache cache = this.plugin.getCache();
+        final PaperCache cache = this.plugin.getCache();
         return this == cache.getConsolePlayerInfo()
                 ? -1
                 : cache.getIdMap().getID(
@@ -643,7 +643,7 @@ public final class PlayerInfo {
      * @see DiscordMap#remove(long)
      */
     public long unlinkDiscord() {
-        final Cache cache = this.plugin.getCache();
+        final PaperCache cache = this.plugin.getCache();
         final DiscordMap discordMap = cache.getDiscordMap();
         final long id = discordMap.getId(DiscordMap.Params.create(this.uuid, this.nickname));
         final BotHandler botHandler = cache.getBotHandlers().get(id);
@@ -721,7 +721,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Player's mute params from {@link Cache#getMuteMap()}
+     * @return Player's mute params from {@link PaperCache#getMuteMap()}
      * @see MuteMap#getMuteEntry(OfflinePlayer)
      */
     public @Nullable MuteMap.Entry getMuteEntry() {
@@ -729,7 +729,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Player's mute reason from {@link Cache#getMuteMap()} params
+     * @return Player's mute reason from {@link PaperCache#getMuteMap()} params
      * @throws IllegalStateException If the player is not muted, check
      *                               {@link #isMuted()} first
      * @see MuteMap.Entry#getReason()
@@ -745,7 +745,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Player's mute source from {@link Cache#getMuteMap()} params
+     * @return Player's mute source from {@link PaperCache#getMuteMap()} params
      * @throws IllegalStateException If the player is not muted, check
      *                               {@link #isMuted()} first
      * @see MuteMap.Entry#getSource()
@@ -762,7 +762,7 @@ public final class PlayerInfo {
 
     /**
      * @param sender The command sender, used to get the time zone
-     * @return Date when the player was muted from {@link Cache#getMuteMap()}
+     * @return Date when the player was muted from {@link PaperCache#getMuteMap()}
      *         with the sender's time zone or default time zone if the sender's
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not muted, check
@@ -775,7 +775,7 @@ public final class PlayerInfo {
 
     /**
      * @param address The IP address, used to get the time zone
-     * @return Date when the player was muted from {@link Cache#getMuteMap()}
+     * @return Date when the player was muted from {@link PaperCache#getMuteMap()}
      *         with the time zone of the IP address or default time zone if the
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not muted, check
@@ -787,7 +787,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Date when the player was muted from {@link Cache#getMuteMap()}
+     * @return Date when the player was muted from {@link PaperCache#getMuteMap()}
      * @throws IllegalStateException If the player is not muted, check
      *                               {@link #isMuted()} first
      * @see MuteMap.Entry#getCreated()
@@ -804,7 +804,7 @@ public final class PlayerInfo {
 
     /**
      * @param sender The command sender, used to get the time zone
-     * @return Date when the player will be unmuted from {@link Cache#getMuteMap()}
+     * @return Date when the player will be unmuted from {@link PaperCache#getMuteMap()}
      *         with the sender's time zone or default time zone if the sender's
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not muted, check
@@ -817,7 +817,7 @@ public final class PlayerInfo {
 
     /**
      * @param address The IP address, used to get the time zone
-     * @return Date when the player will be unmuted from {@link Cache#getMuteMap()}
+     * @return Date when the player will be unmuted from {@link PaperCache#getMuteMap()}
      *         with the time zone of the IP address or default time zone if the
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not muted, check
@@ -829,7 +829,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Date when the player will be unmuted from {@link Cache#getMuteMap()}
+     * @return Date when the player will be unmuted from {@link PaperCache#getMuteMap()}
      * @throws IllegalStateException If the player is not muted, check
      *                               {@link #isMuted()} first
      * @see MuteMap.Entry#getExpiration()
@@ -845,7 +845,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Mutes or unmutes the player in {@link Cache#getMuteMap()}.Also sends a
+     * Mutes or unmutes the player in {@link PaperCache#getMuteMap()}.Also sends a
      * message to the muted player if they are online, and to the sender, who
      * muted the player.
      *
@@ -953,7 +953,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Unmutes the player in {@link Cache#getMuteMap()}. Also sends a message to
+     * Unmutes the player in {@link PaperCache#getMuteMap()}. Also sends a message to
      * the muted player if they are online, and to the sender, who unmuted the
      * player.
      *
@@ -1354,7 +1354,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return True, if the player is muted in {@link Cache#getMuteMap()}
+     * @return True, if the player is muted in {@link PaperCache#getMuteMap()}
      * @see MuteMap#isMuted(OfflinePlayer)
      */
     public boolean isMuted() {
@@ -1550,8 +1550,8 @@ public final class PlayerInfo {
                         .exceptionally(
                                 throwable -> {
                                     componentLogger.error(
-                                            "An error occurred while sending the resource pack to " + this.nickname,
-                                            throwable
+                                            "An error occurred while sending the resource pack to {}",
+                                            this.nickname, throwable
                                     );
                                     this.kick(
                                             SOMETHING_WENT_WRONG_TITLE.asTranslatable(),
@@ -1826,7 +1826,7 @@ public final class PlayerInfo {
             return false;
         }
 
-        this.plugin.getDiscordManager().sendEmbeds(id, messageEmbed, other);
+        //this.plugin.getDiscordModule().sendEmbeds(id, messageEmbed, other);
 
         return true;
     }
@@ -1844,7 +1844,7 @@ public final class PlayerInfo {
             return false;
         }
 
-        this.plugin.getDiscordManager().sendMessage(id, message);
+        //this.plugin.getDiscordModule().sendMessage(id, message);
 
         return true;
     }
@@ -1889,7 +1889,6 @@ public final class PlayerInfo {
 
     /**
      * Updates the player's file and initializes the player's names
-     * @see PlayerFile#loadConfig(WhoMine, UUID, String)
      * @see PlayerInfo#initNames()
      */
     public void update() {

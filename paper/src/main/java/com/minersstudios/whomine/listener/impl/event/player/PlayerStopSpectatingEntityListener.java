@@ -1,20 +1,20 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.destroystokyo.paper.event.player.PlayerStopSpectatingEntityEvent;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerStopSpectatingEntityListener extends EventListener {
-
-    public PlayerStopSpectatingEntityListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerStopSpectatingEntityEvent.class)
+public final class PlayerStopSpectatingEntityListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerStopSpectatingEntity(final @NotNull PlayerStopSpectatingEntityEvent event) {
-        if (this.getPlugin().getCache().getWorldDark().isInWorldDark(event.getPlayer())) {
+    public void onPlayerStopSpectatingEntity(final @NotNull PaperEventContainer<PlayerStopSpectatingEntityEvent> container) {
+        final PlayerStopSpectatingEntityEvent event = container.getEvent();
+
+        if (container.getModule().getCache().getWorldDark().isInWorldDark(event.getPlayer())) {
             event.setCancelled(true);
         }
     }

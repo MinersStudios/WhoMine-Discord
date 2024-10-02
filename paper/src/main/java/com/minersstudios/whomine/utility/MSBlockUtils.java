@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * Utility class for {@link CustomBlockData}
  */
 public final class MSBlockUtils {
-    public static final String NAMESPACED_KEY_REGEX = '(' + SharedConstants.MSBLOCK_NAMESPACE + "):(" + Path.REGEX + ")";
+    public static final String NAMESPACED_KEY_REGEX = '(' + Resource.WMBLOCK + "):(" + Path.REGEX + ")";
     public static final Pattern NAMESPACED_KEY_PATTERN = Pattern.compile(NAMESPACED_KEY_REGEX);
 
     @Contract(" -> fail")

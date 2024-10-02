@@ -93,7 +93,6 @@ public enum DecorParameter {
 
                 final ItemDisplay itemDisplay = customDecor.getDisplay();
                 final ItemStack displayItem = itemDisplay.getItemStack();
-                assert displayItem != null;
 
                 itemMeta.displayName(displayItem.getItemMeta().displayName());
                 typeItem.setItemMeta(itemMeta);

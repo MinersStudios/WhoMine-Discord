@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.renameable;
 
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.ItemStack;
@@ -51,7 +51,7 @@ import java.util.*;
  */
 public final class RenameableItemRegistry {
     public static final String RENAMEABLE_KEY = "renameable";
-    public static final NamespacedKey RENAMEABLE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, RENAMEABLE_KEY);
+    public static final NamespacedKey RENAMEABLE_NAMESPACED_KEY = new NamespacedKey(Resource.WMITEM, RENAMEABLE_KEY);
 
     private static final Map<String, RenameableItem> KEY_MAP = new Object2ObjectOpenHashMap<>();
     private static final Map<RenameEntry, String> RENAME_ENTRY_MAP = new Object2ObjectOpenHashMap<>();

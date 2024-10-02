@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.custom.decor.registry.furniture.chair;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.custom.decor.*;
 import com.minersstudios.whomine.inventory.recipe.builder.RecipeBuilder;
 import com.minersstudios.whomine.inventory.recipe.choice.RecipeChoiceEntry;
 import com.minersstudios.whomine.inventory.recipe.entry.RecipeEntry;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -43,7 +43,7 @@ public abstract class SmallArmchair<C extends CustomDecorData<C>> extends Custom
                 .recipes(
                         unused -> RecipeEntry.fromBuilder(
                                 RecipeBuilder.shaped()
-                                .group(SharedConstants.MSDECOR_NAMESPACE + ":small_armchair")
+                                .group(Resource.WMDECOR + ":small_armchair")
                                 .category(CraftingBookCategory.BUILDING)
                                 .shape(
                                         "LP ",

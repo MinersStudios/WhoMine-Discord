@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.world.sound;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.api.utility.ChatUtils;
@@ -178,7 +178,7 @@ final class SoundImpl implements Sound {
             return this.key;
         }
 
-        final Config config = plugin.getConfiguration();
+        final PaperConfig config = plugin.getConfiguration();
 
         return switch (this.key) {
             case WOOD_PLACE_SOUND_KEY -> config.getWoodSoundPlace();

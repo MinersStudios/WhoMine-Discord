@@ -152,13 +152,7 @@ public final class CustomDecor {
         final MSPosition center = this.msbb.getCenter(world);
 
         if (dropItem) {
-            ItemStack displayItem = this.display.getItemStack();
-
-            if (displayItem == null) {
-                displayItem = this.data.getItem();
-
-                MSLogger.warning("Trying to drop a null item from a custom decor at " + this.display.getLocation());
-            }
+            final ItemStack displayItem = this.display.getItemStack();
 
             world.dropItemNaturally(
                     center.toLocation(),

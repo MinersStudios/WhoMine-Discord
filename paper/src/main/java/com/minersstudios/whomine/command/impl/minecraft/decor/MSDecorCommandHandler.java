@@ -59,7 +59,7 @@ public final class MSDecorCommandHandler extends PluginCommandExecutor {
     ) {
         return args.length != 0
                 && switch (args[0]) {
-                    case "give" -> GiveCommand.runCommand(this.getPlugin(), sender, args);
+                    case "give" -> GiveCommand.runCommand(this.getModule(), sender, args);
                     default -> false;
                 };
     }
@@ -74,7 +74,7 @@ public final class MSDecorCommandHandler extends PluginCommandExecutor {
         return switch (args.length) {
             case 1 -> TAB;
             case 2 -> args[0].equals("give")
-                    ? MSPlayerUtils.getLocalPlayerNames(this.getPlugin())
+                    ? MSPlayerUtils.getLocalPlayerNames(this.getModule())
                     : EMPTY_TAB;
             case 3 -> args[0].equals("give")
                     ?  new ObjectArrayList<>(CustomDecorType.keySet())

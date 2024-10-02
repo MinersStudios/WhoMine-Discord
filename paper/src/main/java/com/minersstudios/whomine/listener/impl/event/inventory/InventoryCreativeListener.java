@@ -1,27 +1,27 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.PlayerUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class InventoryCreativeListener extends EventListener {
+@ListenFor(eventClass = InventoryCreativeEvent.class)
+public final class InventoryCreativeListener extends PaperEventListener {
 
-    public InventoryCreativeListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.CUSTOM)
+    public void onInventoryCreative(final @NotNull PaperEventContainer<InventoryCreativeEvent> container) {
+        final InventoryCreativeEvent event = container.getEvent();
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onInventoryCreative(final @NotNull InventoryCreativeEvent event) {
         if (!event.getClick().isCreativeAction()) {
             return;
         }
@@ -38,7 +38,7 @@ public final class InventoryCreativeListener extends EventListener {
         }
 
         event.setCancelled(true);
-        this.getPlugin().runTask(() ->
+        container.getModule().runTask(() ->
                 player.getInventory().setItem(
                         event.getSlot(),
                         CustomBlockRegistry

@@ -43,7 +43,7 @@ public final class MSCoreCommandHandler extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         return switch (args[0]) {
-            case "reloadconfig" -> ReloadConfigCommand.runCommand(this.getPlugin(), sender);
+            case "reloadconfig" -> ReloadConfigCommand.runCommand(this.getModule(), sender);
             default -> false;
         };
     }

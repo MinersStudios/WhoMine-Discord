@@ -1,7 +1,9 @@
 package com.minersstudios.whomine.discord;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.discord.DiscordModule;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.chat.ChatType;
 import com.minersstudios.whomine.api.status.StatusHandler;
 import com.minersstudios.whomine.api.utility.ChatUtils;
@@ -32,7 +34,7 @@ import static com.minersstudios.whomine.api.locale.Translations.DISCORD_SERVER_E
  *
  * @see <a href="https://jda.wiki">JDA Wiki</a>
  */
-public final class DiscordManager {
+public final class DiscordManager implements DiscordModule<DiscordManager> {
     private final WhoMine plugin;
     private JDA jda;
     private Guild mainGuild;
@@ -423,13 +425,13 @@ public final class DiscordManager {
         }
 
         final Logger logger = this.plugin.getLogger();
-        final Config config = this.plugin.getConfiguration();
+        final PaperConfig config = this.plugin.getConfiguration();
         final StatusHandler statusHandler = this.plugin.getStatusHandler();
         final String botToken = config.getYaml().getString("discord.bot-token");
 
         this.plugin.runTaskAsync(() -> {
             try {
-                statusHandler.assignStatus(WhoMine.LOADING_DISCORD);
+                statusHandler.assignStatus(MainModule.LOADING_DISCORD);
 
                 this.jda = this.buildJda(botToken);
             } catch (final Throwable e) {
@@ -442,7 +444,7 @@ public final class DiscordManager {
 
             if (this.jda == null) {
                 logger.warning("Discord bot not found!");
-                statusHandler.assignStatus(WhoMine.FAILED_LOAD_DISCORD);
+                statusHandler.assignStatus(MainModule.FAILED_LOAD_DISCORD);
 
                 return;
             }
@@ -451,7 +453,7 @@ public final class DiscordManager {
 
             if (this.mainGuild == null) {
                 logger.warning("Discord server not found!");
-                statusHandler.assignStatus(WhoMine.FAILED_LOAD_DISCORD);
+                statusHandler.assignStatus(MainModule.FAILED_LOAD_DISCORD);
                 this.unload();
 
                 return;
@@ -497,7 +499,7 @@ public final class DiscordManager {
                     )
             );
 
-            statusHandler.assignStatus(WhoMine.LOADED_DISCORD);
+            statusHandler.assignStatus(MainModule.LOADED_DISCORD);
 
             this.sendMessage(ChatType.GLOBAL, DISCORD_SERVER_ENABLED.asString());
             this.sendMessage(ChatType.LOCAL, DISCORD_SERVER_ENABLED.asString());
@@ -536,5 +538,10 @@ public final class DiscordManager {
                 .setMemberCachePolicy(MemberCachePolicy.ALL)
                 .build()
                 .awaitReady();
+    }
+
+    @Override
+    public @NotNull StatusHandler getStatusHandler() {
+        return null;
     }
 }

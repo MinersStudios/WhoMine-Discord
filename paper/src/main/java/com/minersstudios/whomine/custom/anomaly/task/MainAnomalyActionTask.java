@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.custom.anomaly.task;
 
-import com.minersstudios.whomine.Config;
+import com.minersstudios.whomine.PaperConfig;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.custom.anomaly.Anomaly;
 import com.minersstudios.whomine.custom.anomaly.AnomalyAction;
@@ -17,8 +17,8 @@ import java.util.Map;
  * anomaly zone. When a player is in the anomaly zone, the action will be
  * performed. Otherwise, the action will be removed.
  * <br>
- * The task is registered in {@link Config#reload()} with
- * {@link Config#getAnomalyCheckRate()}.
+ * The task is registered in {@link PaperConfig#reload()} with
+ * {@link PaperConfig#getAnomalyCheckRate()}.
  *
  * @see AnomalyAction
  * @see AnomalyBoundingBox

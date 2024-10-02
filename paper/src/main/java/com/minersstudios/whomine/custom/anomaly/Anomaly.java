@@ -1,13 +1,13 @@
 package com.minersstudios.whomine.custom.anomaly;
 
 import com.destroystokyo.paper.ParticleBuilder;
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.custom.anomaly.action.AddPotionAction;
 import com.minersstudios.whomine.custom.anomaly.action.SpawnParticlesAction;
 import com.minersstudios.whomine.world.location.MSBoundingBox;
 import com.minersstudios.whomine.utility.BlockUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.doubles.Double2ObjectMap;
 import it.unimi.dsi.fastutil.doubles.Double2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -30,7 +30,7 @@ import java.util.*;
 
 /**
  * Anomaly class with all anomaly data and associated namespaced key.
- * All anomalies are cached in {@link Cache#getAnomalies()} .
+ * All anomalies are cached in {@link PaperCache#getAnomalies()} .
  * <br>
  * Can have :
  * <ul>
@@ -266,7 +266,7 @@ public class Anomaly {
 
         return new Anomaly(
                 new NamespacedKey(
-                        SharedConstants.WHOMINE_NAMESPACE,
+                        Resource.WHOMINE,
                         namespacedKeyStr
                 ),
                 anomalyBoundingBox,

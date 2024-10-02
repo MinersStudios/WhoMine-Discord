@@ -3,7 +3,7 @@ package com.minersstudios.whomine.command.api;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
 import com.minersstudios.whomine.command.api.discord.interaction.TabCompleterHandler;
-import com.minersstudios.whomine.plugin.AbstractPluginComponent;
+import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -21,7 +21,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Represents an abstract class for handling discord slash commands
  */
-public abstract class SlashCommandExecutor extends AbstractPluginComponent {
+public abstract class SlashCommandExecutor extends AbstractModuleComponent<WhoMine> {
     private final Map<User, Map.Entry<Long, TabCompleterHandler>> userRemainingTabCompletes;
     private final SlashCommandData data;
 
@@ -56,15 +56,14 @@ public abstract class SlashCommandExecutor extends AbstractPluginComponent {
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{' +
-                "plugin=" + this.getPlugin() +
+                "plugin=" + this.getModule() +
                 ", commandInfo=" + this.data +
                 '}';
     }
 
-    @Override
     public final void register() throws IllegalStateException {
-        this.getPlugin().getCommandManager().registerDiscord(this);
-        this.onRegister();
+        //this.getModule().getCommandManager().registerDiscord(this);
+        //this.onRegister();
     }
 
     /**
@@ -95,7 +94,7 @@ public abstract class SlashCommandExecutor extends AbstractPluginComponent {
     public final void execute(final @NotNull SlashCommandInteractionEvent event) {
         this.onCommand(
                 new CommandHandler(
-                        this.getPlugin(),
+                        this.getModule(),
                         event.getInteraction()
                 )
         );
@@ -117,7 +116,7 @@ public abstract class SlashCommandExecutor extends AbstractPluginComponent {
                 entry == null
                 || entry.getKey() != interaction.getCommandIdLong()
         ) {
-            handler = new TabCompleterHandler(this.getPlugin(), interaction);
+            handler = new TabCompleterHandler(this.getModule(), interaction);
 
             this.userRemainingTabCompletes.put(
                     interaction.getUser(),

@@ -60,7 +60,7 @@ public final class KickCommand extends PluginCommandExecutor {
         final Component reason = args.length > 1
                 ? text(ChatUtils.extractMessage(args, 1))
                 : COMMAND_KICK_DEFAULT_REASON.asTranslatable();
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -109,7 +109,7 @@ public final class KickCommand extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         return args.length == 1
-                ? MSPlayerUtils.getLocalPlayerNames(this.getPlugin())
+                ? MSPlayerUtils.getLocalPlayerNames(this.getModule())
                 : EMPTY_TAB;
     }
 }

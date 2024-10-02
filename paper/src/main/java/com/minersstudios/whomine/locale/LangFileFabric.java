@@ -336,18 +336,18 @@ public final class LangFileFabric {
             final @NotNull Locale locale,
             final @NotNull InputStream inputStream
     ) throws JsonIOException, JsonSyntaxException {
-        final LanguageFile file = new LanguageFile(locale);
+        final var translationMap = new Object2ObjectOpenHashMap<String, String>();
 
         try (inputStream) {
             Language.loadFromJson(
                     inputStream,
-                    file.getTranslationMap()::put
+                    translationMap::put
             );
         } catch (final IOException e) {
             throw new JsonIOException(e);
         }
 
-        return file;
+        return new LanguageFile(locale, translationMap);
     }
 
     private static @NotNull File getFile(final @NotNull String path) {

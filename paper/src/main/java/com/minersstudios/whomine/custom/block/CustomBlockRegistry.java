@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.custom.block;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.custom.block.params.PlacingType;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.block.params.NoteBlockData;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -26,7 +26,7 @@ import java.util.*;
 
 /**
  * The CustomBlockRegistry class is responsible for managing and storing custom
- * block data for {@link WhoMine} plugin.
+ * block data for {@link MainModule} plugin.
  * <br>
  * It provides various methods to register, unregister, and retrieve custom
  * block data based on different criteria, such as the custom block's key, hash
@@ -76,7 +76,7 @@ import java.util.*;
  * }</pre>
  */
 public final class CustomBlockRegistry {
-    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSBLOCK_NAMESPACE, "type");
+    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(Resource.WMBLOCK, "type");
 
     private static final Int2ObjectMap<CustomBlockData> HASH_CODE_MAP = new Int2ObjectOpenHashMap<>();
     private static final Map<String, IntSet> KEY_MAP = new Object2ObjectOpenHashMap<>();

@@ -1,10 +1,11 @@
 package com.minersstudios.whomine.packet.handler;
 
+import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.module.ModuleComponent;
 import com.minersstudios.whomine.api.packet.*;
 import com.minersstudios.whomine.packet.PaperPacketContainer;
 import com.minersstudios.whomine.packet.PaperPacketEvent;
 import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.WhoMine;
 import io.netty.channel.*;
 import net.kyori.adventure.text.Component;
 import net.minecraft.network.Connection;
@@ -28,31 +29,34 @@ import javax.annotation.concurrent.Immutable;
  * @see PacketContainer
  * @see PacketEvent
  */
+@SuppressWarnings("unused")
 @Immutable
-public final class ChannelHandler extends ChannelDuplexHandler {
+public final class ChannelHandler extends ChannelDuplexHandler implements ModuleComponent<WhoMine> {
 
-    private final WhoMine plugin;
+    private final WhoMine module;
     private final Connection connection;
 
     /**
      * Channel handler constructor
      *
-     * @param plugin     The plugin associated with this channel handler
+     * @param module     The module associated with this channel handler
      * @param connection The connection associated with this channel handler
      */
     public ChannelHandler(
-            final @NotNull WhoMine plugin,
+            final @NotNull WhoMine module,
             final @NotNull Connection connection
     ) {
-        this.plugin = plugin;
+        this.module = module;
         this.connection = connection;
     }
 
     /**
-     * @return The plugin associated with this channel handler
+     * Returns the module associated with this channel handler
+     *
+     * @return The module associated with this channel handler
      */
-    public @NotNull WhoMine getPlugin() {
-        return this.plugin;
+    public @NotNull WhoMine getModule() {
+        return this.module;
     }
 
     /**
@@ -77,13 +81,15 @@ public final class ChannelHandler extends ChannelDuplexHandler {
             final @NotNull ChannelHandlerContext ctx,
             final @NotNull Object msg
     ) throws Exception {
-        final var event = this.handle(msg);
+        final PaperPacketContainer container = this.handle(msg);
 
-        if (event != null) {
-            this.plugin.getListenerManager().callPacketReceiveEvent(event);
+        if (container != null) {
+            final PaperPacketEvent event = container.getEvent();
+
+            this.module.getListenerManager().call(container);
 
             if (!event.isCancelled()) {
-                super.channelRead(ctx, event.getPacketContainer().getPacket());
+                super.channelRead(ctx, event.getPacket());
             }
         }
     }
@@ -105,18 +111,21 @@ public final class ChannelHandler extends ChannelDuplexHandler {
             final @NotNull Object msg,
             final @NotNull ChannelPromise promise
     ) throws Exception {
-        final var event = this.handle(msg);
+        final PaperPacketContainer container = this.handle(msg);
 
-        if (event != null) {
-            this.plugin.getListenerManager().callPacketSendEvent(event);
+        if (container != null) {
+            final PaperPacketEvent event = container.getEvent();
+
+            this.module.getListenerManager().call(container);
 
             if (!event.isCancelled()) {
-                super.write(ctx, event.getPacketContainer().getPacket(), promise);
+                super.write(ctx, event.getPacket(), promise);
             }
         }
     }
 
-    private @Nullable PaperPacketEvent handle(final @NotNull Object msg) {
+    @SuppressWarnings("PatternValidation")
+    private @Nullable PaperPacketContainer handle(final @NotNull Object msg) {
         if (!(msg instanceof final Packet<?> packet)) {
             return null;
         }
@@ -151,9 +160,9 @@ public final class ChannelHandler extends ChannelDuplexHandler {
             return null;
         }
 
-        return new PaperPacketEvent(
-                new PaperPacketContainer(packet, packetType),
-                this.connection
+        return PaperPacketContainer.of(
+                this.module,
+                new PaperPacketEvent(packetType, packet, this.connection)
         );
     }
 
@@ -163,7 +172,7 @@ public final class ChannelHandler extends ChannelDuplexHandler {
     ) {
         final ServerPlayer serverPlayer = this.connection.getPlayer();
 
-        this.plugin.runTask(() -> serverPlayer.connection.disconnect(
+        this.module.runTask(() -> serverPlayer.connection.disconnect(
                 playerKickMessage,
                 PlayerKickEvent.Cause.PLUGIN
         ));

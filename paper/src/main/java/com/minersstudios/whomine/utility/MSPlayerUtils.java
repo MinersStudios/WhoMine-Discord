@@ -39,10 +39,10 @@ public final class MSPlayerUtils {
             final @NotNull WhoMine plugin,
             final @Nullable Player player
     ) {
-        if (player != null) {
-            plugin.getScoreboardHideTagsTeam().addEntry(player.getName());
-            player.setScoreboard(plugin.getScoreboardHideTags());
-        }
+        //if (player != null) {
+        //    plugin.getScoreboardHideTagsTeam().addEntry(player.getName());
+        //    player.setScoreboard(plugin.getScoreboardHideTags());
+        //}
     }
 
     /**

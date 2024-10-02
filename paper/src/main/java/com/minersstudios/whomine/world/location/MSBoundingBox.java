@@ -1873,18 +1873,16 @@ public final class MSBoundingBox {
      */
     @Override
     public int hashCode() {
-        long l = Double.doubleToLongBits(this.minX);
-        int i = (int)(l ^ l >>> 32);
-        l = Double.doubleToLongBits(this.minY);
-        i = 31 * i + (int)(l ^ l >>> 32);
-        l = Double.doubleToLongBits(this.minZ);
-        i = 31 * i + (int)(l ^ l >>> 32);
-        l = Double.doubleToLongBits(this.maxX);
-        i = 31 * i + (int)(l ^ l >>> 32);
-        l = Double.doubleToLongBits(this.maxY);
-        i = 31 * i + (int)(l ^ l >>> 32);
-        l = Double.doubleToLongBits(this.maxZ);
-        return 31 * i + (int)(l ^ l >>> 32);
+        final int prime = 31;
+        int i = Double.hashCode(this.minX);
+
+        i = prime * i + Double.hashCode(this.minY);
+        i = prime * i + Double.hashCode(this.minZ);
+        i = prime * i + Double.hashCode(this.maxX);
+        i = prime * i + Double.hashCode(this.maxY);
+        i = prime * i + Double.hashCode(this.maxZ);
+
+        return i;
     }
 
     /**

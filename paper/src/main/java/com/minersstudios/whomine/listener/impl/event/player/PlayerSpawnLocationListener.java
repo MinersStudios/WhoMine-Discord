@@ -1,21 +1,21 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-public final class PlayerSpawnLocationListener extends EventListener {
-
-    public PlayerSpawnLocationListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerSpawnLocationEvent.class)
+public final class PlayerSpawnLocationListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerSpawnLocation(final @NotNull PlayerSpawnLocationEvent event) {
+    public void onPlayerSpawnLocation(final @NotNull PaperEventContainer<PlayerSpawnLocationEvent> container) {
+        final PlayerSpawnLocationEvent event = container.getEvent();
+
         if (!event.getPlayer().isDead()) {
-            event.setSpawnLocation(this.getPlugin().getCache().getWorldDark().getSpawnLocation());
+            event.setSpawnLocation(container.getModule().getCache().getWorldDark().getSpawnLocation());
         }
     }
 }

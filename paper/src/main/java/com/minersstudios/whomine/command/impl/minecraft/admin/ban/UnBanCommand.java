@@ -59,7 +59,7 @@ public final class UnBanCommand extends PluginCommandExecutor {
             return false;
         }
 
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -84,7 +84,7 @@ public final class UnBanCommand extends PluginCommandExecutor {
     ) {
         if (args.length == 1) {
             final var completions = new ObjectArrayList<String>();
-            final PlayerInfoMap playerInfoMap = this.getPlugin().getCache().getPlayerInfoMap();
+            final PlayerInfoMap playerInfoMap = this.getModule().getCache().getPlayerInfoMap();
             final ProfileBanList banList = Bukkit.getServer().getBanList(BanList.Type.PROFILE);
             final Set<BanEntry<PlayerProfile>> entries = banList.getEntries();
 

@@ -1,15 +1,16 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItem;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSCustomUtils;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -17,14 +18,12 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-public final class PrepareAnvilListener extends EventListener {
-
-    public PrepareAnvilListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PrepareAnvilEvent.class)
+public final class PrepareAnvilListener extends PaperEventListener {
 
     @EventHandler
-    public void onPrepareAnvil(final @NotNull PrepareAnvilEvent event) {
+    public void onPrepareAnvil(final @NotNull PaperEventContainer<PrepareAnvilEvent> container) {
+        final PrepareAnvilEvent event = container.getEvent();
         final ItemStack resultItem = event.getResult();
         final ItemStack firstItem = event.getInventory().getFirstItem();
         @SuppressWarnings("UnstableApiUsage")
@@ -41,7 +40,7 @@ public final class PrepareAnvilListener extends EventListener {
 
         if (
                 renameableItem != null
-                && renameableItem.isWhiteListed((OfflinePlayer) event.getViewers().get(0))
+                && renameableItem.isWhiteListed((OfflinePlayer) event.getViewers().getFirst())
         ) {
             final ItemStack renamedItem = renameableItem.craftRenamed(resultItem, renameText);
 
@@ -69,18 +68,18 @@ public final class PrepareAnvilListener extends EventListener {
             assert customStack != null;
 
             final ItemMeta customMeta = customStack.getItemMeta();
-            final PersistentDataContainer container = meta.getPersistentDataContainer();
-            final PersistentDataContainer dataContainer = customMeta.getPersistentDataContainer();
+            final PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+            final PersistentDataContainer customDataContainer = customMeta.getPersistentDataContainer();
 
             meta.setCustomModelData(customMeta.getCustomModelData());
             meta.lore(customMeta.lore());
-            container.getKeys().forEach(container::remove);
+            dataContainer.getKeys().forEach(dataContainer::remove);
 
-            for (final var key : dataContainer.getKeys()) {
-                final String keyStr = dataContainer.get(key, PersistentDataType.STRING);
+            for (final var key : customDataContainer.getKeys()) {
+                final String keyStr = customDataContainer.get(key, PersistentDataType.STRING);
 
                 if (keyStr != null) {
-                    container.set(key, PersistentDataType.STRING, keyStr);
+                    dataContainer.set(key, PersistentDataType.STRING, keyStr);
                 }
             }
 

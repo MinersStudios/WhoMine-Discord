@@ -24,9 +24,12 @@ public class LanguageFile {
      *
      * @param locale The locale of the language file
      */
-    public LanguageFile(final @NotNull Locale locale) {
+    public LanguageFile(
+            final @NotNull Locale locale,
+            final @NotNull Map<String, String> translationMap
+    ) {
         this.locale = locale;
-        this.translationMap = new Object2ObjectOpenHashMap<>();
+        this.translationMap = new Object2ObjectOpenHashMap<>(translationMap);
     }
 
     /**

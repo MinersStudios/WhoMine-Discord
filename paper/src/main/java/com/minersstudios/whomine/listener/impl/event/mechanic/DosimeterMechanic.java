@@ -1,15 +1,17 @@
 package com.minersstudios.whomine.listener.impl.event.mechanic;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.anomaly.Anomaly;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.registry.Dosimeter;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
@@ -17,6 +19,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -27,182 +30,221 @@ import java.util.Objects;
 
 import static net.kyori.adventure.text.Component.text;
 
-public final class DosimeterMechanic extends EventListener {
+public final class DosimeterMechanic {
 
-    public DosimeterMechanic(final @NotNull WhoMine plugin) {
-        super(plugin);
+    @Contract(" -> fail")
+    private DosimeterMechanic() throws AssertionError {
+        throw new AssertionError("Parent class");
     }
 
-    @EventHandler
-    public void onPlayerSwapHandItems(final @NotNull PlayerSwapHandItemsEvent event) {
-        final Player player = event.getPlayer();
-        final var players = this.getPlugin().getCache().getDosimeterPlayers();
-        final EquipmentSlot equipmentSlot = players.get(player);
+    @ListenFor(eventClass = PlayerSwapHandItemsEvent.class)
+    public static final class PlayerSwapHandItems extends PaperEventListener {
 
-        if (equipmentSlot != null) {
-            players.put(player, equipmentSlot == EquipmentSlot.HAND ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND);
+        @EventHandler
+        public void onPlayerSwapHandItems(final @NotNull PaperEventContainer<PlayerSwapHandItemsEvent> container) {
+            final PlayerSwapHandItemsEvent event = container.getEvent();
+            final Player player = event.getPlayer();
+            final var players = container.getModule().getCache().getDosimeterPlayers();
+            final EquipmentSlot equipmentSlot = players.get(player);
+
+            if (equipmentSlot != null) {
+                players.put(
+                        player,
+                        equipmentSlot == EquipmentSlot.HAND
+                        ? EquipmentSlot.OFF_HAND
+                        : EquipmentSlot.HAND
+                );
+            }
         }
     }
 
-    @EventHandler
-    public void onPlayerItemHeld(final @NotNull PlayerItemHeldEvent event) {
-        final Player player = event.getPlayer();
-        final var players = this.getPlugin().getCache().getDosimeterPlayers();
-        final EquipmentSlot equipmentSlot = players.get(player);
+    @ListenFor(eventClass = PlayerItemHeldEvent.class)
+    public static final class PlayerItemHeld extends PaperEventListener {
 
-        if (equipmentSlot == EquipmentSlot.HAND) {
-            final ItemStack dosimeterItem = player.getInventory().getItem(event.getPreviousSlot());
+        @EventHandler
+        public void onPlayerItemHeld(final @NotNull PaperEventContainer<PlayerItemHeldEvent> container) {
+            final PlayerItemHeldEvent event = container.getEvent();
+            final Player player = event.getPlayer();
+            final var players = container.getModule().getCache().getDosimeterPlayers();
+            final EquipmentSlot equipmentSlot = players.get(player);
+
+            if (equipmentSlot == EquipmentSlot.HAND) {
+                final ItemStack dosimeterItem = player.getInventory().getItem(event.getPreviousSlot());
+
+                CustomItem.fromItemStack(dosimeterItem, Dosimeter.class).ifPresent(dosimeter -> {
+                    final Dosimeter copy = dosimeter.copy();
+
+                    assert dosimeterItem != null;
+
+                    copy.setItem(dosimeterItem);
+                    copy.setEnabled(false);
+                    players.remove(player);
+                });
+            }
+        }
+    }
+
+    @ListenFor(eventClass = InventoryClickEvent.class)
+    public static final class InventoryClick extends PaperEventListener {
+
+        @EventHandler
+        public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
+            final InventoryClickEvent event = container.getEvent();
+            final WhoMine module = container.getModule();
+
+            final Player player = (Player) event.getWhoClicked();
+            final Inventory inventory = event.getClickedInventory();
+            final ClickType clickType = event.getClick();
+
+            if (!(inventory instanceof final PlayerInventory playerInventory)) {
+                return;
+            }
+
+            final var players = module.getCache().getDosimeterPlayers();
+            final EquipmentSlot equipmentSlot = players.get(player);
+
+            if (equipmentSlot == null) {
+                return;
+            }
+
+            final ItemStack dosimeterItem = playerInventory.getItem(equipmentSlot);
 
             CustomItem.fromItemStack(dosimeterItem, Dosimeter.class)
             .ifPresent(dosimeter -> {
                 final Dosimeter copy = dosimeter.copy();
+                final EquipmentSlot newEquipmentSlot = equipmentSlot == EquipmentSlot.HAND ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND;
 
-                assert dosimeterItem != null;
-
-                copy.setItem(dosimeterItem);
-                copy.setEnabled(false);
-                players.remove(player);
-            });
-        }
-    }
-
-    @EventHandler
-    public void onInventoryClick(final @NotNull InventoryClickEvent event) {
-        final Player player = (Player) event.getWhoClicked();
-        final Inventory inventory = event.getClickedInventory();
-        final ClickType clickType = event.getClick();
-
-        if (!(inventory instanceof final PlayerInventory playerInventory)) {
-            return;
-        }
-
-        final var players = this.getPlugin().getCache().getDosimeterPlayers();
-        final EquipmentSlot equipmentSlot = players.get(player);
-
-        if (equipmentSlot == null) {
-            return;
-        }
-
-        final ItemStack dosimeterItem = playerInventory.getItem(equipmentSlot);
-
-        CustomItem.fromItemStack(dosimeterItem, Dosimeter.class)
-        .ifPresent(dosimeter -> {
-            final Dosimeter copy = dosimeter.copy();
-            final EquipmentSlot newEquipmentSlot = equipmentSlot == EquipmentSlot.HAND ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND;
-
-            if (
-                    clickType.isShiftClick()
-                    || (clickType == ClickType.SWAP_OFFHAND
-                    && equipmentSlot == EquipmentSlot.OFF_HAND
-                    && event.getSlot() != playerInventory.getHeldItemSlot())
-            ) {
-                copy.setItem(clickType.isShiftClick() ? Objects.requireNonNull(event.getCurrentItem()) : dosimeterItem);
-                copy.setEnabled(false);
-                players.remove(player);
-
-                return;
-            }
-
-            this.getPlugin().runTask(() -> {
-                if (dosimeterItem.equals(playerInventory.getItem(newEquipmentSlot))) {
-                    players.put(player, newEquipmentSlot);
-                } else if (!dosimeterItem.equals(playerInventory.getItem(equipmentSlot))) {
-                    copy.setItem(
-                            clickType.isKeyboardClick()
-                            ? dosimeterItem
-                            : Objects.requireNonNull(event.getCursor())
-                    );
+                if (
+                        clickType.isShiftClick()
+                        || (clickType == ClickType.SWAP_OFFHAND
+                        && equipmentSlot == EquipmentSlot.OFF_HAND
+                        && event.getSlot() != playerInventory.getHeldItemSlot())
+                ) {
+                    copy.setItem(clickType.isShiftClick() ? Objects.requireNonNull(event.getCurrentItem()) : dosimeterItem);
                     copy.setEnabled(false);
                     players.remove(player);
-                }
-            });
-        });
-    }
 
-    @EventHandler
-    public void onPlayerDropItem(final @NotNull PlayerDropItemEvent event) {
-        final Player player = event.getPlayer();
-        final var players = this.getPlugin().getCache().getDosimeterPlayers();
-        final EquipmentSlot equipmentSlot = players.get(player);
-
-        if (equipmentSlot != null) {
-            final ItemStack drop = event.getItemDrop().getItemStack();
-            final ItemStack itemStack = player.getInventory().getItem(equipmentSlot);
-
-            CustomItem.fromItemStack(itemStack, Dosimeter.class)
-            .ifPresent(dosimeter -> {
-                if (CustomItem.fromItemStack(drop, Dosimeter.class).isEmpty()) {
                     return;
                 }
 
-                final Dosimeter copy = dosimeter.copy();
-
-                copy.setItem(drop);
-                copy.setEnabled(false);
-                players.remove(player);
+                module.runTask(() -> {
+                    if (dosimeterItem.equals(playerInventory.getItem(newEquipmentSlot))) {
+                        players.put(player, newEquipmentSlot);
+                    } else if (!dosimeterItem.equals(playerInventory.getItem(equipmentSlot))) {
+                        copy.setItem(
+                                clickType.isKeyboardClick()
+                                ? dosimeterItem
+                                : Objects.requireNonNull(event.getCursor())
+                        );
+                        copy.setEnabled(false);
+                        players.remove(player);
+                    }
+                });
             });
         }
     }
 
-    @EventHandler
-    public void onPlayerQuit(final @NotNull PlayerQuitEvent event) {
-        final Player player = event.getPlayer();
-        final EquipmentSlot equipmentSlot = this.getPlugin().getCache().getDosimeterPlayers().remove(player);
+    @ListenFor(eventClass = PlayerDropItemEvent.class)
+    public static final class PlayerDropItem extends PaperEventListener {
 
-        if (equipmentSlot != null) {
-            final ItemStack itemStack = player.getInventory().getItem(equipmentSlot);
+        @EventHandler
+        public void onPlayerDropItem(final @NotNull PaperEventContainer<PlayerDropItemEvent> container) {
+            final PlayerDropItemEvent event = container.getEvent();
+            final Player player = event.getPlayer();
+            final var players = container.getModule().getCache().getDosimeterPlayers();
+            final EquipmentSlot equipmentSlot = players.get(player);
 
-            CustomItem.fromItemStack(itemStack, Dosimeter.class)
-            .ifPresent(dosimeter -> {
-                final Dosimeter copy = dosimeter.copy();
+            if (equipmentSlot != null) {
+                final ItemStack drop = event.getItemDrop().getItemStack();
+                final ItemStack itemStack = player.getInventory().getItem(equipmentSlot);
 
-                copy.setItem(itemStack);
-                copy.setEnabled(false);
-            });
-        }
-    }
+                CustomItem.fromItemStack(itemStack, Dosimeter.class)
+                .ifPresent(dosimeter -> {
+                    if (CustomItem.fromItemStack(drop, Dosimeter.class).isEmpty()) {
+                        return;
+                    }
 
-    @EventHandler
-    public void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
-        if (!event.getAction().isRightClick()) {
-            return;
-        }
+                    final Dosimeter copy = dosimeter.copy();
 
-        final Player player = event.getPlayer();
-        final EquipmentSlot hand = event.getHand();
-
-        if (
-                hand == null
-                || !hand.isHand()
-        ) {
-            return;
-        }
-
-        final ItemStack itemInHand = player.getInventory().getItem(hand);
-
-        CustomItem.fromItemStack(itemInHand, Dosimeter.class)
-        .ifPresent(dosimeter -> {
-            final Dosimeter copy = dosimeter.copy();
-
-            event.setCancelled(true);
-            copy.setItem(itemInHand);
-            copy.setEnabled(!copy.isEnabled());
-
-            if (copy.isEnabled()) {
-                this.getPlugin().getCache().getDosimeterPlayers().put(player, hand);
-            } else {
-                this.getPlugin().getCache().getDosimeterPlayers().remove(player, hand);
+                    copy.setItem(drop);
+                    copy.setEnabled(false);
+                    players.remove(player);
+                });
             }
-        });
+        }
+    }
+
+    @ListenFor(eventClass = PlayerQuitEvent.class)
+    public static final class PlayerQuit extends PaperEventListener {
+
+        @EventHandler
+        public void onPlayerQuit(final @NotNull PaperEventContainer<PlayerQuitEvent> container) {
+            final PlayerQuitEvent event = container.getEvent();
+            final Player player = event.getPlayer();
+            final EquipmentSlot equipmentSlot = container.getModule().getCache().getDosimeterPlayers().remove(player);
+
+            if (equipmentSlot != null) {
+                final ItemStack itemStack = player.getInventory().getItem(equipmentSlot);
+
+                CustomItem.fromItemStack(itemStack, Dosimeter.class)
+                .ifPresent(dosimeter -> {
+                    final Dosimeter copy = dosimeter.copy();
+
+                    copy.setItem(itemStack);
+                    copy.setEnabled(false);
+                });
+            }
+        }
+    }
+
+    @ListenFor(eventClass = PlayerInteractEvent.class)
+    public static final class PlayerInteract extends PaperEventListener {
+
+        @EventHandler
+        public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
+            final PlayerInteractEvent event = container.getEvent();
+
+            if (!event.getAction().isRightClick()) {
+                return;
+            }
+
+            final Player player = event.getPlayer();
+            final EquipmentSlot hand = event.getHand();
+
+            if (
+                    hand == null
+                    || !hand.isHand()
+            ) {
+                return;
+            }
+
+            final ItemStack itemInHand = player.getInventory().getItem(hand);
+
+            CustomItem.fromItemStack(itemInHand, Dosimeter.class)
+            .ifPresent(dosimeter -> {
+                final var dosimeterPlayers = container.getModule().getCache().getDosimeterPlayers();
+                final Dosimeter copy = dosimeter.copy();
+
+                event.setCancelled(true);
+                copy.setItem(itemInHand);
+                copy.setEnabled(!copy.isEnabled());
+
+                if (copy.isEnabled()) {
+                    dosimeterPlayers.put(player, hand);
+                } else {
+                    dosimeterPlayers.remove(player, hand);
+                }
+            });
+        }
     }
 
     public static class DosimeterTask {
-        private final WhoMine plugin;
+        private final WhoMine module;
         private final Map<Player, EquipmentSlot> players;
 
-        public DosimeterTask(final @NotNull WhoMine plugin) {
-            this.plugin = plugin;
-            this.players = plugin.getCache().getDosimeterPlayers();
+        public DosimeterTask(final @NotNull WhoMine module) {
+            this.module = module;
+            this.players = module.getCache().getDosimeterPlayers();
         }
 
         public void run() {
@@ -226,7 +268,7 @@ public final class DosimeterMechanic extends EventListener {
                     if (copy.isEnabled()) {
                         final var radiiPlayerInside = new Object2DoubleOpenHashMap<Anomaly>();
 
-                        for (final var anomaly : this.plugin.getCache().getAnomalies().values()) {
+                        for (final var anomaly : this.module.getCache().getAnomalies().values()) {
                             final double radiusInside = anomaly.getBoundingBox().getRadiusInside(player);
 
                             if (radiusInside != -1.0d) {

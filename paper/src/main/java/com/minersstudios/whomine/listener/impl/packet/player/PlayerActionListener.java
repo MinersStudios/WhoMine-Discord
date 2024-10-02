@@ -1,13 +1,15 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventHandler;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.collection.DiggingMap;
-import com.minersstudios.whomine.listener.api.PacketListener;
 import com.minersstudios.whomine.api.packet.registry.PlayPackets;
+import com.minersstudios.whomine.packet.PaperPacketContainer;
 import com.minersstudios.whomine.packet.PaperPacketEvent;
+import com.minersstudios.whomine.packet.PaperPacketListener;
 import com.minersstudios.whomine.world.location.MSPosition;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import com.minersstudios.whomine.utility.BlockUtils;
@@ -17,7 +19,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.level.GameType;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -31,44 +32,40 @@ import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static net.minecraft.world.effect.MobEffectInstance.INFINITE_DURATION;
-import static net.minecraft.world.effect.MobEffects.DIG_SLOWDOWN;
-import static org.bukkit.event.entity.EntityPotionEffectEvent.Cause.PLUGIN;
+public final class PlayerActionListener extends PaperPacketListener {
 
-public final class PlayerActionListener extends PacketListener {
     private final Map<String, Handler> handlerMap;
-    private final Map<String, MobEffectInstance> effectMap;
     final Map<String, CompletableFuture<Block>> clickRequestMap;
 
-    public PlayerActionListener(final @NotNull WhoMine plugin) {
-        super(plugin, PlayPackets.SERVER_PLAYER_ACTION);
+    public PlayerActionListener() {
+        super(PlayPackets.SERVER_PLAYER_ACTION);
 
         this.handlerMap = new Object2ObjectOpenHashMap<>();
-        this.effectMap = new Object2ObjectOpenHashMap<>();
         this.clickRequestMap = new ConcurrentHashMap<>();
     }
 
-    @Override
-    public void onPacketReceive(final @NotNull PaperPacketEvent event) {
+    @EventHandler
+    public void onEvent(final @NotNull PaperPacketContainer container) {
+        final PaperPacketEvent event = container.getEvent();
         final ServerPlayer player = event.getConnection().getPlayer();
-        final var container = event.getPacketContainer();
 
         if (player.gameMode.getGameModeForPlayer() == GameType.SURVIVAL) {
-            final var packet = (ServerboundPlayerActionPacket) container.getPacket();
-            final MSPosition position = MSPosition.of(
-                    player.level().getWorld(),
-                    packet.getPos()
-            );
+            final var packet = (ServerboundPlayerActionPacket) event.getPacket();
+            final MSPosition position = MSPosition.of(player.level().getWorld(), packet.getPos());
 
-            switch (packet.getAction()) {
-                case START_DESTROY_BLOCK -> this.getHandler(player, position).ifPresent(Handler::start);
-                case ABORT_DESTROY_BLOCK -> this.getHandler(player, position).ifPresent(Handler::abort);
-                case STOP_DESTROY_BLOCK ->  this.getHandler(player, position).ifPresent(Handler::finish);
-            }
+            this.getHandler(container.getModule(), player, position).ifPresent(handler -> {
+                switch (packet.getAction()) {
+                    case START_DESTROY_BLOCK -> handler.start();
+                    case ABORT_DESTROY_BLOCK -> handler.abort();
+                    case STOP_DESTROY_BLOCK  -> handler.finish();
+                    default -> {} // Do nothing
+                }
+            });
         }
     }
 
     private @NotNull Optional<Handler> getHandler(
+            final @NotNull WhoMine module,
             final @NotNull ServerPlayer serverPlayer,
             final @NotNull MSPosition position
     ) {
@@ -83,7 +80,7 @@ public final class PlayerActionListener extends PacketListener {
                     return Optional.of(handler);
                 }
 
-                final Handler newHandler = new Handler(serverPlayer, position);
+                final Handler newHandler = new Handler(module, serverPlayer, position);
 
                 this.handlerMap.put(
                         serverPlayer.getStringUUID(),
@@ -96,63 +93,8 @@ public final class PlayerActionListener extends PacketListener {
                 this.handlerMap.remove(serverPlayer.getStringUUID());
             }
 
-            this.getPlugin().runTask(
-                    () -> this.removeSlowDigging(serverPlayer)
-            );
-
             return Optional.empty();
         }
-    }
-
-    private boolean addSlowDigging(final @NotNull ServerPlayer serverPlayer) {
-        final MobEffectInstance effect = serverPlayer.getEffect(DIG_SLOWDOWN);
-        final boolean hasSlowDigging = effect != null;
-
-        if (hasSlowDigging) {
-            if (!effect.isVisible()) {
-                return false;
-            }
-
-            this.effectMap.put(
-                    serverPlayer.getStringUUID(),
-                    new MobEffectInstance(effect)
-            );
-        }
-
-        serverPlayer.addEffect(
-                new MobEffectInstance(
-                        DIG_SLOWDOWN,
-                        INFINITE_DURATION,
-                        Integer.MAX_VALUE,
-                        false,
-                        hasSlowDigging,
-                        hasSlowDigging
-                ),
-                PLUGIN
-        );
-
-        return true;
-    }
-
-    private boolean removeSlowDigging(final @NotNull ServerPlayer serverPlayer) {
-        final MobEffectInstance effect = serverPlayer.getEffect(DIG_SLOWDOWN);
-
-        if (
-                effect != null
-                && !effect.isVisible()
-        ) {
-            serverPlayer.removeEffect(DIG_SLOWDOWN, PLUGIN);
-
-            final MobEffectInstance oldEffect = this.effectMap.remove(serverPlayer.getStringUUID());
-
-            if (oldEffect != null) {
-                serverPlayer.addEffect(oldEffect);
-            }
-
-            return true;
-        }
-
-        return false;
     }
 
     static @Nullable Block getTargetBlock(final @NotNull ServerPlayer serverPlayer) {
@@ -168,7 +110,8 @@ public final class PlayerActionListener extends PacketListener {
      * Handles the block-breaking process
      */
     private class Handler {
-        private final DiggingMap diggingMap;
+
+        private final WhoMine module;
         private final ServerPlayer serverPlayer;
         private final MSPosition position;
         private final Block block;
@@ -180,10 +123,11 @@ public final class PlayerActionListener extends PacketListener {
          * @param position     The position of the block
          */
         Handler(
+                final @NotNull WhoMine module,
                 final @NotNull ServerPlayer serverPlayer,
                 final @NotNull MSPosition position
         ) {
-            this.diggingMap = PlayerActionListener.this.getPlugin().getCache().getDiggingMap();
+            this.module = module;
             this.serverPlayer = serverPlayer;
             this.position = position;
             this.block = position.getBlock();
@@ -193,19 +137,11 @@ public final class PlayerActionListener extends PacketListener {
          * Starts the block-breaking process
          */
         public void start() {
-            final WhoMine plugin = PlayerActionListener.this.getPlugin();
-
             this.stop();
 
             if (this.block.getBlockData() instanceof final NoteBlock noteBlock) {
-                plugin.runTask(
-                        () -> PlayerActionListener.this.addSlowDigging(this.serverPlayer)
-                );
                 this.handleNoteBlock(noteBlock);
             } else {
-                plugin.runTask(
-                        () -> PlayerActionListener.this.removeSlowDigging(this.serverPlayer)
-                );
                 this.handleWoodenBlock();
             }
         }
@@ -226,20 +162,20 @@ public final class PlayerActionListener extends PacketListener {
          *                   packet sent by the client
          */
         public void abort(final boolean fromPacket) {
-            final DiggingMap.Entry entry = this.diggingMap.getEntry(
+            final DiggingMap diggingMap = this.module.getCache().getDiggingMap();
+            final DiggingMap.Entry entry = diggingMap.getEntry(
                     this.block,
                     this.serverPlayer.getBukkitEntity()
             );
 
             if (entry != null) {
-                final WhoMine plugin = PlayerActionListener.this.getPlugin();
                 final String uuid = this.serverPlayer.getStringUUID();
 
                 if (PlayerActionListener.this.clickRequestMap.containsKey(uuid)) {
                     return;
                 }
 
-                plugin.runTask(() -> {
+                this.module.runTask(() -> {
                     if (fromPacket) {
                         if (this.block.equals(getTargetBlock(this.serverPlayer))) {
                             this.stop(entry);
@@ -248,7 +184,7 @@ public final class PlayerActionListener extends PacketListener {
 
                         entry.setStage(-1);
 
-                        if (this.diggingMap.getDiggingEntries(this.block).size() == 1) {
+                        if (diggingMap.getDiggingEntries(this.block).size() == 1) {
                             this.broadcastStage(this.block, -1);
                         }
                     }
@@ -294,21 +230,21 @@ public final class PlayerActionListener extends PacketListener {
          *              the player will be stopped
          */
         public void stop(final @Nullable DiggingMap.Entry entry) {
-            final WhoMine plugin = PlayerActionListener.this.getPlugin();
+            final DiggingMap diggingMap = this.module.getCache().getDiggingMap();
 
             if (entry == null) {
-                final var removed = this.diggingMap.removeAll(this.serverPlayer.getBukkitEntity());
+                final var removed = diggingMap.removeAll(this.serverPlayer.getBukkitEntity());
 
                 if (!removed.isEmpty()) {
-                    plugin.runTask(() -> {
+                    this.module.runTask(() -> {
                         for (final var removedEntry : removed) {
                             broadcastBiggestStage(removedEntry.getKey());
                         }
                     });
                 }
             } else {
-                this.diggingMap.remove(this.block, entry);
-                plugin.runTask(() -> broadcastBiggestStage(this.block));
+                diggingMap.remove(this.block, entry);
+                this.module.runTask(() -> broadcastBiggestStage(this.block));
             }
 
             PlayerActionListener.this.clickRequestMap.remove(this.serverPlayer.getStringUUID());
@@ -319,12 +255,14 @@ public final class PlayerActionListener extends PacketListener {
          * with the block
          */
         public void finish() {
-            if (this.diggingMap.containsBlock(this.block)) {
-                this.diggingMap.removeAll(this.block);
+            final DiggingMap diggingMap = this.module.getCache().getDiggingMap();
+
+            if (diggingMap.containsBlock(this.block)) {
+                diggingMap.removeAll(this.block);
                 PlayerActionListener.this.clickRequestMap.remove(
                         this.serverPlayer.getStringUUID()
                 );
-                PlayerActionListener.this.getPlugin().runTask(
+                this.module.runTask(
                         () -> this.broadcastStage(this.block, -1)
                 );
             }
@@ -360,7 +298,7 @@ public final class PlayerActionListener extends PacketListener {
          * @param block The block to get the biggest stage entry from
          */
         public void broadcastBiggestStage(final @NotNull Block block) {
-            final DiggingMap.Entry entry = this.diggingMap.getBiggestStageEntry(block);
+            final DiggingMap.Entry entry = this.module.getCache().getDiggingMap().getBiggestStageEntry(block);
 
             this.broadcastStage(
                     block,
@@ -368,22 +306,7 @@ public final class PlayerActionListener extends PacketListener {
             );
         }
 
-        private int getSlowDiggingAmplifier() {
-            MobEffectInstance slowDigging =
-                    PlayerActionListener.this.effectMap.get(this.serverPlayer.getStringUUID());
-
-            if (slowDigging == null) {
-                slowDigging = this.serverPlayer.getEffect(DIG_SLOWDOWN);
-            }
-
-            return slowDigging == null
-                    || slowDigging.isInfiniteDuration()
-                    ? -1
-                    : slowDigging.getAmplifier();
-        }
-
-        private void handleNoteBlock(final NoteBlock noteBlock) {
-            final WhoMine plugin = PlayerActionListener.this.getPlugin();
+        private void handleNoteBlock(final @NotNull NoteBlock noteBlock) {
             final Player player = this.serverPlayer.getBukkitEntity();
             final Location center = this.position.center().toLocation();
             final DiggingMap.Entry entry = DiggingMap.Entry.create(player);
@@ -393,13 +316,10 @@ public final class PlayerActionListener extends PacketListener {
                     .fromNoteBlock(noteBlock)
                     .orElse(CustomBlockData.defaultData());
             final SoundGroup soundGroup = customBlockData.getSoundGroup();
-            final float digSpeed = customBlockData.getBlockSettings().calculateDigSpeed(
-                    player,
-                    this.getSlowDiggingAmplifier()
-            );
+            final float digSpeed = customBlockData.getBlockSettings().calculateDigSpeed(player);
 
-            this.diggingMap.put(this.block, entry.setTaskId(
-                    plugin.runTaskTimer(new Runnable() {
+            this.module.getCache().getDiggingMap().put(this.block, entry.setTaskId(
+                    this.module.runTaskTimer(new Runnable() {
                         float ticks = 0.0f;
                         float progress = 0.0f;
                         boolean isAlreadyAborted = false;
@@ -439,8 +359,8 @@ public final class PlayerActionListener extends PacketListener {
                                 if (progressInStage > SharedConstants.FINAL_DESTROY_STAGE) {
                                     Handler.this.finish();
                                     new CustomBlock(block, customBlockData)
-                                            .destroy(plugin, player);
-                                } else if (entry.isStageTheBiggest(plugin, block)) {
+                                            .destroy(module, player);
+                                } else if (entry.isStageTheBiggest(module, block)) {
                                     Handler.this.broadcastStage(block, progressInStage);
                                 }
                             }
@@ -453,8 +373,8 @@ public final class PlayerActionListener extends PacketListener {
             final DiggingMap.Entry entry = DiggingMap.Entry.create(this.serverPlayer.getBukkitEntity());
             final Location center = this.position.center().toLocation();
 
-            this.diggingMap.put(this.block, entry.setTaskId(
-                    PlayerActionListener.this.getPlugin().runTaskTimer(new Runnable() {
+            this.module.getCache().getDiggingMap().put(this.block, entry.setTaskId(
+                    this.module.runTaskTimer(new Runnable() {
                         float ticks = 0.0f;
                         boolean isAlreadyAborted = false;
 

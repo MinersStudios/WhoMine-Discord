@@ -1,25 +1,24 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.ResourcePack;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerResourcePackStatusListener extends EventListener {
-
-    public PlayerResourcePackStatusListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerResourcePackStatusEvent.class)
+public final class PlayerResourcePackStatusListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerResourcePackStatus(final @NotNull PlayerResourcePackStatusEvent event) {
+    public void onPlayerResourcePackStatus(final @NotNull PaperEventContainer<PlayerResourcePackStatusEvent> container) {
+        final PlayerResourcePackStatusEvent event = container.getEvent();
         final PlayerResourcePackStatusEvent.Status status = event.getStatus();
         final Player player = event.getPlayer();
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(this.getPlugin(), player);
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(container.getModule(), player);
         final ResourcePack.Type currentType = playerInfo.getPlayerFile().getPlayerSettings().getResourcePackType();
 
         if (

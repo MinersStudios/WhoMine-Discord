@@ -5,42 +5,56 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Represents a packet event.
  * <p>
- * It contains the packet container and the connection who sent or received the
- * packet. The packet container contains the packet and the packet type and can
- * be modified, but the packet type cannot be changed.
+ * It contains the packet type, the packet and the connection who sent or
+ * received the packet.
+ *
+ * @param <P> The packet type
+ * @param <C> The connection type
  *
  * @see PacketContainer
- * @param <P> The packet container type
- * @param <C> The connection type
+ * @see PacketListener
  */
 @SuppressWarnings("unused")
-public abstract class PacketEvent<P extends PacketContainer<?>, C> {
+public abstract class PacketEvent<P, C> {
 
-    private final P packetContainer;
+    private final PacketType type;
+    private final P packet;
     private final C connection;
     private boolean cancelled;
 
     /**
      * Constructs a new packet event
      *
-     * @param packetContainer The packet container
-     * @param connection      The connection
+     * @param type       The packet type
+     * @param packet     The packet
+     * @param connection The connection who sent or received the packet
      */
     protected PacketEvent(
-            final @NotNull P packetContainer,
+            final @NotNull PacketType type,
+            final @NotNull P packet,
             final @NotNull C connection
     ) {
-        this.packetContainer = packetContainer;
+        this.type = type;
+        this.packet = packet;
         this.connection = connection;
     }
 
     /**
-     * Returns the packet container of this event
+     * Returns the packet type
      *
-     * @return The packet container of this event
+     * @return The packet type
      */
-    public final @NotNull P getPacketContainer() {
-        return this.packetContainer;
+    public final @NotNull PacketType getType() {
+        return this.type;
+    }
+
+    /**
+     * Returns the packet
+     *
+     * @return The packet
+     */
+    public final @NotNull P getPacket() {
+        return this.packet;
     }
 
     /**

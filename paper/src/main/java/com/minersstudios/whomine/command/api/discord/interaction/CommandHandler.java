@@ -33,7 +33,7 @@ public final class CommandHandler extends AbstractInteractionHandler<SlashComman
 
         final User user = this.getInteraction().getUser();
 
-        if (!this.getPlugin().getDiscordManager().isVerified(user)) {
+        if (!this.getPlugin().getDiscordModule().isVerified(user)) {
             this.send(Translations.DISCORD_NOT_A_USER.asString());
 
             return null;

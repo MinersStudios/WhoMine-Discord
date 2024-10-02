@@ -1,23 +1,24 @@
 package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import com.minersstudios.whomine.packet.handler.ChannelHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import net.minecraft.network.Connection;
 import net.minecraft.network.HandlerNames;
 
-public class ChannelInjector {
+public class ChannelInjector extends AbstractModuleComponent<WhoMine> {
     public static final String CHANNEL_HANDLER_NAME = "ms_channel_handler";
 
-    private final WhoMine plugin;
     private final Connection connection;
 
     public ChannelInjector(
-            final WhoMine plugin,
+            final WhoMine module,
             final Connection connection
     ) {
-        this.plugin = plugin;
+        super(module);
+
         this.connection = connection;
     }
 
@@ -28,7 +29,7 @@ public class ChannelInjector {
             pipeline.addBefore(
                     HandlerNames.PACKET_HANDLER,
                     CHANNEL_HANDLER_NAME,
-                    new ChannelHandler(this.plugin, this.connection)
+                    new ChannelHandler(this.getModule(), this.connection)
             );
         }
     }

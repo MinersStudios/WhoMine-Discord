@@ -1,23 +1,22 @@
 package com.minersstudios.whomine.listener.impl.event.entity;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSDecorUtils;
 import org.bukkit.block.Block;
 import org.bukkit.entity.FallingBlock;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public final class EntityChangeBlockListener extends EventListener {
-
-    public EntityChangeBlockListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = EntityChangeBlockEvent.class)
+public final class EntityChangeBlockListener extends PaperEventListener {
 
     @EventHandler
-    public void onEntityChangeBlock(final @NotNull EntityChangeBlockEvent event) {
+    public void onEntityChangeBlock(final @NotNull PaperEventContainer<EntityChangeBlockEvent> container) {
+        final EntityChangeBlockEvent event = container.getEvent();
         final Block block = event.getBlock();
 
         if (

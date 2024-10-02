@@ -1,24 +1,25 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSDecorUtils;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.BlockPistonExtendEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class BlockPistonExtendListener extends EventListener {
+@ListenFor(eventClass = BlockPistonExtendEvent.class)
+public final class BlockPistonExtendListener extends PaperEventListener {
 
-    public BlockPistonExtendListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    public void onBlockPistonExtend(final @NotNull PaperEventContainer<BlockPistonExtendEvent> container) {
+        final BlockPistonExtendEvent event = container.getEvent();
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onBlockPistonExtend(final @NotNull BlockPistonExtendEvent event) {
         for (final var block : event.getBlocks()) {
             if (MSDecorUtils.isCustomDecorMaterial(block.getType())) {
                 event.setCancelled(true);
+
                 break;
             }
         }

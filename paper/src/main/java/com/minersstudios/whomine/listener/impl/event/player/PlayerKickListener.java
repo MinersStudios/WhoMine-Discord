@@ -1,17 +1,19 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.jetbrains.annotations.NotNull;
 
 import static com.minersstudios.whomine.api.locale.Translations.*;
 
-public class PlayerKickListener extends EventListener {
+@ListenFor(eventClass = PlayerKickEvent.class)
+public class PlayerKickListener extends PaperEventListener {
     private static final TranslatableComponent SERVER_RESTARTING =
             FORMAT_LEAVE_MESSAGE.asTranslatable()
             .arguments(
@@ -20,12 +22,10 @@ public class PlayerKickListener extends EventListener {
             )
             .color(NamedTextColor.DARK_GRAY);
 
-    public PlayerKickListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
-
     @EventHandler
-    public void onPlayerKick(final @NotNull PlayerKickEvent event) {
+    public void onPlayerKick(final @NotNull PaperEventContainer<PlayerKickEvent> container) {
+        final PlayerKickEvent event = container.getEvent();
+
         if (event.getCause() == PlayerKickEvent.Cause.RESTART_COMMAND) {
             event.reason(SERVER_RESTARTING);
         }

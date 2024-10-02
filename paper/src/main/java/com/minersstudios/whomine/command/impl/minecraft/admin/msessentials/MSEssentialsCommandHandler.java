@@ -57,9 +57,9 @@ public final class MSEssentialsCommandHandler extends PluginCommandExecutor {
     ) {
         return args.length != 0
                 && switch (args[0]) {
-                    case "reload" ->      ReloadCommand.runCommand(this.getPlugin(), sender);
-                    case "updateids" ->   UpdateIdsCommand.runCommand(this.getPlugin(), sender);
-                    case "updatemutes" -> UpdateMutesCommand.runCommand(this.getPlugin(), sender);
+                    case "reload" ->      ReloadCommand.runCommand(this.getModule(), sender);
+                    case "updateids" ->   UpdateIdsCommand.runCommand(this.getModule(), sender);
+                    case "updatemutes" -> UpdateMutesCommand.runCommand(this.getModule(), sender);
                     default -> false;
                 };
     }

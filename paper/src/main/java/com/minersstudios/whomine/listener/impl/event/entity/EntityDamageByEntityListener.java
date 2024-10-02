@@ -1,29 +1,28 @@
 package com.minersstudios.whomine.listener.impl.event.entity;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.decor.CustomDecor;
 import com.minersstudios.whomine.custom.decor.event.CustomDecorClickEvent;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.utility.SharedConstants;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Interaction;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class EntityDamageByEntityListener extends EventListener {
-
-    public EntityDamageByEntityListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = EntityDamageByEntityEvent.class)
+public final class EntityDamageByEntityListener extends PaperEventListener {
 
     @EventHandler
-    public void onEntityDamageByEntity(final @NotNull EntityDamageByEntityEvent event) {
+    public void onEntityDamageByEntityNormal(final @NotNull PaperEventContainer<EntityDamageByEntityEvent> container) {
         if (
-                event.getEntity() instanceof final ItemFrame itemFrame
+                container.getEvent().getEntity() instanceof final ItemFrame itemFrame
                 && itemFrame.getScoreboardTags().contains(SharedConstants.INVISIBLE_ITEM_FRAME_TAG)
                 && !itemFrame.isVisible()
         ) {
@@ -31,8 +30,10 @@ public final class EntityDamageByEntityListener extends EventListener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onEntityDamageByEntityMonitor(final @NotNull EntityDamageByEntityEvent event) {
+    @EventHandler(priority = EventOrder.CUSTOM)
+    public void onEntityDamageByEntityCustom(final @NotNull PaperEventContainer<EntityDamageByEntityEvent> container) {
+        final EntityDamageByEntityEvent event = container.getEvent();
+
         if (
                 !(event.getDamager() instanceof final Player player)
                 || !(event.getEntity() instanceof final Interaction interaction)
@@ -49,6 +50,8 @@ public final class EntityDamageByEntityListener extends EventListener {
             return;
         }
 
+        final WhoMine module = container.getModule();
+
         if (
                 (
                         player.isSneaking()
@@ -56,7 +59,7 @@ public final class EntityDamageByEntityListener extends EventListener {
                 )
                 || gameMode == GameMode.CREATIVE
         ) {
-            CustomDecor.destroy(this.getPlugin(), player, interaction);
+            CustomDecor.destroy(module, player, interaction);
         } else {
             CustomDecor.fromInteraction(interaction)
             .ifPresent(
@@ -74,7 +77,7 @@ public final class EntityDamageByEntityListener extends EventListener {
                         player.getServer().getPluginManager().callEvent(clickEvent);
 
                         if (!clickEvent.isCancelled()) {
-                            customDecor.getData().doClickAction(this.getPlugin(), clickEvent);
+                            customDecor.getData().doClickAction(module, clickEvent);
                         }
                     }
             );

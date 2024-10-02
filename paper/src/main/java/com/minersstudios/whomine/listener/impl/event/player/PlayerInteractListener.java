@@ -1,6 +1,8 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
@@ -11,7 +13,8 @@ import com.minersstudios.whomine.custom.block.params.settings.Placing;
 import com.minersstudios.whomine.custom.decor.CustomDecor;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.decor.event.CustomDecorClickEvent;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.*;
 import com.minersstudios.whomine.world.location.MSPosition;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
@@ -31,8 +34,7 @@ import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -47,7 +49,8 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.UUID;
 
-public final class PlayerInteractListener extends EventListener {
+@ListenFor(eventClass = PlayerInteractEvent.class)
+public final class PlayerInteractListener extends PaperEventListener {
     private static final BlockFace[] FACES = { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
     private static final Set<Material> IGNORABLE_MATERIALS = EnumSet.of(
             //<editor-fold desc="Ignorable materials" defaultstate="collapsed">
@@ -141,12 +144,9 @@ public final class PlayerInteractListener extends EventListener {
     );
     private static final Set<UUID> HAND_HANDLER = new ObjectOpenHashSet<>();
 
-    public PlayerInteractListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
-
     @EventHandler(ignoreCancelled = true)
-    public void onDecorPlayerInteract(final @NotNull PlayerInteractEvent event) {
+    public void onDecorPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
+        final PlayerInteractEvent event = container.getEvent();
         final Block block = event.getClickedBlock();
         final EquipmentSlot hand = event.getHand();
 
@@ -157,7 +157,7 @@ public final class PlayerInteractListener extends EventListener {
             return;
         }
 
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine module = container.getModule();
         final Player player = event.getPlayer();
         final Material blockType = block.getType();
         final GameMode gameMode = player.getGameMode();
@@ -176,13 +176,13 @@ public final class PlayerInteractListener extends EventListener {
                             )
                             || gameMode == GameMode.CREATIVE
                     ) {
-                        CustomDecor.destroyInBlock(plugin, player, block);
+                        CustomDecor.destroyInBlock(module, player, block);
                     } else {
                         final Location interactedLocation = event.getInteractionPoint();
 
                         if (interactedLocation != null) {
                             callDecorClickEvent(
-                                    plugin,
+                                    module,
                                     player,
                                     block,
                                     hand,
@@ -225,7 +225,7 @@ public final class PlayerInteractListener extends EventListener {
 
                     if (interactedLocation != null) {
                         callDecorClickEvent(
-                                plugin,
+                                module,
                                 player,
                                 block,
                                 hand,
@@ -250,7 +250,7 @@ public final class PlayerInteractListener extends EventListener {
                     CustomDecorData.fromItemStack(itemInHand)
                     .ifPresent(data -> {
                         data.place(
-                                plugin,
+                                module,
                                 MSPosition.of(
                                         BlockUtils.isReplaceable(blockType)
                                         ? block.getLocation()
@@ -268,8 +268,9 @@ public final class PlayerInteractListener extends EventListener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerInteract(final @NotNull PlayerInteractEvent event) {
+    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
+        final PlayerInteractEvent event = container.getEvent();
         final Block clickedBlock = event.getClickedBlock();
         EquipmentSlot hand = event.getHand();
 
@@ -305,7 +306,7 @@ public final class PlayerInteractListener extends EventListener {
             hand = EquipmentSlot.HAND;
         }
 
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine module = container.getModule();
         final Block blockAtFace = clickedBlock.getRelative(blockFace);
         final ItemStack itemInHand = player.getInventory().getItem(hand);
         final Location interactionPoint = getInteractionPoint(player.getEyeLocation(), 8);
@@ -330,7 +331,7 @@ public final class PlayerInteractListener extends EventListener {
                 final CustomBlock customBlock = new CustomBlock(clickedBlock, clickedCustomBlockData);
                 final CustomBlockRightClickEvent rightClickEvent = new CustomBlockRightClickEvent(customBlock, player, hand, blockFace, interactionPoint);
 
-                plugin.getServer().getPluginManager().callEvent(rightClickEvent);
+                module.getServer().getPluginManager().callEvent(rightClickEvent);
 
                 if (rightClickEvent.isCancelled()) {
                     return;
@@ -379,16 +380,16 @@ public final class PlayerInteractListener extends EventListener {
             final CustomBlock customBlock = new CustomBlock(replaceableBlock, customBlockData);
 
             if (placingType instanceof PlacingType.Default) {
-                customBlock.place(plugin, player, hand);
+                customBlock.place(module, player, hand);
             } else if (placingType instanceof PlacingType.Directional) {
-                customBlock.place(plugin, player, hand, blockFace, null);
+                customBlock.place(module, player, hand, blockFace, null);
             } else if (placingType instanceof final PlacingType.Orientable orientable) {
                 final Location playerLocation = player.getLocation();
                 final float yaw = playerLocation.getYaw();
                 final float pitch = playerLocation.getPitch();
                 final var blockAxes = orientable.getMap().keySet();
 
-                customBlock.place(plugin, player, hand, null, getAxisByEyes(yaw, pitch, blockAxes));
+                customBlock.place(module, player, hand, null, getAxisByEyes(yaw, pitch, blockAxes));
             }
         }
     }

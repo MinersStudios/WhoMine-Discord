@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.teleport;
 
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -71,7 +71,7 @@ public final class WorldTeleportCommand extends PluginCommandExecutor {
             return false;
         }
 
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -161,7 +161,7 @@ public final class WorldTeleportCommand extends PluginCommandExecutor {
             @NotNull String label,
             String @NotNull ... args
     ) {
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine plugin = this.getModule();
 
         return switch (args.length) {
             case 1 -> MSPlayerUtils.getLocalPlayerNames(plugin);

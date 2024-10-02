@@ -19,6 +19,11 @@
  *         the connection who sent or received the packet.</td>
  *     </tr>
  *     <tr>
+ *         <td>{@link com.minersstudios.whomine.api.packet.PacketListener}</td>
+ *         <td>Represents a packet listener. It listens for packet events and
+ *         handles them.</td>
+ *     </tr>
+ *     <tr>
  *         <td>{@link com.minersstudios.whomine.api.packet.PacketRegistry}</td>
  *         <td>Represents a packet registry, which contains the packet maps.
  *         The packet registry contains two packet maps:

@@ -1,23 +1,22 @@
 package com.minersstudios.whomine.listener.impl.event.entity;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class EntityExplodeListener extends EventListener {
-
-    public EntityExplodeListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = EntityExplodeEvent.class)
+public final class EntityExplodeListener extends PaperEventListener {
 
     @EventHandler
-    public void onEntityExplode(final @NotNull EntityExplodeEvent event) {
+    public void onEntityExplode(final @NotNull PaperEventContainer<EntityExplodeEvent> container) {
+        final EntityExplodeEvent event = container.getEvent();
         final World world = event.getLocation().getWorld();
 
         for (final var block : event.blockList()) {

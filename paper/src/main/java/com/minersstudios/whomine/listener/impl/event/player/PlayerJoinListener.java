@@ -1,55 +1,57 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.packet.ChannelInjector;
-import com.minersstudios.whomine.packet.handler.ChannelHandler;
 import com.minersstudios.whomine.player.PlayerInfo;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerJoinListener extends EventListener {
+@ListenFor(eventClass = PlayerJoinEvent.class)
+public final class PlayerJoinListener extends PaperEventListener {
 
-    public PlayerJoinListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+    @EventHandler(priority = EventOrder.LOWEST)
+    public void onPlayerJoin(final @NotNull PaperEventContainer<PlayerJoinEvent> container) {
+        final PlayerJoinEvent event = container.getEvent();
+        final WhoMine module = container.getModule();
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerJoin(final @NotNull PlayerJoinEvent event) {
-        final WhoMine plugin = this.getPlugin();
         final Player player = event.getPlayer();
         final ChannelInjector injector = new ChannelInjector(
-            plugin,
+            module,
             ((CraftPlayer) player).getHandle().connection.connection
         );
 
-        plugin.runTask(injector::inject);
+        module.runTask(injector::inject);
 
         event.joinMessage(null);
 
         if (player.isDead()) {
-            this.getPlugin().runTaskLater(() -> {
+            module.runTaskLater(() -> {
                 player.spigot().respawn();
-                this.handle(player);
+                this.handle(module, player);
             }, 8L);
         } else {
-            this.handle(player);
+            this.handle(module, player);
         }
     }
 
-    private void handle(final @NotNull Player player) {
-        final WhoMine plugin = this.getPlugin();
-        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, player);
+    private void handle(
+            final @NotNull WhoMine module,
+            final @NotNull Player player
+    ) {
+        final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(module, player);
 
         playerInfo.hideNameTag();
         player.displayName(playerInfo.getDefaultName());
-        plugin.getCache().getWorldDark()
+        module.getCache().getWorldDark()
         .teleportToDarkWorld(player)
-        .thenRun(() -> plugin.runTaskTimer(task -> {
+        .thenRun(() -> module.runTaskTimer(task -> {
             if (!player.isOnline()) {
                 task.cancel();
                 return;

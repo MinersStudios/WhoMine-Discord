@@ -2,6 +2,7 @@ package com.minersstudios.whomine.command.api.minecraft;
 
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
@@ -11,7 +12,7 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -74,7 +75,7 @@ public final class Commodore {
 
         plugin.getStatusHandler().addWatcher(
                 StatusWatcher.builder()
-                .statuses(WhoMine.ENABLED)
+                .statuses(MainModule.ENABLED)
                 .successRunnable(
                         () -> plugin.getServer().getPluginManager().registerEvents(new Listener() {
 

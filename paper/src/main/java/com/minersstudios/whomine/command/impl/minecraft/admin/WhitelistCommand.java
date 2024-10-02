@@ -82,7 +82,7 @@ public final class WhitelistCommand extends PluginCommandExecutor {
                     return false;
                 }
 
-                final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), playerArg);
+                final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), playerArg);
 
                 if (playerInfo == null) {
                     MSLogger.severe(
@@ -122,7 +122,7 @@ public final class WhitelistCommand extends PluginCommandExecutor {
                     return false;
                 }
 
-                final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), playerArg);
+                final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), playerArg);
 
                 if (playerInfo == null) {
                     MSLogger.severe(
@@ -176,7 +176,7 @@ public final class WhitelistCommand extends PluginCommandExecutor {
                 final var completions = new ObjectArrayList<String>();
 
                 if (args[0].equals("remove")) {
-                    final PlayerInfoMap playerInfoMap = this.getPlugin().getCache().getPlayerInfoMap();
+                    final PlayerInfoMap playerInfoMap = this.getModule().getCache().getPlayerInfoMap();
 
                     for (final var offlinePlayer : sender.getServer().getWhitelistedPlayers()) {
                         final int id =

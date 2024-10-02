@@ -1,6 +1,8 @@
 package com.minersstudios.whomine.custom.item;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.annotation.Resource;
+import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.custom.item.damageable.Damageable;
 import com.minersstudios.whomine.custom.item.registry.*;
 import com.minersstudios.whomine.menu.CraftsMenu;
@@ -13,7 +15,6 @@ import com.minersstudios.whomine.custom.item.registry.cosmetics.LeatherHat;
 import com.minersstudios.whomine.api.status.StatusHandler;
 import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
@@ -57,7 +58,7 @@ public enum CustomItemType {
     private final Class<? extends CustomItem> clazz;
 
     public static final String TYPE_TAG_NAME = "type";
-    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, TYPE_TAG_NAME);
+    public static final NamespacedKey TYPE_NAMESPACED_KEY = new NamespacedKey(Resource.WMITEM, TYPE_TAG_NAME);
 
     private static final Map<String, CustomItemType> KEY_TO_TYPE_MAP = new Object2ObjectOpenHashMap<>();
     private static final Map<Class<? extends CustomItem>, CustomItemType> CLASS_TO_TYPE_MAP = new Object2ObjectOpenHashMap<>();
@@ -94,9 +95,9 @@ public enum CustomItemType {
         statusHandler.addWatcher(
                 StatusWatcher.builder()
                 .successStatuses(
-                        WhoMine.LOADED_BLOCKS,
-                        WhoMine.LOADED_DECORATIONS,
-                        WhoMine.LOADED_ITEMS
+                        MainModule.LOADED_BLOCKS,
+                        MainModule.LOADED_DECORATIONS,
+                        MainModule.LOADED_ITEMS
                 )
                 .successRunnable(
                         () -> plugin.runTask(() -> {
@@ -113,7 +114,7 @@ public enum CustomItemType {
                 .build()
         );
 
-        statusHandler.assignStatus(WhoMine.LOADING_ITEMS);
+        statusHandler.assignStatus(MainModule.LOADING_ITEMS);
         Stream.of(types).parallel()
         .forEach(type -> {
             final CustomItem customItem;
@@ -143,7 +144,7 @@ public enum CustomItemType {
         });
         typesWithRecipes.sort(Comparator.comparingInt(CustomItemType::ordinal));
 
-        statusHandler.assignStatus(WhoMine.LOADED_ITEMS);
+        statusHandler.assignStatus(MainModule.LOADED_ITEMS);
         plugin.getComponentLogger().info(
                 Component.text(
                         "Loaded " + types.length + " custom items in " + (System.currentTimeMillis() - startTime) + "ms",

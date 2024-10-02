@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.custom.item.damageable;
 
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
@@ -29,8 +29,8 @@ public class DamageableItem {
 
     public static final String MAX_DAMAGE_KEY =  "max_damage";
     public static final String REAL_DAMAGE_KEY = "real_damage";
-    public static final NamespacedKey MAX_DAMAGE_NAMESPACED_KEY =  new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, MAX_DAMAGE_KEY);
-    public static final NamespacedKey REAL_DAMAGE_NAMESPACED_KEY = new NamespacedKey(SharedConstants.MSITEMS_NAMESPACE, REAL_DAMAGE_KEY);
+    public static final NamespacedKey MAX_DAMAGE_NAMESPACED_KEY =  new NamespacedKey(Resource.WMITEM, MAX_DAMAGE_KEY);
+    public static final NamespacedKey REAL_DAMAGE_NAMESPACED_KEY = new NamespacedKey(Resource.WMITEM, REAL_DAMAGE_KEY);
 
     private static final TranslatableComponent DURABILITY = translatable("item.durability");
 
@@ -162,9 +162,9 @@ public class DamageableItem {
         if (lore != null) {
             newLore.addAll(lore);
 
-            if (newLore.get(newLore.size() - 1) instanceof TranslatableComponent) {
-                newLore.remove(newLore.size() - 1);
-                newLore.remove(newLore.size() - 1);
+            if (newLore.getLast() instanceof TranslatableComponent) {
+                newLore.removeLast();
+                newLore.removeLast();
             }
         }
 

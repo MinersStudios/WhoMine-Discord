@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.utility;
 
 import com.minersstudios.whomine.api.annotation.Path;
+import com.minersstudios.whomine.api.annotation.Resource;
 import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.SharedConstants;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  * Utility class for {@link CustomItem}
  */
 public final class MSItemUtils {
-    public static final String NAMESPACED_KEY_REGEX = '(' + SharedConstants.MSITEMS_NAMESPACE + "):(" + Path.REGEX + ")";
+    public static final String NAMESPACED_KEY_REGEX = '(' + Resource.WMITEM + "):(" + Path.REGEX + ")";
     public static final Pattern NAMESPACED_KEY_PATTERN = Pattern.compile(NAMESPACED_KEY_REGEX);
 
     @Contract(" -> fail")

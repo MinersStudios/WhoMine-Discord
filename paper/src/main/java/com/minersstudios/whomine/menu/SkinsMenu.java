@@ -55,7 +55,7 @@ public final class SkinsMenu extends AbstractInventoryHolder {
         this.applyButton = new InventoryButton(applyItem, (event, inv) -> {
             final Player player = (Player) event.getWhoClicked();
             final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, player);
-            final Skin skin = playerInfo.getPlayerFile().getSkin((int) inv.args().get(0));
+            final Skin skin = playerInfo.getPlayerFile().getSkin((int) inv.args().getFirst());
 
             if (skin == null) {
                 return;
@@ -88,7 +88,7 @@ public final class SkinsMenu extends AbstractInventoryHolder {
             final PlayerFile playerFile = playerInfo.getPlayerFile();
 
             try {
-                final Skin selectedSkin = playerFile.getSkin((int) inv.args().get(0));
+                final Skin selectedSkin = playerFile.getSkin((int) inv.args().getFirst());
 
                 if (selectedSkin == null) {
                     return;
@@ -155,14 +155,14 @@ public final class SkinsMenu extends AbstractInventoryHolder {
                     .item(head)
                     .clickAction((event, inv) -> {
                         final boolean havePrevious = !inv.args().isEmpty();
-                        final boolean isSame = havePrevious && ((int) inv.args().get(0)) == finalI;
+                        final boolean isSame = havePrevious && ((int) inv.args().getFirst()) == finalI;
                         final ItemMeta headItemMeta = head.getItemMeta();
 
                         headItemMeta.setCustomModelData(isSame ? null : 1);
                         head.setItemMeta(headItemMeta);
 
                         if (havePrevious) {
-                            final int previous = (int) inv.args().get(0);
+                            final int previous = (int) inv.args().getFirst();
                             final InventoryButton previousButton = skinButtons.get(previous);
 
                             if (previousButton != null) {

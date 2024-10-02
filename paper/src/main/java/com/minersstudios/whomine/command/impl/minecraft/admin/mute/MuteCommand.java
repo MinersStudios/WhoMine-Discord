@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.mute;
 
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
@@ -77,7 +77,7 @@ public final class MuteCommand extends PluginCommandExecutor {
                 ? ChatUtils.extractMessage(args, 2)
                 : COMMAND_MUTE_DEFAULT_REASON.asString();
 
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -103,7 +103,7 @@ public final class MuteCommand extends PluginCommandExecutor {
         switch (args.length) {
             case 1 -> {
                 final var completions = new ObjectArrayList<String>();
-                final Cache cache = this.getPlugin().getCache();
+                final PaperCache cache = this.getModule().getCache();
                 final MuteMap muteMap = cache.getMuteMap();
                 final IDMap idMap = cache.getIdMap();
 

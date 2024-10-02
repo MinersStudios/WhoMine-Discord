@@ -73,7 +73,7 @@ public final class BanCommand extends PluginCommandExecutor {
                 ? ChatUtils.extractMessage(args, 2)
                 : COMMAND_BAN_DEFAULT_REASON.asString();
 
-        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getPlugin(), args[0]);
+        final PlayerInfo playerInfo = PlayerInfo.fromString(this.getModule(), args[0]);
 
         if (playerInfo == null) {
             MSLogger.severe(
@@ -109,7 +109,7 @@ public final class BanCommand extends PluginCommandExecutor {
                         continue;
                     }
 
-                    final int id = this.getPlugin().getCache().getIdMap().getID(uuid, false, false);
+                    final int id = this.getModule().getCache().getIdMap().getID(uuid, false, false);
 
                     if (id != -1) {
                         completions.add(String.valueOf(id));

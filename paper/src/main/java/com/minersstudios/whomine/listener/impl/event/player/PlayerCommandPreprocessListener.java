@@ -1,22 +1,21 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class PlayerCommandPreprocessListener extends EventListener {
-
-    public PlayerCommandPreprocessListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = PlayerCommandPreprocessEvent.class)
+public final class PlayerCommandPreprocessListener extends PaperEventListener {
 
     @EventHandler
-    public void onPlayerCommandPreprocess(final @NotNull PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandPreprocess(final @NotNull PaperEventContainer<PlayerCommandPreprocessEvent> container) {
+        final PlayerCommandPreprocessEvent event = container.getEvent();
         final Player player = event.getPlayer();
         final String message = event.getMessage();
 
@@ -26,7 +25,7 @@ public final class PlayerCommandPreprocessListener extends EventListener {
                         && !message.startsWith("/logout")
                 )
                 || message.startsWith("/reg")
-                || !this.getPlugin().getCache().getWorldDark().isInWorldDark(player)
+                || !container.getModule().getCache().getWorldDark().isInWorldDark(player)
         ) {
             return;
         }

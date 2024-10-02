@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.scheduler.task;
 
-import com.minersstudios.whomine.Cache;
+import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.world.WorldDark;
@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 public final class PlayerListTask implements Runnable {
     private final Server server;
-    private final Cache cache;
+    private final PaperCache cache;
 
     public PlayerListTask(final @NotNull WhoMine plugin) {
         this.server = plugin.getServer();

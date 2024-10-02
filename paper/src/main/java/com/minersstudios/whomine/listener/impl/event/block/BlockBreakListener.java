@@ -1,10 +1,13 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.custom.block.params.ToolType;
-import com.minersstudios.whomine.listener.api.EventListener;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.BlockUtils;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
@@ -32,20 +35,17 @@ import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.event.CraftEventFactory;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
 
-public final class BlockBreakListener extends EventListener {
-
-    public BlockBreakListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = BlockBreakEvent.class)
+public final class BlockBreakListener extends PaperEventListener {
 
     @EventHandler
-    public void onBlockBreak(final @NotNull BlockBreakEvent event) {
+    public void onBlockBreak(final @NotNull PaperEventContainer<BlockBreakEvent> container) {
+        final WhoMine module = container.getModule();
+        final BlockBreakEvent event = container.getEvent();
+
         final Player player = event.getPlayer();
         final ServerPlayer serverPlayer = ((CraftPlayer) player).getHandle();
         final Block block = event.getBlock();
@@ -70,7 +70,7 @@ public final class BlockBreakListener extends EventListener {
 
             if (
                     gameMode == GameMode.CREATIVE
-                    && this.destroyBlock(serverPlayer, blockPosition)
+                    && this.destroyBlock(module, serverPlayer, blockPosition)
             ) {
                 customBlockMaterial.getSoundGroup().playBreakSound(blockLocation.toCenterLocation());
             }
@@ -79,9 +79,8 @@ public final class BlockBreakListener extends EventListener {
                     customBlockMaterial.getBlockSettings().getTool().getToolType() == ToolType.AXE
                     && gameMode != GameMode.CREATIVE
             ) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.MINING_FATIGUE, 108000, -1, true, false, false));
                 block.getWorld().dropItemNaturally(blockLocation, customBlockMaterial.craftItemStack());
-                this.destroyBlock(serverPlayer, blockPosition);
+                this.destroyBlock(module, serverPlayer, blockPosition);
             }
 
             return;
@@ -92,12 +91,13 @@ public final class BlockBreakListener extends EventListener {
                 || bottomBlock.getType() == Material.NOTE_BLOCK
         ) {
             event.setCancelled(true);
-            this.destroyBlock(serverPlayer, blockPosition);
+            this.destroyBlock(module, serverPlayer, blockPosition);
         }
     }
 
     @SuppressWarnings("DataFlowIssue")
     private boolean destroyBlock(
+            final @NotNull WhoMine module,
             final @NotNull ServerPlayer serverPlayer,
             final @NotNull BlockPos pos
     ) {
@@ -168,7 +168,7 @@ public final class BlockBreakListener extends EventListener {
                     if (packet != null) {
                         serverPlayer.connection.send(packet);
                     } else {
-                        this.getPlugin().getLogger().warning(
+                        module.getLogger().warning(
                                 "TileEntity " + tileEntity + " failed to get an update packet!"
                         );
                     }

@@ -1,29 +1,27 @@
 package com.minersstudios.whomine.listener.impl.event.server;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.listener.api.EventListener;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.utility.MSLogger;
-import org.bukkit.event.EventHandler;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class ServerCommandListener extends EventListener {
-
-    public ServerCommandListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
+@ListenFor(eventClass = ServerCommandEvent.class)
+public final class ServerCommandListener extends PaperEventListener {
 
     @EventHandler
-    public void onServerCommand(final @NotNull ServerCommandEvent event) {
+    public void onServerCommand(final @NotNull PaperEventContainer<ServerCommandEvent> container) {
+        final ServerCommandEvent event = container.getEvent();
         final String command = event.getCommand().split(" ")[0];
 
-        if (this.getPlugin().getCommandManager().isPlayerOnly(command)) {
-            MSLogger.severe(
-                    event.getSender(),
-                    Translations.ERROR_ONLY_PLAYER_COMMAND.asTranslatable()
-            );
-            event.setCancelled(true);
-        }
+        // TODO: fix getCommandManager
+        //if (container.getModule().getCommandManager().isPlayerOnly(command)) {
+        //    MSLogger.severe(
+        //            event.getSender(),
+        //            Translations.ERROR_ONLY_PLAYER_COMMAND.asTranslatable()
+        //    );
+        //    event.setCancelled(true);
+        //}
     }
 }

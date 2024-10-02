@@ -1,21 +1,20 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.listener.api.EventListener;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
+import com.minersstudios.whomine.event.PaperEventListener;
+import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.jetbrains.annotations.NotNull;
 
-public final class InventoryDragListener extends EventListener {
+@ListenFor(eventClass = InventoryDragEvent.class)
+public final class InventoryDragListener extends PaperEventListener {
 
-    public InventoryDragListener(final @NotNull WhoMine plugin) {
-        super(plugin);
-    }
-
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onInventoryDrag(final @NotNull InventoryDragEvent event) {
+    @EventHandler(priority = EventOrder.CUSTOM)
+    public void onInventoryDrag(final @NotNull PaperEventContainer<InventoryDragEvent> container) {
+        final InventoryDragEvent event = container.getEvent();
         if (!(event.getInventory() instanceof final CustomInventory customInventory)) {
             return;
         }

@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -216,7 +216,7 @@ public final class AdminPlayerCommandHandler extends PluginCommandExecutor {
             return false;
         }
 
-        final WhoMine plugin = this.getPlugin();
+        final WhoMine plugin = this.getModule();
         final PlayerInfo playerInfo = PlayerInfo.fromString(plugin, args[0]);
 
         if (playerInfo == null) {
@@ -252,7 +252,7 @@ public final class AdminPlayerCommandHandler extends PluginCommandExecutor {
         switch (args.length) {
             case 1 -> {
                 final var completions = new ObjectArrayList<String>();
-                final IDMap idMap = this.getPlugin().getCache().getIdMap();
+                final IDMap idMap = this.getModule().getCache().getIdMap();
 
                 for (final var offlinePlayer : sender.getServer().getOfflinePlayers()) {
                     final String nickname = offlinePlayer.getName();
@@ -356,7 +356,7 @@ public final class AdminPlayerCommandHandler extends PluginCommandExecutor {
                         final OfflinePlayer offlinePlayer;
 
                         if (IDUtils.matchesIDRegex(args[0])) {
-                            final IDMap idMap = this.getPlugin().getCache().getIdMap();
+                            final IDMap idMap = this.getModule().getCache().getIdMap();
                             offlinePlayer = idMap.getPlayerByID(args[0]);
                         } else if (args[0].length() > 2) {
                             offlinePlayer = sender.getServer().getOfflinePlayer(args[0]);
@@ -364,7 +364,7 @@ public final class AdminPlayerCommandHandler extends PluginCommandExecutor {
                             return EMPTY_TAB;
                         }
 
-                        final PlayerInfo playerInfo = PlayerInfo.fromOfflinePlayer(this.getPlugin(), offlinePlayer);
+                        final PlayerInfo playerInfo = PlayerInfo.fromOfflinePlayer(this.getModule(), offlinePlayer);
 
                         switch (args[3]) {
                             case "set", "remove" -> {
