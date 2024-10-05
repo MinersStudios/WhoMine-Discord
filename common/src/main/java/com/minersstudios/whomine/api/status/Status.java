@@ -231,7 +231,7 @@ public interface Status extends Ordered<StatusPriority> {
 
         if (
                 failureStatus != null
-                && failureStatus.isEqualTo(priority)
+                && !failureStatus.isEqualTo(priority)
         ) {
             throw new IllegalArgumentException(
                     "Failure status must have the same priority as the main status"
