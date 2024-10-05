@@ -2,7 +2,6 @@ package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.module.AbstractModuleComponent;
-import com.minersstudios.whomine.packet.handler.ChannelHandler;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 import net.minecraft.network.Connection;

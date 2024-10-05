@@ -29,7 +29,7 @@ import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
-import java.net.URL;
+import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 
@@ -77,7 +77,7 @@ public final class MineSkinResponse {
 
         final String requestBody = "url=" + URLEncoder.encode(link, StandardCharsets.UTF_8);
         final String apiKey = plugin.getConfiguration().getMineSkinApiKey();
-        final HttpURLConnection connection = (HttpURLConnection) new URL(MINE_SKIN_API_URL).openConnection();
+        final HttpURLConnection connection = (HttpURLConnection) URI.create(MINE_SKIN_API_URL).toURL().openConnection();
 
         connection.setRequestMethod("POST");
         connection.setConnectTimeout(90000);

@@ -70,7 +70,7 @@ public final class DiscordCommand extends PluginCommandExecutor {
 
         if (args.length > 0) {
             switch (args[0]) {
-                case "link" -> plugin.openCustomInventory(DiscordLinkCodeMenu.class, player);
+                case "link" -> plugin.getGuiManager().open(DiscordLinkCodeMenu.class, player);
                 case "unlink" -> {
                     final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, player);
                     final long id = playerInfo.unlinkDiscord();

@@ -379,17 +379,22 @@ public final class PlayerInteractListener extends PaperEventListener {
             final PlacingType placingType = placing.getType();
             final CustomBlock customBlock = new CustomBlock(replaceableBlock, customBlockData);
 
-            if (placingType instanceof PlacingType.Default) {
-                customBlock.place(module, player, hand);
-            } else if (placingType instanceof PlacingType.Directional) {
-                customBlock.place(module, player, hand, blockFace, null);
-            } else if (placingType instanceof final PlacingType.Orientable orientable) {
-                final Location playerLocation = player.getLocation();
-                final float yaw = playerLocation.getYaw();
-                final float pitch = playerLocation.getPitch();
-                final var blockAxes = orientable.getMap().keySet();
+            switch (placingType) {
+                case PlacingType.Default         defaultType -> customBlock.place(module, player, hand);
+                case PlacingType.Directional     directional -> customBlock.place(module, player, hand, blockFace, null);
+                case final PlacingType.Orientable orientable -> {
+                    final Location playerLocation = player.getLocation();
+                    final float yaw = playerLocation.getYaw();
+                    final float pitch = playerLocation.getPitch();
+                    final var blockAxes = orientable.getMap().keySet();
 
-                customBlock.place(module, player, hand, null, getAxisByEyes(yaw, pitch, blockAxes));
+                    customBlock.place(
+                            module, player, hand, null,
+                            getAxisByEyes(yaw, pitch, blockAxes)
+                    );
+                }
+                default -> {
+                }
             }
         }
     }

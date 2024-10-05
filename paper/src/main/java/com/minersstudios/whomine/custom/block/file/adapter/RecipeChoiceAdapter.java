@@ -85,14 +85,14 @@ public class RecipeChoiceAdapter implements JsonSerializer<RecipeChoice>, JsonDe
                 : CUSTOM_CHOICE
         );
 
-        if (choice instanceof final RecipeChoice.MaterialChoice materialChoice) {
-            jsonObject.add(CHOICES_KEY, context.serialize(materialChoice.getChoices()));
-        } else if (choice instanceof final RecipeChoice.ExactChoice exactChoice) {
-            jsonObject.add(CHOICES_KEY, context.serialize(exactChoice.getChoices()));
-        } else if (choice instanceof final CustomChoice customChoice) {
-            jsonObject.add(CHOICES_KEY, context.serialize(customChoice.namespacedKeySet()));
-        } else {
-            throw new IllegalArgumentException("Unknown RecipeChoice type: " + choice.getClass().getName());
+        switch (choice) {
+            case final RecipeChoice.MaterialChoice materialChoice ->
+                    jsonObject.add(CHOICES_KEY, context.serialize(materialChoice.getChoices()));
+            case final RecipeChoice.ExactChoice exactChoice ->
+                    jsonObject.add(CHOICES_KEY, context.serialize(exactChoice.getChoices()));
+            case final CustomChoice customChoice ->
+                    jsonObject.add(CHOICES_KEY, context.serialize(customChoice.namespacedKeySet()));
+            default -> throw new IllegalArgumentException("Unknown RecipeChoice type: " + choice.getClass().getName());
         }
 
         return jsonObject;

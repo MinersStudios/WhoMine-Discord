@@ -3,25 +3,22 @@ package com.minersstudios.whomine.player;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.PaperCache;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.inventory.CustomInventory;
 import com.minersstudios.whomine.api.locale.Translations;
+import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.api.utility.IDUtils;
+import com.minersstudios.whomine.discord.BotHandler;
+import com.minersstudios.whomine.discord.DiscordMap;
+import com.minersstudios.whomine.inventory.CustomInventory;
+import com.minersstudios.whomine.menu.PronounMenu;
+import com.minersstudios.whomine.menu.ResourcePackMenu;
 import com.minersstudios.whomine.player.collection.MuteMap;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.player.skin.Skin;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.utility.BlockUtils;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.utility.DateUtils;
-import com.minersstudios.whomine.utility.PlayerUtils;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.discord.DiscordMap;
-import com.minersstudios.whomine.menu.PronounMenu;
-import com.minersstudios.whomine.menu.ResourcePackMenu;
-import com.minersstudios.whomine.api.utility.IDUtils;
-import com.minersstudios.whomine.utility.MSPlayerUtils;
+import com.minersstudios.whomine.utility.*;
 import com.minersstudios.whomine.world.WorldDark;
 import com.mojang.authlib.GameProfile;
 import fr.xephi.authme.api.v3.AuthMeApi;
+import io.papermc.paper.ban.BanListType;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -965,16 +962,16 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return The ban entry of the player from {@link BanList.Type#PROFILE}
+     * @return The ban entry of the player from {@link BanListType#PROFILE}
      */
     public @Nullable BanEntry<PlayerProfile> getBanEntry() {
-        final BanList<PlayerProfile> banList = this.server.getBanList(BanList.Type.PROFILE);
+        final BanList<PlayerProfile> banList = this.server.getBanList(BanListType.PROFILE);
 
         return banList.getBanEntry(this.profile);
     }
 
     /**
-     * @return The ban reason of the player from {@link BanList.Type#PROFILE}
+     * @return The ban reason of the player from {@link BanListType#PROFILE}
      *         or {@link Translations#COMMAND_BAN_DEFAULT_REASON}
      *         if the reason is null
      * @throws IllegalStateException If the player is not banned, check
@@ -1012,7 +1009,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return The ban source of the player from {@link BanList.Type#PROFILE}
+     * @return The ban source of the player from {@link BanListType#PROFILE}
      * @throws IllegalStateException If the player is not banned, check
      *                               {@link #isBanned()} first
      * @see BanEntry#getSource()
@@ -1046,7 +1043,7 @@ public final class PlayerInfo {
 
     /**
      * @param sender The command sender, used to get the time zone
-     * @return Date when the player was banned from {@link BanList.Type#PROFILE}
+     * @return Date when the player was banned from {@link BanListType#PROFILE}
      *         with the sender's time zone or default time zone if the sender's
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not banned, check
@@ -1059,7 +1056,7 @@ public final class PlayerInfo {
 
     /**
      * @param address The IP address, used to get the time zone
-     * @return Date when the player was banned from {@link BanList.Type#PROFILE}
+     * @return Date when the player was banned from {@link BanListType#PROFILE}
      *         with the time zone of the IP address or default time zone if the
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not banned, check
@@ -1071,7 +1068,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Date when the player was banned from {@link BanList.Type#PROFILE}
+     * @return Date when the player was banned from {@link BanListType#PROFILE}
      * @throws IllegalStateException If the player is not banned, check
      *                               {@link #isBanned()} first
      * @see BanEntry#getCreated()
@@ -1088,7 +1085,7 @@ public final class PlayerInfo {
 
     /**
      * @param sender The command sender, used to get the time zone
-     * @return Date when the player will be unbanned from {@link BanList.Type#PROFILE}
+     * @return Date when the player will be unbanned from {@link BanListType#PROFILE}
      *         with the sender's time zone or default time zone if the sender's
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not banned, check
@@ -1110,7 +1107,7 @@ public final class PlayerInfo {
 
     /**
      * @param address The IP address, used to get the time zone
-     * @return Date when the player will be unbanned from {@link BanList.Type#PROFILE}
+     * @return Date when the player will be unbanned from {@link BanListType#PROFILE}
      *         with the time zone of the IP address or default time zone if the
      *         time zone cannot be obtained
      * @throws IllegalStateException If the player is not banned, check
@@ -1131,7 +1128,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return Date when the player will be unbanned from {@link BanList.Type#PROFILE},
+     * @return Date when the player will be unbanned from {@link BanListType#PROFILE},
      *         or null if the player is banned forever
      * @throws IllegalStateException If the player is not banned, check
      *                               {@link #isBanned()} first
@@ -1150,7 +1147,7 @@ public final class PlayerInfo {
 
     /**
      * @param expiration Date when the player will be unbanned from
-     *                   {@link BanList.Type#PROFILE}, or null if the player is
+     *                   {@link BanListType#PROFILE}, or null if the player is
      *                   banned forever
      * @throws IllegalStateException If the player is not banned, check
      *                               {@link #isBanned()} first
@@ -1168,7 +1165,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Bans or unbans the player in {@link BanList.Type#PROFILE}. Also kick the
+     * Bans or unbans the player in {@link BanListType#PROFILE}. Also kick the
      * player with the specified reason and expiration date if they are online,
      * and to the player's private discord channel, if it is linked. Also sends
      * a message to the sender.
@@ -1185,7 +1182,7 @@ public final class PlayerInfo {
             final @NotNull String reason,
             final @Nullable CommandSender sender
     ) {
-        final BanList<PlayerProfile> banList = this.server.getBanList(BanList.Type.PROFILE);
+        final BanList<PlayerProfile> banList = this.server.getBanList(BanListType.PROFILE);
         final Player player = this.getOnlinePlayer();
         final CommandSender commandSender = sender == null ? this.server.getConsoleSender() : sender;
 
@@ -1266,7 +1263,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * Unbans the player in {@link BanList.Type#PROFILE}
+     * Unbans the player in {@link BanListType#PROFILE}
      *
      * @param commandSender The command sender, who unbanned the player, or null
      *                      if the player was unbanned by the console
@@ -1362,7 +1359,7 @@ public final class PlayerInfo {
     }
 
     /**
-     * @return True, if the player is banned in {@link BanList.Type#PROFILE}
+     * @return True, if the player is banned in {@link BanListType#PROFILE}
      */
     public boolean isBanned() {
         return this.getBanEntry() != null;
@@ -1503,7 +1500,7 @@ public final class PlayerInfo {
                         return;
                     }
 
-                    this.plugin.openCustomInventory(ResourcePackMenu.class, player);
+                    this.plugin.getGuiManager().open(ResourcePackMenu.class, player);
                 }, 0L, 5L);
                 return CompletableFuture.completedFuture(false);
             }
@@ -1925,7 +1922,7 @@ public final class PlayerInfo {
             new RegistrationProcess(this.plugin).registerPlayer(this);
         } else {
             if (this.playerFile.getConfig().getString("pronouns") == null) {
-                this.plugin.openCustomInventory(PronounMenu.class, player);
+                this.plugin.getGuiManager().open(PronounMenu.class, player);
             } else {
                 final Skin currentSkin = this.getCurrentSkin();
 

@@ -270,22 +270,25 @@ public final class CustomBlockRegistry {
 
         final PlacingType placingType = customBlockData.getBlockSettings().getPlacing().getType();
 
-        if (placingType instanceof final PlacingType.Default normal) {
-            return containsHashCode(normal.getNoteBlockData().hashCode());
-        } else if (placingType instanceof final PlacingType.Directional directional) {
-            for (final var noteBlockData : directional.getMap().values()) {
-                if (containsHashCode(noteBlockData.hashCode())) {
-                    return true;
+        switch (placingType) {
+            case final PlacingType.Default normal -> {
+                return containsHashCode(normal.getNoteBlockData().hashCode());
+            }
+            case final PlacingType.Directional directional -> {
+                for (final var noteBlockData : directional.getMap().values()) {
+                    if (containsHashCode(noteBlockData.hashCode())) {
+                        return true;
+                    }
                 }
             }
-        } else if (placingType instanceof final PlacingType.Orientable orientable) {
-            for (final var noteBlockData : orientable.getMap().values()) {
-                if (containsHashCode(noteBlockData.hashCode())) {
-                    return true;
+            case final PlacingType.Orientable orientable -> {
+                for (final var noteBlockData : orientable.getMap().values()) {
+                    if (containsHashCode(noteBlockData.hashCode())) {
+                        return true;
+                    }
                 }
             }
-        } else {
-            throw new IllegalArgumentException("Unknown placing type: " + placingType.getClass().getName());
+            default -> throw new IllegalArgumentException("Unknown placing type: " + placingType.getClass().getName());
         }
 
         return false;
@@ -372,30 +375,20 @@ public final class CustomBlockRegistry {
         final String key = customBlockData.getKey();
         final PlacingType placingType = customBlockData.getBlockSettings().getPlacing().getType();
 
-        if (placingType instanceof final PlacingType.Default normal) {
-            register(
-                    customBlockData,
-                    normal.getNoteBlockData().hashCode(),
-                    key
-            );
-        } else if (placingType instanceof final PlacingType.Directional directional) {
-            directional.getMap().forEach(
-                    (blockFace, data) -> register(
-                            customBlockData,
-                            data.hashCode(),
-                            key
-                    )
-            );
-        } else if (placingType instanceof final PlacingType.Orientable orientable) {
-            orientable.getMap().forEach(
-                    (blockAxis, data) -> register(
-                            customBlockData,
-                            data.hashCode(),
-                            key
-                    )
-            );
-        } else {
-            throw new IllegalArgumentException("Unknown placing type: " + placingType.getClass().getName());
+        switch (placingType) {
+            case final PlacingType.Default normal ->
+                    register(
+                            customBlockData, normal.getNoteBlockData().hashCode(), key
+                    );
+            case final PlacingType.Directional directional ->
+                    directional.getMap().forEach(
+                            (blockFace, data) -> register(customBlockData, data.hashCode(), key)
+                    );
+            case final PlacingType.Orientable orientable ->
+                    orientable.getMap().forEach(
+                            (blockAxis, data) -> register(customBlockData, data.hashCode(), key)
+                    );
+            default -> throw new IllegalArgumentException("Unknown placing type: " + placingType.getClass().getName());
         }
     }
 

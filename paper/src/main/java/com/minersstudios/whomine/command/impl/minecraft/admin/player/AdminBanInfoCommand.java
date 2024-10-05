@@ -2,10 +2,11 @@ package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.utility.DateUtils;
+import com.minersstudios.whomine.utility.MSLogger;
+import io.papermc.paper.ban.BanListType;
 import org.bukkit.BanList;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
@@ -124,7 +125,7 @@ public final class AdminBanInfoCommand {
                 }
 
                 final Date date = Date.from(instant);
-                final BanList<PlayerProfile> banList = sender.getServer().getBanList(BanList.Type.PROFILE);
+                final BanList<PlayerProfile> banList = sender.getServer().getBanList(BanListType.PROFILE);
                 final var banEntry = banList.getBanEntry(playerInfo.getPlayerProfile());
 
                 playerInfo.setBannedTo(date);

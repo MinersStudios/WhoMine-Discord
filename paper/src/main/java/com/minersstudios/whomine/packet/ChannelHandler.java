@@ -1,10 +1,8 @@
-package com.minersstudios.whomine.packet.handler;
+package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.module.ModuleComponent;
 import com.minersstudios.whomine.api.packet.*;
-import com.minersstudios.whomine.packet.PaperPacketContainer;
-import com.minersstudios.whomine.packet.PaperPacketEvent;
 import com.minersstudios.whomine.utility.MSLogger;
 import io.netty.channel.*;
 import net.kyori.adventure.text.Component;
@@ -55,6 +53,7 @@ public final class ChannelHandler extends ChannelDuplexHandler implements Module
      *
      * @return The module associated with this channel handler
      */
+    @Override
     public @NotNull WhoMine getModule() {
         return this.module;
     }

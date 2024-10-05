@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Base64;
@@ -310,7 +310,7 @@ public final class Skin implements ConfigurationSerializable {
      */
     public static boolean isValidSkinImg(final @NotNull String link) {
         try {
-            final BufferedImage image = ImageIO.read(new URL(link));
+            final BufferedImage image = ImageIO.read(URI.create(link).toURL());
             return image != null
                     && image.getWidth() == 64
                     && image.getHeight() == 64;

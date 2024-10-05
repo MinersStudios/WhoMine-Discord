@@ -83,32 +83,20 @@ public class PlacingTypeAdapter implements JsonSerializer<PlacingType>, JsonDese
     ) throws UnsupportedOperationException {
         final JsonObject jsonObject = new JsonObject();
 
-        if (placingType instanceof final PlacingType.Default defaultType) {
-            jsonObject.addProperty(TYPE_KEY, DEFAULT_TYPE);
-            jsonObject.add(
-                    NOTE_BLOCK_DATA_KEY,
-                    context.serialize(defaultType.getNoteBlockData())
-            );
-        } else if (placingType instanceof final PlacingType.Directional directionalType) {
-            jsonObject.addProperty(TYPE_KEY, DIRECTIONAL_TYPE);
-            jsonObject.add(
-                    NOTE_BLOCK_DATA_KEY,
-                    context.serialize(
-                            directionalType.getMap(),
-                            BLOCK_FACE_MAP_TYPE
-                    )
-            );
-        } else if (placingType instanceof final PlacingType.Orientable orientableType) {
-            jsonObject.addProperty(TYPE_KEY, ORIENTABLE_TYPE);
-            jsonObject.add(
-                    NOTE_BLOCK_DATA_KEY,
-                    context.serialize(
-                            orientableType.getMap(),
-                            AXIS_NOTE_MAP_TYPE
-                    )
-            );
-        } else {
-            throw new UnsupportedOperationException("Unknown placing type : " + placingType.getClass());
+        switch (placingType) {
+            case final PlacingType.Default defaultType -> {
+                jsonObject.addProperty(TYPE_KEY, DEFAULT_TYPE);
+                jsonObject.add(NOTE_BLOCK_DATA_KEY, context.serialize(defaultType.getNoteBlockData()));
+            }
+            case final PlacingType.Directional directionalType -> {
+                jsonObject.addProperty(TYPE_KEY, DIRECTIONAL_TYPE);
+                jsonObject.add(NOTE_BLOCK_DATA_KEY, context.serialize(directionalType.getMap(), BLOCK_FACE_MAP_TYPE));
+            }
+            case final PlacingType.Orientable orientableType -> {
+                jsonObject.addProperty(TYPE_KEY, ORIENTABLE_TYPE);
+                jsonObject.add(NOTE_BLOCK_DATA_KEY, context.serialize(orientableType.getMap(), AXIS_NOTE_MAP_TYPE));
+            }
+            default -> throw new UnsupportedOperationException("Unknown placing type : " + placingType.getClass());
         }
 
         return jsonObject;

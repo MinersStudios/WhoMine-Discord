@@ -52,17 +52,18 @@ public final class PrepareAnvilListener extends PaperEventListener {
             final var custom = MSCustomUtils.getCustom(firstItem).orElse(null);
             ItemStack customStack = null;
 
-            if (custom == null) {
-                meta.setCustomModelData(null);
-                resultItem.setItemMeta(meta);
-                event.setResult(resultItem);
-                return;
-            } else if (custom instanceof final CustomBlockData data) {
-                customStack = data.craftItemStack();
-            } else if (custom instanceof final CustomItem item) {
-                customStack = item.getItem().clone();
-            } else if (custom instanceof final CustomDecorData<?> data) {
-                customStack = data.getItem().clone();
+            switch (custom) {
+                case null -> {
+                    meta.setCustomModelData(null);
+                    resultItem.setItemMeta(meta);
+                    event.setResult(resultItem);
+                    return;
+                }
+                case final CustomBlockData data -> customStack = data.craftItemStack();
+                case final CustomItem item -> customStack = item.getItem().clone();
+                case final CustomDecorData<?> data -> customStack = data.getItem().clone();
+                default -> {
+                }
             }
 
             assert customStack != null;

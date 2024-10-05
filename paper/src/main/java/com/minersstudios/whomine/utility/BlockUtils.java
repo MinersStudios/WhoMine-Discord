@@ -2,6 +2,8 @@ package com.minersstudios.whomine.utility;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.Material;
 import org.bukkit.SoundGroup;
 import org.bukkit.block.Block;
@@ -14,6 +16,9 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.EnumSet;
 import java.util.Locale;
 import java.util.Map;
@@ -441,5 +446,35 @@ public final class BlockUtils {
         return material == Material.TALL_GRASS
                 || material == Material.LARGE_FERN
                 || material == Material.TALL_SEAGRASS;
+    }
+
+    public static void editBlockStrength(
+            final @NotNull net.minecraft.world.level.block.Block block,
+            final float hardness,
+            final float resistance
+    ) {
+        block.properties().strength(hardness, resistance);
+
+        final BlockState newNoteBlockState = block.defaultBlockState();
+
+        try {
+            final Field destroySpeedField = BlockBehaviour.BlockStateBase.class.getDeclaredField("destroySpeed");
+
+            destroySpeedField.setAccessible(true);
+            destroySpeedField.set(newNoteBlockState, -1.0f);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            final Method registerDefaultState = net.minecraft.world.level.block.Block.class.getDeclaredMethod("registerDefaultState", BlockState.class);
+
+            registerDefaultState.setAccessible(true);
+            registerDefaultState.invoke(block, newNoteBlockState);
+        } catch (final NoSuchMethodException e) {
+            MSLogger.severe("Could not find Block#registerDefaultState method", e);
+        } catch (final InvocationTargetException | IllegalAccessException e) {
+            MSLogger.severe("Could not invoke Block#registerDefaultState method", e);
+        }
     }
 }

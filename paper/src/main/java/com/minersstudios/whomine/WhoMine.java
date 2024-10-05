@@ -1,20 +1,14 @@
 package com.minersstudios.whomine;
 
-import com.minersstudios.whomine.api.gui.GuiManager;
 import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.discord.DiscordManager;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.whomine.gui.PaperGuiManager;
 import com.minersstudios.whomine.listener.api.PaperListenerManager;
 import com.minersstudios.whomine.scheduler.TaskExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
-import org.jetbrains.annotations.UnmodifiableView;
-
-import java.util.Map;
-import java.util.Optional;
 
 /**
  * Represents a WhoMine module
@@ -43,7 +37,7 @@ public interface WhoMine extends MainModule<WhoMine>, Plugin, TaskExecutor {
      *
      * @return The gui manager of the module
      */
-    @NotNull GuiManager<WhoMine> getGuiManager();
+    @NotNull PaperGuiManager getGuiManager();
 
     /**
      * Returns the discord module
@@ -51,24 +45,6 @@ public interface WhoMine extends MainModule<WhoMine>, Plugin, TaskExecutor {
      * @return The discord module
      */
     @NotNull DiscordManager getDiscordModule();
-
-
-    /**
-     * Returns an unmodifiable view of the inventory holder map
-     *
-     * @return An unmodifiable view of the inventory holder map
-     */
-    @NotNull @UnmodifiableView Map<Class<? extends AbstractInventoryHolder>, AbstractInventoryHolder> getInventoryHolderMap();
-
-    /**
-     * Gets the inventory holder of the specified class if present, otherwise an
-     * empty optional will be returned
-     *
-     * @param clazz Class of the inventory holder
-     * @return An optional containing the inventory holder if present, otherwise
-     *         an empty optional
-     */
-    @NotNull Optional<AbstractInventoryHolder> getInventoryHolder(final @NotNull Class<? extends AbstractInventoryHolder> clazz);
 
     /**
      * Gets a {@link FileConfiguration} for this plugin, read through
@@ -122,17 +98,4 @@ public interface WhoMine extends MainModule<WhoMine>, Plugin, TaskExecutor {
      */
     @Override
     void saveDefaultConfig();
-
-    /**
-     * Opens a custom inventory for the given player if the custom inventory is
-     * registered to the plugin
-     *
-     * @param clazz  Class of the custom inventory holder
-     * @param player Player to open the custom inventory
-     * @see AbstractInventoryHolder
-     */
-    void openCustomInventory(
-            final @NotNull Class<? extends AbstractInventoryHolder> clazz,
-            final @NotNull Player player
-    );
 }

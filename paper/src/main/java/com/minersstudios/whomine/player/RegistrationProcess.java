@@ -147,7 +147,7 @@ public final class RegistrationProcess {
                     this.sendDialogueMessage(REGISTRATION_MESSAGE_13.asTranslatable(), 150L);
 
                     this.plugin.runTaskLater(
-                            () -> this.plugin.openCustomInventory(PronounMenu.class, this.player),
+                            () -> this.plugin.getGuiManager().open(PronounMenu.class, this.player),
                             225L
                     );
 

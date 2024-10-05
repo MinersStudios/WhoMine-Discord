@@ -3,9 +3,9 @@ package com.minersstudios.whomine.scheduler.task;
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
+import io.papermc.paper.ban.BanListType;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.bukkit.BanEntry;
-import org.bukkit.BanList;
 import org.bukkit.Server;
 import org.bukkit.ban.ProfileBanList;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +28,7 @@ public final class BanListTask implements Runnable {
 
     @Override
     public void run() {
-        final ProfileBanList banList = this.server.getBanList(BanList.Type.PROFILE);
+        final ProfileBanList banList = this.server.getBanList(BanListType.PROFILE);
         final Set<BanEntry<PlayerProfile>> entries = banList.getEntries();
         final Instant currentInstant = Instant.now();
 

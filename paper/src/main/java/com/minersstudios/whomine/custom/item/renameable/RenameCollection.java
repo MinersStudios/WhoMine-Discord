@@ -255,8 +255,9 @@ public final class RenameCollection {
      * @see #addAllItems(Collection)
      */
     public boolean addAll(final @NotNull RenameCollection that) {
-        return this.addAllRenames(that.renames)
-                | this.addAllItems(that.items);
+        final boolean addedRenames = this.addAllRenames(that.renames);
+
+        return this.addAllItems(that.items) || addedRenames;
     }
 
     /**

@@ -35,7 +35,7 @@ public final class SkinsCommand extends PluginCommandExecutor {
             final @NotNull String label,
             final String @NotNull ... args
     ) {
-        this.getModule().openCustomInventory(
+        this.getModule().getGuiManager().open(
                 SkinsMenu.class,
                 (Player) sender
         );

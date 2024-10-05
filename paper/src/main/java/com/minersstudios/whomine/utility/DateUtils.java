@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.time.DateTimeException;
 import java.time.Instant;
@@ -60,7 +60,7 @@ public final class DateUtils {
         }
 
         try (
-                final var input = new URL("http://ip-api.com/json/" + ip.getHostAddress()).openStream();
+                final var input = URI.create("http://ip-api.com/json/" + ip.getHostAddress()).toURL().openStream();
                 final var reader = new BufferedReader(new InputStreamReader(input, StandardCharsets.UTF_8))
         ) {
             final StringBuilder entirePage = new StringBuilder();

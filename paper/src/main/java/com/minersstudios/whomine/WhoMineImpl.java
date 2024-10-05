@@ -1,7 +1,10 @@
 package com.minersstudios.whomine;
 
 import com.google.common.base.Charsets;
-import com.minersstudios.whomine.api.gui.GuiManager;
+import com.minersstudios.whomine.api.locale.TranslationRegistry;
+import com.minersstudios.whomine.api.locale.Translations;
+import com.minersstudios.whomine.api.status.StatusHandler;
+import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.api.utility.ChatUtils;
 import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.api.utility.SharedConstants;
@@ -10,11 +13,9 @@ import com.minersstudios.whomine.command.api.CommandManager;
 import com.minersstudios.whomine.custom.decor.CustomDecorType;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.discord.DiscordManager;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.whomine.gui.PaperGuiManager;
 import com.minersstudios.whomine.listener.api.PaperListenerManager;
 import com.minersstudios.whomine.listener.impl.event.mechanic.DosimeterMechanic;
-import com.minersstudios.whomine.api.locale.TranslationRegistry;
-import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.menu.DiscordLinkCodeMenu;
 import com.minersstudios.whomine.menu.PronounMenu;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
@@ -24,39 +25,26 @@ import com.minersstudios.whomine.scheduler.task.BanListTask;
 import com.minersstudios.whomine.scheduler.task.MuteMapTask;
 import com.minersstudios.whomine.scheduler.task.PlayerListTask;
 import com.minersstudios.whomine.scheduler.task.SeatsTask;
-import com.minersstudios.whomine.api.status.StatusHandler;
-import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.utility.*;
 import com.minersstudios.whomine.world.WorldDark;
 import com.minersstudios.whomine.world.sound.SoundAdapter;
 import com.minersstudios.whomine.world.sound.SoundGroup;
 import fr.xephi.authme.AuthMe;
 import fr.xephi.authme.api.v3.AuthMeApi;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.coreprotect.CoreProtect;
 import net.kyori.adventure.text.format.NamedTextColor;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.BlockState;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.UnmodifiableView;
 
 import java.io.*;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 import java.util.logging.Level;
@@ -74,9 +62,10 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     private final PaperCache cache;
     private final PaperConfig config;
     private final PaperListenerManager listenerManager;
+    private final PaperGuiManager guiManager;
     private final CommandManager commandManager;
     private final DiscordManager discordManager;
-    private final Map<Class<? extends AbstractInventoryHolder>, AbstractInventoryHolder> inventoryHolderMap;
+
     private final File configFile;
     private FileConfiguration newConfig;
 
@@ -100,9 +89,9 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         this.config = new PaperConfig(this);
         this.statusHandler = new StatusHandler();
         this.listenerManager = new PaperListenerManager(this);
+        this.guiManager = new PaperGuiManager(this);
         this.commandManager = new CommandManager(this);
         this.discordManager = new DiscordManager(this);
-        this.inventoryHolderMap = new Object2ObjectOpenHashMap<>();
     }
 
     @Override
@@ -126,23 +115,13 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     }
 
     @Override
-    public @NotNull GuiManager<WhoMine> getGuiManager() {
-        return null;
+    public @NotNull PaperGuiManager getGuiManager() {
+        return this.guiManager;
     }
 
     @Override
     public @NotNull DiscordManager getDiscordModule() {
         return this.discordManager;
-    }
-
-    @Override
-    public @NotNull @UnmodifiableView Map<Class<? extends AbstractInventoryHolder>, AbstractInventoryHolder> getInventoryHolderMap() {
-        return Collections.unmodifiableMap(this.inventoryHolderMap);
-    }
-
-    @Override
-    public @NotNull Optional<AbstractInventoryHolder> getInventoryHolder(final @NotNull Class<? extends AbstractInventoryHolder> clazz) {
-        return Optional.ofNullable(this.inventoryHolderMap.get(clazz));
     }
 
     @Override
@@ -167,36 +146,6 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         );
     }
 
-    private void editBlockStrength(
-            final @NotNull Block block,
-            final float hardness,
-            final float resistance
-    ) {
-        block.properties().strength(hardness, resistance);
-
-        final BlockState newNoteBlockState = block.defaultBlockState();
-
-        try {
-            final Field destroySpeedField = BlockBehaviour.BlockStateBase.class.getDeclaredField("destroySpeed");
-
-            destroySpeedField.setAccessible(true);
-            destroySpeedField.set(newNoteBlockState, -1.0f);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
-            final Method registerDefaultState = Block.class.getDeclaredMethod("registerDefaultState", BlockState.class);
-
-            registerDefaultState.setAccessible(true);
-            registerDefaultState.invoke(block, newNoteBlockState);
-        } catch (final NoSuchMethodException e) {
-            MSLogger.severe("Could not find Block#registerDefaultState method", e);
-        } catch (final InvocationTargetException | IllegalAccessException e) {
-            MSLogger.severe("Could not invoke Block#registerDefaultState method", e);
-        }
-    }
-
     @Override
     public void onLoad() {
         final long time = System.currentTimeMillis();
@@ -210,8 +159,7 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         TranslationRegistry.bootstrap(this.config.getDefaultLocale());
         initClass(Translations.class);
 
-        this.editBlockStrength(Blocks.NOTE_BLOCK, -1.0f, 3600000.8F);
-        this.editBlockStrength(Blocks.ACACIA_PLANKS, -1.0f, 3600000.8F);
+        BlockUtils.editBlockStrength(Blocks.NOTE_BLOCK, -1.0f, 3600000.8F);
 
         PaperUtils
         .editConfig(PaperUtils.ConfigType.GLOBAL, this.getServer())
@@ -319,14 +267,15 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         this.newConfig = YamlConfiguration.loadConfiguration(this.configFile);
         final InputStream defaultInput = this.getResource("config.yml");
 
-        if (defaultInput == null) {
-            return;
+        if (defaultInput != null) {
+            try(final var inputReader = new InputStreamReader(defaultInput, Charsets.UTF_8)) {
+                final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(inputReader);
+
+                this.newConfig.setDefaults(configuration);
+            } catch (final Exception e) {
+                this.getLogger().severe("Could not load default config from jar");
+            }
         }
-
-        final InputStreamReader inputReader = new InputStreamReader(defaultInput, Charsets.UTF_8);
-        final YamlConfiguration configuration = YamlConfiguration.loadConfiguration(inputReader);
-
-        this.newConfig.setDefaults(configuration);
     }
 
     @Override
@@ -490,17 +439,6 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
             final long period
     ) {
         this.getServer().getScheduler().runTaskTimer(this, task, delay, period);
-    }
-
-    @Override
-    public void openCustomInventory(
-            final @NotNull Class<? extends AbstractInventoryHolder> clazz,
-            final @NotNull Player player
-    ) {
-        this.getInventoryHolder(clazz)
-        .ifPresent(
-                holder -> holder.open(player)
-        );
     }
 
     @NotNull File getConfigFile() {

@@ -2,17 +2,17 @@ package com.minersstudios.whomine.command.impl.minecraft.admin.ban;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.whomine.api.locale.Translations;
+import com.minersstudios.whomine.api.utility.Font;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.player.PlayerInfo;
 import com.minersstudios.whomine.player.collection.PlayerInfoMap;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.whomine.utility.MSLogger;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import io.papermc.paper.ban.BanListType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.BanEntry;
-import org.bukkit.BanList;
 import org.bukkit.Bukkit;
 import org.bukkit.ban.ProfileBanList;
 import org.bukkit.command.Command;
@@ -85,7 +85,7 @@ public final class UnBanCommand extends PluginCommandExecutor {
         if (args.length == 1) {
             final var completions = new ObjectArrayList<String>();
             final PlayerInfoMap playerInfoMap = this.getModule().getCache().getPlayerInfoMap();
-            final ProfileBanList banList = Bukkit.getServer().getBanList(BanList.Type.PROFILE);
+            final ProfileBanList banList = Bukkit.getServer().getBanList(BanListType.PROFILE);
             final Set<BanEntry<PlayerProfile>> entries = banList.getEntries();
 
             for (final var entry : entries) {

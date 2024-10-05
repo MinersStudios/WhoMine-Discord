@@ -58,6 +58,8 @@ public abstract class AbstractInventoryHolder {
 
         this.plugin = plugin;
         this.customInventory = this.createCustomInventory();
+
+        plugin.getGuiManager().register(this);
     }
 
     /**
