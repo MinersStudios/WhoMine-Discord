@@ -29,7 +29,7 @@ paperweight.reobfArtifactConfiguration = MOJANG_PRODUCTION
 dependencies {
     paperweight.paperDevBundle(paperVersion)
 
-    implementation(project(":common"))
+    implementation(project(":WhoMine-common"))
     compileOnly(libs.authme)
     compileOnly(libs.coreprotect)
 }
@@ -37,7 +37,7 @@ dependencies {
 tasks {
     processResources {
         val props = mapOf(
-            "name"               to rootProject.name + "-" + project.name,
+            "name"               to project.name,
             "version"            to project.version,
             "description"        to project.description,
             "author"             to author,

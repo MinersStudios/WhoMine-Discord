@@ -42,7 +42,7 @@ subprojects {
 
     sourceSets {
         main {
-            java.srcDir(project(":common").sourceSets.main.get().java.srcDirs)
+            java.srcDir(project(":WhoMine-common").sourceSets.main.get().java.srcDirs)
         }
     }
 
@@ -55,7 +55,6 @@ subprojects {
         }
 
         jar {
-            archiveBaseName.set("${rootProject.name}-${project.name}")
             destinationDirectory.set(file("$rootDir/build"))
         }
 

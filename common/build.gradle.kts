@@ -17,7 +17,7 @@ tasks {
     shadowJar {
         destinationDirectory.set(file("$rootDir/build"))
 
-        archiveBaseName.set(rootProject.name + "-" + project.name)
+        archiveBaseName.set(project.name)
         archiveVersion.set(project.version.toString())
     }
 

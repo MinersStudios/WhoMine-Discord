@@ -1,7 +1,14 @@
 rootProject.name = "WhoMine"
 
-include(
+sequenceOf(
     "common",
     "paper",
-    "velocity"
-)
+    "velocity",
+).forEach {
+    val path = ":${rootProject.name}-$it"
+
+    include(path)
+    project(path).projectDir =
+        if (it == "common") file(it)
+        else file("platform/$it")
+}
