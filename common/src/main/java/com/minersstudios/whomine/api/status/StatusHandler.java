@@ -117,7 +117,7 @@ public final class StatusHandler {
      * @param status Status to be assigned
      */
     public void assignStatus(final @NotNull Status status) {
-        if (status.getPriority() == Status.Priority.HIGH) {
+        if (status.isHighPriority()) {
             this.highStatus.set(status);
         } else {
             this.lowStatusSet.add(status);

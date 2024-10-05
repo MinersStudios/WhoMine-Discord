@@ -29,7 +29,7 @@ import java.util.Set;
 
 import static net.kyori.adventure.text.Component.text;
 
-@ListenFor(eventClass = InventoryClickEvent.class)
+@ListenFor(InventoryClickEvent.class)
 public final class InventoryClickListener extends PaperEventListener {
     private static final int HELMET_SLOT = 39;
     private static final Set<InventoryType> IGNORABLE_INVENTORY_TYPES = EnumSet.of(
@@ -49,7 +49,7 @@ public final class InventoryClickListener extends PaperEventListener {
             //</editor-fold>
     );
 
-    @EventHandler(priority = EventOrder.CUSTOM)
+    @EventHandler(order = EventOrder.CUSTOM)
     public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
         final InventoryClickEvent event = container.getEvent();
         final WhoMine module = container.getModule();

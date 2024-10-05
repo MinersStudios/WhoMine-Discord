@@ -8,7 +8,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = InventoryOpenEvent.class)
+@ListenFor(InventoryOpenEvent.class)
 public final class InventoryOpenListener extends PaperEventListener {
 
     @EventHandler

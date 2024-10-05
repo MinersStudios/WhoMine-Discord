@@ -11,7 +11,7 @@ import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = EntityChangeBlockEvent.class)
+@ListenFor(EntityChangeBlockEvent.class)
 public final class EntityChangeBlockListener extends PaperEventListener {
 
     @EventHandler

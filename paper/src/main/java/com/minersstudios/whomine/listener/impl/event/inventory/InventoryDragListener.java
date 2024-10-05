@@ -9,10 +9,10 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = InventoryDragEvent.class)
+@ListenFor(InventoryDragEvent.class)
 public final class InventoryDragListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.CUSTOM)
+    @EventHandler(order = EventOrder.CUSTOM)
     public void onInventoryDrag(final @NotNull PaperEventContainer<InventoryDragEvent> container) {
         final InventoryDragEvent event = container.getEvent();
         if (!(event.getInventory() instanceof final CustomInventory customInventory)) {

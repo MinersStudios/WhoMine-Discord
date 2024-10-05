@@ -1,6 +1,7 @@
 package com.minersstudios.whomine.api.status;
 
 import com.minersstudios.whomine.api.annotation.StatusKey;
+import com.minersstudios.whomine.api.order.Ordered;
 import com.minersstudios.whomine.api.throwable.InvalidRegexException;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ import static com.minersstudios.whomine.api.annotation.StatusKey.Validator.valid
  * </ul>
  */
 @SuppressWarnings("unused")
-public interface Status {
+public interface Status extends Ordered<StatusPriority> {
 
     /**
      * Returns the key of the status
@@ -32,11 +33,20 @@ public interface Status {
     @NotNull String getKey();
 
     /**
+     * @deprecated Use {@link #getPriority()} instead
+     */
+    @Deprecated
+    @Override
+    default @NotNull StatusPriority getOrder() {
+        return this.getPriority();
+    }
+
+    /**
      * Returns the priority of the status
      *
      * @return The priority of the status
      */
-    @NotNull Priority getPriority();
+    @NotNull StatusPriority getPriority();
 
     /**
      * Returns whether the status is a high priority
@@ -111,11 +121,11 @@ public interface Status {
      * @return A new status with the specified key and low priority
      * @throws InvalidRegexException If the key does not match the
      *                               {@link StatusKey#REGEX regex}
-     * @see #success(String, Priority)
+     * @see #success(String, StatusPriority)
      */
     @Contract("_ -> new")
     static @NotNull SuccessStatus successLow(final @StatusKey @NotNull String key) throws InvalidRegexException {
-        return success(key, Priority.LOW);
+        return success(key, StatusPriority.LOW);
     }
 
     /**
@@ -130,14 +140,14 @@ public interface Status {
      *                                  {@link StatusKey#REGEX regex}
      * @throws IllegalArgumentException If the failure status has a different
      *                                  priority than the specified priority
-     * @see #success(String, Priority, FailureStatus)
+     * @see #success(String, StatusPriority, FailureStatus)
      */
     @Contract("_, _ -> new")
     static @NotNull SuccessStatus successLow(
             final @StatusKey @NotNull String key,
             final @Nullable FailureStatus failureStatus
     ) throws InvalidRegexException, IllegalArgumentException {
-        return success(key, Priority.LOW, failureStatus);
+        return success(key, StatusPriority.LOW, failureStatus);
     }
 
     /**
@@ -147,11 +157,11 @@ public interface Status {
      * @return A new status with the specified key and high priority
      * @throws InvalidRegexException If the key does not match the
      *                               {@link StatusKey#REGEX regex}
-     * @see #success(String, Priority)
+     * @see #success(String, StatusPriority)
      */
     @Contract("_ -> new")
     static @NotNull SuccessStatus successHigh(final @StatusKey @NotNull String key) throws InvalidRegexException {
-        return success(key, Priority.HIGH);
+        return success(key, StatusPriority.HIGH);
     }
 
     /**
@@ -167,14 +177,14 @@ public interface Status {
      *                                  {@link StatusKey#REGEX regex}
      * @throws IllegalArgumentException If the failure status has a different
      *                                  priority than the specified priority
-     * @see #success(String, Priority, FailureStatus)
+     * @see #success(String, StatusPriority, FailureStatus)
      */
     @Contract("_, _ -> new")
     static @NotNull SuccessStatus successHigh(
             final @StatusKey @NotNull String key,
             final @Nullable FailureStatus failureStatus
     ) throws InvalidRegexException, IllegalArgumentException {
-        return success(key, Priority.HIGH, failureStatus);
+        return success(key, StatusPriority.HIGH, failureStatus);
     }
 
     /**
@@ -190,7 +200,7 @@ public interface Status {
     @Contract("_, _ -> new")
     static @NotNull SuccessStatus success(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority
+            final @NotNull StatusPriority priority
     ) throws InvalidRegexException {
         validate(key);
 
@@ -214,14 +224,14 @@ public interface Status {
     @Contract("_, _, _ -> new")
     static @NotNull SuccessStatus success(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority,
+            final @NotNull StatusPriority priority,
             final @Nullable FailureStatus failureStatus
     ) throws InvalidRegexException, IllegalArgumentException {
         validate(key);
 
         if (
                 failureStatus != null
-                && failureStatus.getPriority() != priority
+                && failureStatus.isEqualTo(priority)
         ) {
             throw new IllegalArgumentException(
                     "Failure status must have the same priority as the main status"
@@ -238,11 +248,11 @@ public interface Status {
      * @return A new failure status with the specified key and low priority
      * @throws InvalidRegexException If the key does not match the
      *                               {@link StatusKey#REGEX regex}
-     * @see #failure(String, Priority)
+     * @see #failure(String, StatusPriority)
      */
     @Contract("_ -> new")
     static @NotNull FailureStatus failureLow(final @StatusKey @NotNull String key) throws InvalidRegexException {
-        return failure(key, Priority.LOW);
+        return failure(key, StatusPriority.LOW);
     }
 
     /**
@@ -252,11 +262,11 @@ public interface Status {
      * @return A new failure status with the specified key and medium priority
      * @throws InvalidRegexException If the key does not match the
      *                               {@link StatusKey#REGEX regex}
-     * @see #failure(String, Priority)
+     * @see #failure(String, StatusPriority)
      */
     @Contract("_ -> new")
     static @NotNull FailureStatus failureHigh(final @StatusKey @NotNull String key) throws InvalidRegexException {
-        return failure(key, Priority.HIGH);
+        return failure(key, StatusPriority.HIGH);
     }
 
     /**
@@ -272,23 +282,10 @@ public interface Status {
     @Contract("_, _ -> new")
     static @NotNull FailureStatus failure(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority
+            final @NotNull StatusPriority priority
     ) throws InvalidRegexException {
         validate(key);
 
         return new FailureStatus(key, priority);
-    }
-
-    /**
-     * Priority of the status.
-     * <br>
-     * There are two types of priorities:
-     * <ul>
-     *     <li>{@link Priority#LOW Low-priority}</li>
-     *     <li>{@link Priority#HIGH High-priority}</li>
-     * </ul>
-     */
-    enum Priority {
-        LOW, HIGH
     }
 }

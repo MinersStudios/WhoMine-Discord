@@ -13,10 +13,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerJoinEvent.class)
+@ListenFor(PlayerJoinEvent.class)
 public final class PlayerJoinListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.LOWEST)
+    @EventHandler(order = EventOrder.LOWEST)
     public void onPlayerJoin(final @NotNull PaperEventContainer<PlayerJoinEvent> container) {
         final PlayerJoinEvent event = container.getEvent();
         final WhoMine module = container.getModule();

@@ -8,7 +8,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = EntityDamageEvent.class)
+@ListenFor(EntityDamageEvent.class)
 public final class EntityDamageListener extends PaperEventListener {
 
     @EventHandler(ignoreCancelled = true)

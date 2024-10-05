@@ -9,10 +9,10 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.BlockPistonRetractEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockPistonRetractEvent.class)
+@ListenFor(BlockPistonRetractEvent.class)
 public final class BlockPistonRetractListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onBlockPistonRetract(final @NotNull PaperEventContainer<BlockPistonRetractEvent> container) {
         final BlockPistonRetractEvent event = container.getEvent();
 

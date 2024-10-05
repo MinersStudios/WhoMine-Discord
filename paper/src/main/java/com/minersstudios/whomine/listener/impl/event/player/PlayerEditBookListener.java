@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static net.kyori.adventure.text.Component.text;
 
-@ListenFor(eventClass = PlayerEditBookEvent.class)
+@ListenFor(PlayerEditBookEvent.class)
 public final class PlayerEditBookListener extends PaperEventListener {
 
     @EventHandler

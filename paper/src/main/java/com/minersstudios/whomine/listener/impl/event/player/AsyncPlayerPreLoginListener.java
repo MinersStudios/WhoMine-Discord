@@ -22,7 +22,7 @@ import static com.minersstudios.whomine.api.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 import static org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result.*;
 
-@ListenFor(eventClass = AsyncPlayerPreLoginEvent.class)
+@ListenFor(AsyncPlayerPreLoginEvent.class)
 public final class AsyncPlayerPreLoginListener extends PaperEventListener {
     //<editor-fold desc="Component Messages" defaultstate="collapsed">
     private static final Style TITLE_STYLE = Style.style(NamedTextColor.RED, TextDecoration.BOLD);
@@ -53,7 +53,7 @@ public final class AsyncPlayerPreLoginListener extends PaperEventListener {
             );
     //</editor-fold>
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onAsyncPlayerPreLogin(final @NotNull PaperEventContainer<AsyncPlayerPreLoginEvent> container) {
         final AsyncPlayerPreLoginEvent event = container.getEvent();
         final WhoMine module = container.getModule();

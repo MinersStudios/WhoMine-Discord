@@ -1,5 +1,6 @@
 package com.minersstudios.whomine.api.event;
 
+import com.minersstudios.whomine.api.order.Ordered;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +12,7 @@ import javax.annotation.concurrent.Immutable;
  * <p>
  * <b>It contains :</b>
  * <ul>
- *     <li>The priority of the event handler</li>
+ *     <li>The order of the event handler</li>
  *     <li>Whether the event handler should ignore cancelled events</li>
  * </ul>
  * <table>
@@ -21,27 +22,27 @@ import javax.annotation.concurrent.Immutable;
  *         <th>Description</th>
  *     </tr>
  *     <tr>
- *         <td>{@link #normal()}</td>
+ *         <td>{@link #defaultParams()}</td>
  *         <td>Returns the default event handler params</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(EventHandler)}</td>
  *         <td>Creates a new event handler params with the given handler's
- *         priority and ignore cancelled state</td>
+ *         order and ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(EventOrder)}</td>
- *         <td>Creates a new event handler params with the given priority and
+ *         <td>Creates a new event handler params with the given order and
  *         default ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(boolean)}</td>
- *         <td>Creates a new event handler params with the default priority and
+ *         <td>Creates a new event handler params with the default order and
  *         ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(EventOrder, boolean)}</td>
- *         <td>Creates a new event handler params with the given priority and
+ *         <td>Creates a new event handler params with the given order and
  *         ignore cancelled state</td>
  *     </tr>
  * </table>
@@ -50,27 +51,28 @@ import javax.annotation.concurrent.Immutable;
  */
 @SuppressWarnings("unused")
 @Immutable
-public final class EventHandlerParams implements Comparable<EventHandlerParams> {
-    private static final EventHandlerParams NORMAL = new EventHandlerParams(EventOrder.NORMAL, false);
+public class EventHandlerParams implements Ordered<EventOrder>, Comparable<EventHandlerParams> {
+    private static final EventHandlerParams DEFAULT = new EventHandlerParams(EventOrder.NORMAL, false);
 
-    private final EventOrder priority;
+    private final EventOrder order;
     private final boolean ignoreCancelled;
 
     private EventHandlerParams(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final boolean ignoreCancelled
     ) {
-        this.priority = priority;
+        this.order = order;
         this.ignoreCancelled = ignoreCancelled;
     }
 
     /**
-     * Returns the priority of the event handler
+     * Returns the order of the event handler
      *
-     * @return The priority of the event handler
+     * @return The order of the event handler
      */
-    public @NotNull EventOrder getPriority() {
-        return this.priority;
+    @Override
+    public final @NotNull EventOrder getOrder() {
+        return this.order;
     }
 
     /**
@@ -78,26 +80,17 @@ public final class EventHandlerParams implements Comparable<EventHandlerParams> 
      *
      * @return Whether the event handler should ignore cancelled events
      */
-    public boolean isIgnoringCancelled() {
+    public final boolean isIgnoringCancelled() {
         return this.ignoreCancelled;
     }
 
-    /**
-     * Compares this event handler params with the specified event handler
-     * params for order.
-     * <p>
-     * Returns a negative integer, zero, or a positive integer as this event
-     * handler params is less than, equal to, or greater than the specified
-     * event handler params.
-     *
-     * @param that The event handler params to be compared
-     * @return A negative integer, zero, or a positive integer as this event
-     *         handler params is less than, equal to, or greater than the
-     *         specified event handler params
-     */
     @Override
-    public int compareTo(final @NotNull EventHandlerParams that) {
-        return this.priority.compareTo(that.priority);
+    public int compareTo(final @NotNull EventHandlerParams other) {
+        int result = this.compareByOrder(other);
+
+        return result == 0
+                ? Boolean.compare(other.ignoreCancelled, this.ignoreCancelled)
+                : result;
     }
 
     /**
@@ -110,7 +103,7 @@ public final class EventHandlerParams implements Comparable<EventHandlerParams> 
         final int prime = 31;
         int result = 1;
 
-        result = prime * result + this.priority.hashCode();
+        result = prime * result + this.order.hashCode();
         result = prime * result + Boolean.hashCode(this.ignoreCancelled);
 
         return result;
@@ -129,7 +122,7 @@ public final class EventHandlerParams implements Comparable<EventHandlerParams> 
         return this == obj
                 || (
                         obj instanceof EventHandlerParams that
-                        && this.priority == that.priority
+                        && this.order == that.order
                         && this.ignoreCancelled == that.ignoreCancelled
                 );
     }
@@ -142,7 +135,7 @@ public final class EventHandlerParams implements Comparable<EventHandlerParams> 
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{'
-                + "priority=" + this.priority
+                + "order=" + this.order
                 + ", ignoreCancelled=" + this.ignoreCancelled
                 + '}';
     }
@@ -151,79 +144,79 @@ public final class EventHandlerParams implements Comparable<EventHandlerParams> 
      * Returns the default event handler params.
      * <p>
      * <ul>
-     *     <li>Priority: {@link EventOrder#NORMAL}</li>
+     *     <li>Order: {@link EventOrder#NORMAL}</li>
      *     <li>Ignore Cancelled: {@code false}</li>
      * </ul>
      *
      * @return The default event handler params
      */
-    public static @NotNull EventHandlerParams normal() {
-        return NORMAL;
+    public static @NotNull EventHandlerParams defaultParams() {
+        return DEFAULT;
     }
 
     /**
-     * Creates a new event handler params with the given handler's priority and
+     * Creates a new event handler params with the given handler's order and
      * ignore cancelled state
      *
      * @param handler The event handler
-     * @return A new event handler params with the given handler's priority and
+     * @return A new event handler params with the given handler's order and
      *         ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
     public static @NotNull EventHandlerParams of(final @NotNull EventHandler handler) {
-        return of(handler.priority(), handler.ignoreCancelled());
+        return of(handler.order(), handler.ignoreCancelled());
     }
 
     /**
-     * Creates a new event handler params with the given priority and default
+     * Creates a new event handler params with the given order and default
      * ignore cancelled state.
      * <p>
      * The default ignore cancelled state retrieved from the
-     * {@link #normal() default params}.
+     * {@link #defaultParams() default params}.
      *
-     * @param priority The priority of the event handler
-     * @return A new event handler params with the given priority and default
+     * @param order The order of the event handler
+     * @return A new event handler params with the given order and default
      *         ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
-    public static @NotNull EventHandlerParams of(final @NotNull EventOrder priority) {
-        return of(priority, NORMAL.isIgnoringCancelled());
+    public static @NotNull EventHandlerParams of(final @NotNull EventOrder order) {
+        return of(order, DEFAULT.isIgnoringCancelled());
     }
 
     /**
-     * Creates a new event handler params with the default priority and ignore
+     * Creates a new event handler params with the default order and ignore
      * cancelled state.
      * <p>
-     * The default priority retrieved from the {@link #normal() default params}.
+     * The default order retrieved from the {@link #defaultParams() default params}.
      *
      * @param ignoreCancelled Whether the event handler should ignore cancelled
      *                        events
-     * @return A new event handler params with the default priority and ignore
+     * @return A new event handler params with the default order and ignore
      *         cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
     public static @NotNull EventHandlerParams of(final boolean ignoreCancelled) {
-        return of(NORMAL.getPriority(), ignoreCancelled);
+        return of(DEFAULT.getOrder(), ignoreCancelled);
     }
 
     /**
-     * Creates a new event handler params with the given priority and ignore
+     * Creates a new event handler params with the given order and ignore
      * cancelled state
      *
-     * @param priority        The priority of the event handler
+     * @param order           The order of the event handler
      * @param ignoreCancelled Whether the event handler should ignore cancelled
      *                        events
-     * @return A new event handler params with the given priority and ignore
+     * @return A new event handler params with the given order and ignore
      *         cancelled state
      */
     @Contract("_, _ -> new")
     public static @NotNull EventHandlerParams of(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final boolean ignoreCancelled
     ) {
-        return new EventHandlerParams(priority, ignoreCancelled);
+        return new EventHandlerParams(order, ignoreCancelled);
     }
 }

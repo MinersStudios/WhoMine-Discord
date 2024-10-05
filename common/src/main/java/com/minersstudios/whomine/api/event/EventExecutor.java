@@ -1,10 +1,12 @@
 package com.minersstudios.whomine.api.event;
 
 import com.minersstudios.whomine.api.executor.Executor;
+import com.minersstudios.whomine.api.order.Ordered;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import javax.annotation.concurrent.Immutable;
 import java.lang.reflect.Method;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,7 +23,8 @@ import java.util.logging.Logger;
  *
  * @see EventContainer
  */
-public class EventExecutor implements Executor<EventContainer<?, ?>>, Comparable<EventExecutor> {
+@Immutable
+public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<EventOrder> {
     private static final Logger LOGGER = Logger.getLogger(EventExecutor.class.getSimpleName());
 
     private final Method method;
@@ -59,10 +62,26 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Comparable
         return this.params;
     }
 
+    /**
+     * Returns the order of the event
+     *
+     * @return The order of the event
+     */
+    @Override
+    public @NotNull EventOrder getOrder() {
+        return this.getParams().getOrder();
+    }
+
+    /**
+     * @deprecated Use {@link #execute(EventListener, EventContainer)} instead
+     */
     @Contract("_ -> fail")
+    @Deprecated
     @Override
     public void execute(final @NotNull EventContainer<?, ?> ignored) throws UnsupportedOperationException {
-        throw new UnsupportedOperationException("Use " + this.getClass().getSimpleName() + "#execute(EventListener, EventContainer)");
+        throw new UnsupportedOperationException(
+                "Use " + this.getClass().getSimpleName() + "#execute(EventListener, EventContainer)"
+        );
     }
 
     /**
@@ -84,11 +103,6 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Comparable
                     e
             );
         }
-    }
-
-    @Override
-    public int compareTo(final @NotNull EventExecutor that) {
-        return this.params.compareTo(that.params);
     }
 
     /**
@@ -138,13 +152,28 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Comparable
     }
 
     /**
-     * Creates a dummy event executor
+     * Creates an event executor
+     *
+     * @param method  The method to execute
+     * @param handler The handler of the event executor
+     * @return An event executor
+     * @see #of(Method, EventHandlerParams)
+     */
+    public static @NotNull EventExecutor of(
+            final @NotNull Method method,
+            final @NotNull EventHandler handler
+    ) {
+        return of(method, EventHandlerParams.of(handler));
+    }
+
+    /**
+     * Creates an event executor
      *
      * @param method The method to execute
      * @param params The parameters of the event handler
-     * @return A dummy event executor
+     * @return An event executor
      */
-    public static @NotNull EventExecutor dummy(
+    public static @NotNull EventExecutor of(
             final @NotNull Method method,
             final @NotNull EventHandlerParams params
     ) {

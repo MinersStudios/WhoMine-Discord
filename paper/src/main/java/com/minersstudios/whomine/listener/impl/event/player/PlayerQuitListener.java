@@ -11,7 +11,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerQuitEvent.class)
+@ListenFor(PlayerQuitEvent.class)
 public final class PlayerQuitListener extends PaperEventListener {
 
     @EventHandler

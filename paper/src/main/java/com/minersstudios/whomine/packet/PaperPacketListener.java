@@ -46,7 +46,7 @@ public abstract class PaperPacketListener extends PacketListener<PaperPacketCont
      *
      * @param packetType The packet type of the packet listener
      * @throws ListenerException If the listener has duplicate handlers for the
-     *                           same priority
+     *                           same order
      */
     protected PaperPacketListener(final @NotNull PacketType packetType) throws ListenerException {
         super(packetType);

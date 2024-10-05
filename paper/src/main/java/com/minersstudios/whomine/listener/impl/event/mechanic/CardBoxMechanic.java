@@ -29,10 +29,10 @@ public final class CardBoxMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = InventoryMoveItemEvent.class)
+    @ListenFor(InventoryMoveItemEvent.class)
     public static final class InventoryMoveItem extends PaperEventListener {
 
-        @EventHandler(priority = EventOrder.CUSTOM)
+        @EventHandler(order = EventOrder.CUSTOM)
         public void onInventoryMoveItem(final @NotNull PaperEventContainer<InventoryMoveItemEvent> container) {
             final InventoryMoveItemEvent event = container.getEvent();
 
@@ -48,10 +48,10 @@ public final class CardBoxMechanic {
         }
     }
 
-    @ListenFor(eventClass = InventoryDragEvent.class)
+    @ListenFor(InventoryDragEvent.class)
     public static final class InventoryDrag extends PaperEventListener {
 
-        @EventHandler(priority = EventOrder.CUSTOM)
+        @EventHandler(order = EventOrder.CUSTOM)
         public void onInventoryDrag(final @NotNull PaperEventContainer<InventoryDragEvent> container) {
             final InventoryDragEvent event = container.getEvent();
 
@@ -65,10 +65,10 @@ public final class CardBoxMechanic {
         }
     }
 
-    @ListenFor(eventClass = InventoryClickEvent.class)
+    @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
-        @EventHandler(priority = EventOrder.CUSTOM)
+        @EventHandler(order = EventOrder.CUSTOM)
         public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
             final InventoryClickEvent event = container.getEvent();
             final ItemStack cursorItem = event.getCursor();

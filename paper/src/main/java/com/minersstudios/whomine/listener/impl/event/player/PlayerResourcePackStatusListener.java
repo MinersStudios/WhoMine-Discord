@@ -10,7 +10,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerResourcePackStatusEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerResourcePackStatusEvent.class)
+@ListenFor(PlayerResourcePackStatusEvent.class)
 public final class PlayerResourcePackStatusListener extends PaperEventListener {
 
     @EventHandler

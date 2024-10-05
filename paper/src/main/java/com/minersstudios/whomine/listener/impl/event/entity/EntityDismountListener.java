@@ -9,7 +9,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityDismountEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = EntityDismountEvent.class)
+@ListenFor(EntityDismountEvent.class)
 public final class EntityDismountListener extends PaperEventListener {
 
     @EventHandler

@@ -11,7 +11,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerTeleportEvent.class)
+@ListenFor(PlayerTeleportEvent.class)
 public final class PlayerTeleportListener extends PaperEventListener {
 
     @EventHandler

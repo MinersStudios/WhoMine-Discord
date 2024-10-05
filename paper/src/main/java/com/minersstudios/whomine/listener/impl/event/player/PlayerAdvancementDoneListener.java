@@ -16,7 +16,7 @@ import java.util.Locale;
 
 import static net.kyori.adventure.text.Component.*;
 
-@ListenFor(eventClass = PlayerAdvancementDoneEvent.class)
+@ListenFor(PlayerAdvancementDoneEvent.class)
 public final class PlayerAdvancementDoneListener extends PaperEventListener {
 
     @EventHandler

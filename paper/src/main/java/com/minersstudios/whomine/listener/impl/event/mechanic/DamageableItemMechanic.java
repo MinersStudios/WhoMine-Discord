@@ -18,7 +18,7 @@ public final class DamageableItemMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = PlayerItemDamageEvent.class)
+    @ListenFor(PlayerItemDamageEvent.class)
     public static final class PlayerItemDamage extends PaperEventListener {
 
         @EventHandler

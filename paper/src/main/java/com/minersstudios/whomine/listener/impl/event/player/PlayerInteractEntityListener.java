@@ -19,11 +19,11 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.SecureRandom;
 
-@ListenFor(eventClass = PlayerInteractEntityEvent.class)
+@ListenFor(PlayerInteractEntityEvent.class)
 public final class PlayerInteractEntityListener extends PaperEventListener {
     private final SecureRandom random = new SecureRandom();
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onPlayerInteractEntity(final @NotNull PaperEventContainer<PlayerInteractEntityEvent> container) {
         final PlayerInteractEntityEvent event = container.getEvent();
         final Player whoClicked = event.getPlayer();

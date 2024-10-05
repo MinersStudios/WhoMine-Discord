@@ -260,19 +260,19 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
 
                 for (final var executor : eventListener.executors()) {
                     final EventHandlerParams params = executor.getParams();
-                    final EventOrder priority = params.getPriority();
+                    final EventOrder order = params.getOrder();
 
                     this.getModule().getServer().getPluginManager().registerEvent(
                             eventClass,
                             eventListener,
-                            ApiConverter.apiToBukkit(priority),
+                            ApiConverter.apiToBukkit(order),
                             (__, event) -> {
                                 if (!eventClass.isAssignableFrom(event.getClass())) {
                                     return;
                                 }
 
                                 eventListener.call(
-                                        priority,
+                                        order,
                                         PaperEventContainer.of(
                                                 this.getModule(),
                                                 event
@@ -362,15 +362,15 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
      * Calls the registered listeners for the given event with the given
      * parameters
      *
-     * @param priority  The event priority
+     * @param order     The event order
      * @param container The event container
      */
     public void call(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final @NotNull PaperEventContainer<? extends Event> container
     ) {
         this.rawCall(
-                priority, container,
+                order, container,
                 () -> this.getEventListeners(container.getEvent())
         );
     }
@@ -389,17 +389,17 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
 
     /**
      * Calls the registered listeners for the given packet with the given
-     * priority
+     * order
      *
-     * @param priority  The event priority
+     * @param order     The event order
      * @param container The packet container
      */
     public void call(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final @NotNull PaperPacketContainer container
     ) {
         this.rawCall(
-                priority, container,
+                order, container,
                 () -> this.getPacketListeners(container.getEvent().getType())
         );
     }
@@ -426,7 +426,7 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
     }
 
     private <C extends EventContainer<?, ?>> void rawCall(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final @NotNull C container,
             final @NotNull Supplier<List<? extends EventListener<?, C>>> supplier
     ) {
@@ -434,7 +434,7 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
 
         if (listeners != null) {
             for (final var listener : listeners) {
-                listener.call(priority, container);
+                listener.call(order, container);
             }
         }
     }

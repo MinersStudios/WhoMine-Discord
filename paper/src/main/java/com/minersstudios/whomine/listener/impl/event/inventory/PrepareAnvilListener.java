@@ -18,7 +18,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PrepareAnvilEvent.class)
+@ListenFor(PrepareAnvilEvent.class)
 public final class PrepareAnvilListener extends PaperEventListener {
 
     @EventHandler

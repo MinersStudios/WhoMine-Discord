@@ -12,7 +12,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.minersstudios.whomine.api.locale.Translations.*;
 
-@ListenFor(eventClass = PlayerKickEvent.class)
+@ListenFor(PlayerKickEvent.class)
 public class PlayerKickListener extends PaperEventListener {
     private static final TranslatableComponent SERVER_RESTARTING =
             FORMAT_LEAVE_MESSAGE.asTranslatable()

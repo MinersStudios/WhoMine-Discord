@@ -21,10 +21,10 @@ import static com.minersstudios.whomine.api.locale.Translations.COMMAND_MUTE_ALR
 import static com.minersstudios.whomine.api.locale.Translations.WARNING_YOU_CANT_DO_THIS_NOW;
 import static net.kyori.adventure.text.Component.text;
 
-@ListenFor(eventClass = AsyncChatEvent.class)
+@ListenFor(AsyncChatEvent.class)
 public final class AsyncChatListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.LOW, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.LOW, ignoreCancelled = true)
     public void onAsyncChat(final @NotNull PaperEventContainer<AsyncChatEvent> container) {
         final AsyncChatEvent event = container.getEvent();
         final WhoMine module = container.getModule();

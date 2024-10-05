@@ -1,7 +1,10 @@
 package com.minersstudios.whomine.api.event;
 
+import com.minersstudios.whomine.api.order.Order;
+import com.minersstudios.whomine.api.order.Ordered;
+
 /**
- * This enum represents the priority of an event.
+ * This enum represents the order.
  * <p>
  * <b>Handling occurs in the following order :</b>
  * <ol>
@@ -13,33 +16,13 @@ package com.minersstudios.whomine.api.event;
  *     <li>{@link #CUSTOM}</li>
  * </ol>
  *
- * @see EventHandler
+ * @see Ordered
  */
-public enum EventOrder {
-    LOWEST(0),
-    LOW(1),
-    NORMAL(2),
-    HIGH(3),
-    HIGHEST(4),
-    CUSTOM(5);
+public enum EventOrder implements Order<EventOrder> {
+    LOWEST, LOW, NORMAL, HIGH, HIGHEST, CUSTOM;
 
-    private final short order;
-
-    /**
-     * Event order constructor
-     *
-     * @param order The order of the event
-     */
-    EventOrder(final int order) {
-        this.order = (short) order;
-    }
-
-    /**
-     * Returns the order of the event
-     *
-     * @return The order of the event
-     */
-    public int getOrder() {
-        return order;
+    @Override
+    public int asNumber() {
+        return this.ordinal();
     }
 }

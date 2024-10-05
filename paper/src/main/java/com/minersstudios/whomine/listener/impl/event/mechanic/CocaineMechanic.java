@@ -18,7 +18,7 @@ public final class CocaineMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = PlayerItemConsumeEvent.class)
+    @ListenFor(PlayerItemConsumeEvent.class)
     public static final class PlayerItemConsume extends PaperEventListener {
 
         @EventHandler

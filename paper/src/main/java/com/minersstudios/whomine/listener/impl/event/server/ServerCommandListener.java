@@ -7,7 +7,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = ServerCommandEvent.class)
+@ListenFor(ServerCommandEvent.class)
 public final class ServerCommandListener extends PaperEventListener {
 
     @EventHandler

@@ -10,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import static com.minersstudios.whomine.api.locale.Translations.ERROR_UNKNOWN_COMMAND;
 
-@ListenFor(eventClass = UnknownCommandEvent.class)
+@ListenFor(UnknownCommandEvent.class)
 public class UnknownCommandListener extends PaperEventListener {
 
     @EventHandler

@@ -50,7 +50,7 @@ public abstract class PaperEventListener
      * @throws ClassCastException If the event class is not a subclass of
      *                            annotated event class
      * @throws ListenerException  If the listener has duplicate event handlers
-     *                            for the same priority, or if the listener does
+     *                            for the same order, or if the listener does
      *                            not have a {@link ListenFor} annotation
      */
     protected PaperEventListener() throws ClassCastException, ListenerException {
@@ -65,7 +65,7 @@ public abstract class PaperEventListener
      *
      * @param key The key of the event listener
      * @throws ListenerException If the listener has duplicate event handlers
-     *                           for the same priority
+     *                           for the same order
      */
     protected PaperEventListener(final @NotNull Class<? extends Event> key) throws ListenerException {
         super(key);

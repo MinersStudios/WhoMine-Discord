@@ -7,7 +7,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerDropItemEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerDropItemEvent.class)
+@ListenFor(PlayerDropItemEvent.class)
 public final class PlayerDropItemListener extends PaperEventListener {
 
     @EventHandler(ignoreCancelled = true)

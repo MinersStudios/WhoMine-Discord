@@ -48,7 +48,7 @@ public abstract class PacketListener<C extends PacketContainer<?, ?>>
      *
      * @param packetType The packet type of the packet listener
      * @throws ListenerException If the listener has duplicate handlers for the
-     *                           same priority
+     *                           same order
      */
     protected PacketListener(final @NotNull PacketType packetType) throws ListenerException {
         super(packetType);

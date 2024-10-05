@@ -13,11 +13,11 @@ import java.util.function.Function;
 abstract class ImplStatus implements Status {
 
     private final String key;
-    private final Status.Priority priority;
+    private final StatusPriority priority;
 
     protected ImplStatus(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority
+            final @NotNull StatusPriority priority
     ) {
         this.key = key;
         this.priority = priority;
@@ -30,18 +30,18 @@ abstract class ImplStatus implements Status {
     }
 
     @Override
-    public final @NotNull Priority getPriority() {
+    public final @NotNull StatusPriority getPriority() {
         return this.priority;
     }
 
     @Override
     public final boolean isHighPriority() {
-        return this.priority == Priority.HIGH;
+        return this.priority == StatusPriority.HIGH;
     }
 
     @Override
     public final boolean isLowPriority() {
-        return this.priority == Priority.LOW;
+        return this.priority == StatusPriority.LOW;
     }
 
     @Override

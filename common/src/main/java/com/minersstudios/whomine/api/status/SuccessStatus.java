@@ -16,8 +16,8 @@ import java.util.function.Function;
  * <br>
  * Factory methods for creating a successful status:
  * <ul>
- *     <li>{@link #success(String, Priority)}</li>
- *     <li>{@link #success(String, Priority, FailureStatus)}</li>
+ *     <li>{@link #success(String, StatusPriority)}</li>
+ *     <li>{@link #success(String, StatusPriority, FailureStatus)}</li>
  *     <li>{@link #successLow(String)}
  *     <li>{@link #successLow(String, FailureStatus)}</li>
  *     <li>{@link #successHigh(String)}</li>
@@ -34,7 +34,7 @@ public class SuccessStatus extends ImplStatus {
 
     protected SuccessStatus(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority,
+            final @NotNull StatusPriority priority,
             final @Nullable FailureStatus failureStatus
     ) {
         super(key, priority);

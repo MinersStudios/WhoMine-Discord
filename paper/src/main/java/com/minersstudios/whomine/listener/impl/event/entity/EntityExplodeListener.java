@@ -11,7 +11,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = EntityExplodeEvent.class)
+@ListenFor(EntityExplodeEvent.class)
 public final class EntityExplodeListener extends PaperEventListener {
 
     @EventHandler

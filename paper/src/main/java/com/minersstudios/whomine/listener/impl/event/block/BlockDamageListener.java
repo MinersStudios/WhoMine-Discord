@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockDamageEvent.class)
+@ListenFor(BlockDamageEvent.class)
 public final class BlockDamageListener extends PaperEventListener {
 
     @EventHandler

@@ -38,7 +38,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockBreakEvent.class)
+@ListenFor(BlockBreakEvent.class)
 public final class BlockBreakListener extends PaperEventListener {
 
     @EventHandler

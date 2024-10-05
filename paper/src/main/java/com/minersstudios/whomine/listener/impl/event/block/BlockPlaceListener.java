@@ -17,10 +17,10 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockPlaceEvent.class)
+@ListenFor(BlockPlaceEvent.class)
 public final class BlockPlaceListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.CUSTOM)
+    @EventHandler(order = EventOrder.CUSTOM)
     public void onBlockPlace(final @NotNull PaperEventContainer<BlockPlaceEvent> container) {
         final BlockPlaceEvent event = container.getEvent();
         final Player player = event.getPlayer();

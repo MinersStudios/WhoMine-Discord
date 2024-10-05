@@ -7,7 +7,7 @@ import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerStopSpectatingEntityEvent.class)
+@ListenFor(PlayerStopSpectatingEntityEvent.class)
 public final class PlayerStopSpectatingEntityListener extends PaperEventListener {
 
     @EventHandler

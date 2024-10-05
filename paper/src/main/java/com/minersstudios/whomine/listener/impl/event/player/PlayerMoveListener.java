@@ -15,7 +15,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerMoveEvent.class)
+@ListenFor(PlayerMoveEvent.class)
 public final class PlayerMoveListener extends PaperEventListener {
 
     @EventHandler

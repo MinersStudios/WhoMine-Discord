@@ -12,10 +12,10 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerBucketEmptyEvent.class)
+@ListenFor(PlayerBucketEmptyEvent.class)
 public final class PlayerBucketEmptyListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onPlayerBucketEmpty(final @NotNull PaperEventContainer<PlayerBucketEmptyEvent> container) {
         final PlayerBucketEmptyEvent event = container.getEvent();
         final Block block = event.getBlock();

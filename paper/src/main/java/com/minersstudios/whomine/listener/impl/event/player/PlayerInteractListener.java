@@ -49,7 +49,7 @@ import java.util.EnumSet;
 import java.util.Set;
 import java.util.UUID;
 
-@ListenFor(eventClass = PlayerInteractEvent.class)
+@ListenFor(PlayerInteractEvent.class)
 public final class PlayerInteractListener extends PaperEventListener {
     private static final BlockFace[] FACES = { BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST };
     private static final Set<Material> IGNORABLE_MATERIALS = EnumSet.of(
@@ -268,7 +268,7 @@ public final class PlayerInteractListener extends PaperEventListener {
         }
     }
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
         final PlayerInteractEvent event = container.getEvent();
         final Block clickedBlock = event.getClickedBlock();

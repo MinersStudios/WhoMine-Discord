@@ -10,7 +10,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerCommandPreprocessEvent.class)
+@ListenFor(PlayerCommandPreprocessEvent.class)
 public final class PlayerCommandPreprocessListener extends PaperEventListener {
 
     @EventHandler

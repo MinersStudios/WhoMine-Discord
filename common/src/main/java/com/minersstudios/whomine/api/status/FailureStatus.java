@@ -14,7 +14,7 @@ import java.util.function.Function;
  * <br>
  * Factory methods for creating a failure status:
  * <ul>
- *     <li>{@link #failure(String, Priority)}</li>
+ *     <li>{@link #failure(String, StatusPriority)}</li>
  *     <li>{@link #failureLow(String)}</li>
  *     <li>{@link #failureHigh(String)}</li>
  * </ul>
@@ -27,7 +27,7 @@ public class FailureStatus extends ImplStatus {
 
     protected FailureStatus(
             final @StatusKey @NotNull String key,
-            final @NotNull Priority priority
+            final @NotNull StatusPriority priority
     ) {
         super(key, priority);
     }

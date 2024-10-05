@@ -23,7 +23,7 @@ public final class PoopMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = PlayerInteractEvent.class)
+    @ListenFor(PlayerInteractEvent.class)
     public static final class PlayerInteract extends PaperEventListener {
 
         @EventHandler

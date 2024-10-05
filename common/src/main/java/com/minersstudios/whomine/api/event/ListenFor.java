@@ -10,6 +10,7 @@ import java.lang.annotation.*;
  * @see EventListener
  */
 @Documented
+@Inherited
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface ListenFor {
@@ -19,5 +20,5 @@ public @interface ListenFor {
      *
      * @return The class of the event that the listener listens for
      */
-    @NotNull Class<?> eventClass();
+    @NotNull Class<?> value();
 }

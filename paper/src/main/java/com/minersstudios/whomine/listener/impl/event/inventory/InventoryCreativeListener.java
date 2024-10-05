@@ -15,10 +15,10 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = InventoryCreativeEvent.class)
+@ListenFor(InventoryCreativeEvent.class)
 public final class InventoryCreativeListener extends PaperEventListener {
 
-    @EventHandler(priority = EventOrder.CUSTOM)
+    @EventHandler(order = EventOrder.CUSTOM)
     public void onInventoryCreative(final @NotNull PaperEventContainer<InventoryCreativeEvent> container) {
         final InventoryCreativeEvent event = container.getEvent();
 

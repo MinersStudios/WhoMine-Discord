@@ -7,7 +7,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerGameModeChangeEvent.class)
+@ListenFor(PlayerGameModeChangeEvent.class)
 public final class PlayerGameModeChangeListener extends PaperEventListener {
 
     @EventHandler

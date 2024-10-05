@@ -37,7 +37,7 @@ public final class DosimeterMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = PlayerSwapHandItemsEvent.class)
+    @ListenFor(PlayerSwapHandItemsEvent.class)
     public static final class PlayerSwapHandItems extends PaperEventListener {
 
         @EventHandler
@@ -58,7 +58,7 @@ public final class DosimeterMechanic {
         }
     }
 
-    @ListenFor(eventClass = PlayerItemHeldEvent.class)
+    @ListenFor(PlayerItemHeldEvent.class)
     public static final class PlayerItemHeld extends PaperEventListener {
 
         @EventHandler
@@ -84,7 +84,7 @@ public final class DosimeterMechanic {
         }
     }
 
-    @ListenFor(eventClass = InventoryClickEvent.class)
+    @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
         @EventHandler
@@ -144,7 +144,7 @@ public final class DosimeterMechanic {
         }
     }
 
-    @ListenFor(eventClass = PlayerDropItemEvent.class)
+    @ListenFor(PlayerDropItemEvent.class)
     public static final class PlayerDropItem extends PaperEventListener {
 
         @EventHandler
@@ -174,7 +174,7 @@ public final class DosimeterMechanic {
         }
     }
 
-    @ListenFor(eventClass = PlayerQuitEvent.class)
+    @ListenFor(PlayerQuitEvent.class)
     public static final class PlayerQuit extends PaperEventListener {
 
         @EventHandler
@@ -197,7 +197,7 @@ public final class DosimeterMechanic {
         }
     }
 
-    @ListenFor(eventClass = PlayerInteractEvent.class)
+    @ListenFor(PlayerInteractEvent.class)
     public static final class PlayerInteract extends PaperEventListener {
 
         @EventHandler

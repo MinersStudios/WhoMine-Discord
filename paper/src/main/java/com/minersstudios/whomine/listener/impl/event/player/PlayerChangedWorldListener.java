@@ -8,7 +8,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerChangedWorldEvent.class)
+@ListenFor(PlayerChangedWorldEvent.class)
 public final class PlayerChangedWorldListener extends PaperEventListener {
 
     @EventHandler

@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockDropItemEvent.class)
+@ListenFor(BlockDropItemEvent.class)
 public final class BlockDropItemListener extends PaperEventListener {
 
     @EventHandler

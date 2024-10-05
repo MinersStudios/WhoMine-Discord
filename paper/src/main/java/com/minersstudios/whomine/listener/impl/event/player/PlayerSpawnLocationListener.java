@@ -7,7 +7,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 import org.spigotmc.event.player.PlayerSpawnLocationEvent;
 
-@ListenFor(eventClass = PlayerSpawnLocationEvent.class)
+@ListenFor(PlayerSpawnLocationEvent.class)
 public final class PlayerSpawnLocationListener extends PaperEventListener {
 
     @EventHandler

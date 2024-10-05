@@ -9,7 +9,7 @@ import org.bukkit.entity.ItemFrame;
 import org.bukkit.event.hanging.HangingBreakByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = HangingBreakByEntityEvent.class)
+@ListenFor(HangingBreakByEntityEvent.class)
 public final class HangingBreakByEntityListener extends PaperEventListener {
 
     @EventHandler

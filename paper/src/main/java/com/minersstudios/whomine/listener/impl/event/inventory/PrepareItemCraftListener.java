@@ -13,7 +13,7 @@ import org.bukkit.inventory.ShapedRecipe;
 import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("deprecation")
-@ListenFor(eventClass = PrepareItemCraftEvent.class)
+@ListenFor(PrepareItemCraftEvent.class)
 public final class PrepareItemCraftListener extends PaperEventListener {
 
     @EventHandler

@@ -10,7 +10,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerInteractAtEntityEvent.class)
+@ListenFor(PlayerInteractAtEntityEvent.class)
 public final class PlayerInteractAtEntityListener extends PaperEventListener {
 
     @EventHandler

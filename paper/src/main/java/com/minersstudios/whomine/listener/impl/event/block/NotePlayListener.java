@@ -11,12 +11,12 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.block.NotePlayEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = NotePlayEvent.class)
+@ListenFor(NotePlayEvent.class)
 public final class NotePlayListener extends PaperEventListener {
     private static final Instrument DEFAULT_INSTRUMENT = NoteBlockData.defaultData().instrument();
     private static final Note DEFAULT_NOTE = NoteBlockData.defaultData().note();
 
-    @EventHandler(priority = EventOrder.CUSTOM, ignoreCancelled = true)
+    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onNotePlay(final @NotNull PaperEventContainer<NotePlayEvent> container) {
         final NotePlayEvent event = container.getEvent();
 

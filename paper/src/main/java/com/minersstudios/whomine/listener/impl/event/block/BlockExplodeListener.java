@@ -12,7 +12,7 @@ import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.event.block.BlockExplodeEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = BlockExplodeEvent.class)
+@ListenFor(BlockExplodeEvent.class)
 public final class BlockExplodeListener extends PaperEventListener {
 
     @EventHandler

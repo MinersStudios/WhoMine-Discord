@@ -21,10 +21,10 @@ public final class BanSwordMechanic {
         throw new AssertionError("Parent class");
     }
 
-    @ListenFor(eventClass = EntityDamageByEntityEvent.class)
+    @ListenFor(EntityDamageByEntityEvent.class)
     public static final class EntityDamageByEntity extends PaperEventListener {
 
-        @EventHandler(priority = EventOrder.CUSTOM)
+        @EventHandler(order = EventOrder.CUSTOM)
         public void onEntityDamageByEntity(final @NotNull PaperEventContainer<EntityDamageByEntityEvent> container) {
             final EntityDamageByEntityEvent event = container.getEvent();
 
@@ -44,10 +44,10 @@ public final class BanSwordMechanic {
         }
     }
 
-    @ListenFor(eventClass = InventoryClickEvent.class)
+    @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
-        @EventHandler(priority = EventOrder.CUSTOM)
+        @EventHandler(order = EventOrder.CUSTOM)
         public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
             final InventoryClickEvent event = container.getEvent();
             final ItemStack currentItem = event.getCurrentItem();

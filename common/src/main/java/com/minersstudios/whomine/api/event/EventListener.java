@@ -62,12 +62,12 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      * @throws ClassCastException If the event class is not a subclass of
      *                            annotated event class
      * @throws ListenerException  If the listener has duplicate event handlers
-     *                            for the same priority, or if the listener does
+     *                            for the same order, or if the listener does
      *                            not have a {@link ListenFor} annotation
      */
     @SuppressWarnings("unchecked")
     protected EventListener() throws ClassCastException, ListenerException {
-        this.key = (K) this.getListenFor().eventClass();
+        this.key = (K) this.getListenFor().value();
         this.executorMap = this.retrieveExecutors();
     }
 
@@ -79,7 +79,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      *
      * @param key The key of the event listener
      * @throws ListenerException If the listener has duplicate event handlers
-     *                           for the same priority
+     *                           for the same order
      */
     protected EventListener(final @NotNull K key) throws ListenerException {
         this.key = key;
@@ -126,13 +126,13 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
     }
 
     /**
-     * Returns whether the event listener contains the specified priority
+     * Returns whether the event listener contains the specified order
      *
-     * @param priority The event priority
-     * @return True if the event listener contains the specified priority
+     * @param order The event order
+     * @return True if the event listener contains the specified order
      */
-    public boolean containsPriority(final @NotNull EventOrder priority) {
-        return this.executorMap.containsKey(priority);
+    public boolean containsOrder(final @NotNull EventOrder order) {
+        return this.executorMap.containsKey(order);
     }
 
     /**
@@ -194,16 +194,16 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
     }
 
     /**
-     * Calls the event executor with the specified event container and priority
+     * Calls the event executor with the specified event container and order
      *
-     * @param priority  The event order priority
+     * @param order     The event order
      * @param container The event container
      */
     public void call(
-            final @NotNull EventOrder priority,
+            final @NotNull EventOrder order,
             final @NotNull C container
     ) {
-        final EventExecutor executor = this.executorMap.get(priority);
+        final EventExecutor executor = this.executorMap.get(order);
 
         if (
                 executor != null
@@ -236,18 +236,18 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
                 continue;
             }
 
-            final EventHandler annotation = method.getAnnotation(EventHandler.class);
+            final EventHandler handler = method.getAnnotation(EventHandler.class);
 
-            if (annotation != null) {
-                final EventOrder order = annotation.priority();
+            if (handler != null) {
+                final EventOrder order = handler.order();
 
                 if (map.containsKey(order)) {
-                    throw new ListenerException("Duplicate event handler for " + order + " priority in " + this);
+                    throw new ListenerException("Duplicate event handler for " + order + " order in " + this);
                 }
 
                 map.put(
                         order,
-                        EventExecutor.dummy(method, EventHandlerParams.of(annotation))
+                        EventExecutor.of(method, handler)
                 );
             }
         }

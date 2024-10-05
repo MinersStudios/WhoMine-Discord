@@ -16,7 +16,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = EntityDamageByEntityEvent.class)
+@ListenFor(EntityDamageByEntityEvent.class)
 public final class EntityDamageByEntityListener extends PaperEventListener {
 
     @EventHandler
@@ -30,7 +30,7 @@ public final class EntityDamageByEntityListener extends PaperEventListener {
         }
     }
 
-    @EventHandler(priority = EventOrder.CUSTOM)
+    @EventHandler(order = EventOrder.CUSTOM)
     public void onEntityDamageByEntityCustom(final @NotNull PaperEventContainer<EntityDamageByEntityEvent> container) {
         final EntityDamageByEntityEvent event = container.getEvent();
 

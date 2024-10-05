@@ -9,9 +9,9 @@ import java.lang.annotation.*;
  * <p>
  * <b>It contains :</b>
  * <ul>
- *     <li>The priority of the event</li>
+ *     <li>The order of the event</li>
  *     <li>
- *         Whether to ignore an event call if it is canceled by a lower priority
+ *         Whether to ignore an event call if it is canceled by a lower order
  *         event in this or another event listener
  *     </li>
  * </ul>
@@ -25,7 +25,7 @@ import java.lang.annotation.*;
 public @interface EventHandler {
 
     /**
-     * Returns the priority of the event.
+     * Returns the order of the event.
      * <p>
      * <b>Handling occurs in the following order :</b>
      * <ol>
@@ -37,15 +37,15 @@ public @interface EventHandler {
      *     <li>{@link EventOrder#CUSTOM}</li>
      * </ol>
      *
-     * @return The priority of the event
+     * @return The order of the event
      */
-    @NotNull EventOrder priority() default EventOrder.NORMAL;
+    @NotNull EventOrder order() default EventOrder.NORMAL;
 
     /**
      * Returns whether to ignore an event call if it is canceled.
      * <p>
      * If set to {@code true}, the event call will be ignored if it is canceled
-     * by a lower priority event in this or another event listener.
+     * by a lower order event in this or another event listener.
      *
      * @return Whether to ignore an event call if it is canceled
      */

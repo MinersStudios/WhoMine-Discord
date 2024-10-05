@@ -12,7 +12,7 @@ import com.minersstudios.whomine.api.event.EventHandler;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.jetbrains.annotations.NotNull;
 
-@ListenFor(eventClass = PlayerDeathEvent.class)
+@ListenFor(PlayerDeathEvent.class)
 public final class PlayerDeathListener extends PaperEventListener {
 
     @EventHandler
