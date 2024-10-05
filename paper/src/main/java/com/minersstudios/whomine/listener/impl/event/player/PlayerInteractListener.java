@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
@@ -34,7 +34,7 @@ import org.bukkit.craftbukkit.block.CraftBlock;
 import org.bukkit.craftbukkit.entity.CraftPlayer;
 import org.bukkit.craftbukkit.inventory.CraftItemStack;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -144,7 +144,7 @@ public final class PlayerInteractListener extends PaperEventListener {
     );
     private static final Set<UUID> HAND_HANDLER = new ObjectOpenHashSet<>();
 
-    @EventHandler(ignoreCancelled = true)
+    @CancellableHandler(ignoreCancelled = true)
     public void onDecorPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
         final PlayerInteractEvent event = container.getEvent();
         final Block block = event.getClickedBlock();
@@ -268,7 +268,7 @@ public final class PlayerInteractListener extends PaperEventListener {
         }
     }
 
-    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
+    @CancellableHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
         final PlayerInteractEvent event = container.getEvent();
         final Block clickedBlock = event.getClickedBlock();

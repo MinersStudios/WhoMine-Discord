@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
-import com.minersstudios.whomine.api.event.EventHandler;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(BlockDamageEvent.class)
 public final class BlockDamageListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onBlockDamage(final @NotNull PaperEventContainer<BlockDamageEvent> container) {
         final BlockDamageEvent event = container.getEvent();
 

@@ -1,5 +1,6 @@
-package com.minersstudios.whomine.api.event;
+package com.minersstudios.whomine.api.listener;
 
+import com.minersstudios.whomine.api.event.EventListener;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.*;

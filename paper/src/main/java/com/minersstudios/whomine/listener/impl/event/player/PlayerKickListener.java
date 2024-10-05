@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,7 +22,7 @@ public class PlayerKickListener extends PaperEventListener {
             )
             .color(NamedTextColor.DARK_GRAY);
 
-    @EventHandler
+    @CancellableHandler
     public void onPlayerKick(final @NotNull PaperEventContainer<PlayerKickEvent> container) {
         final PlayerKickEvent event = container.getEvent();
 

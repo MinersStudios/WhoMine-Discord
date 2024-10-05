@@ -4,6 +4,8 @@ import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.api.status.StatusWatcher;
+import com.minersstudios.whomine.event.PaperEventContainer;
+import com.minersstudios.whomine.event.PaperEventListener;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.CommandNode;
@@ -12,7 +14,7 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,6 +29,7 @@ import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 /**
  * API for registering commands with Mojang's Brigadier command system
  */
+@SuppressWarnings("UnstableApiUsage")
 public final class Commodore {
     public final List<Command> commands;
     private final String pluginName;
@@ -77,11 +80,12 @@ public final class Commodore {
                 StatusWatcher.builder()
                 .statuses(MainModule.ENABLED)
                 .successRunnable(
-                        () -> plugin.getServer().getPluginManager().registerEvents(new Listener() {
+                        () -> plugin.getListenerManager().register(new PaperEventListener(AsyncPlayerSendCommandsEvent.class) {
 
-                            @SuppressWarnings("UnstableApiUsage")
-                            @EventHandler
-                            public void onPlayerSendCommandsEvent(final @NotNull AsyncPlayerSendCommandsEvent<?> event) {
+                            @CancellableHandler
+                            public void onPlayerSendCommandsEvent(final @NotNull PaperEventContainer<AsyncPlayerSendCommandsEvent<?>> container) {
+                                final var event = container.getEvent();
+
                                 if (
                                         event.isAsynchronous()
                                         || !event.hasFiredAsync()
@@ -94,7 +98,7 @@ public final class Commodore {
                                     }
                                 }
                             }
-                        }, plugin)
+                        })
                 )
                 .build()
         );

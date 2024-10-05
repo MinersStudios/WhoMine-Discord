@@ -36,6 +36,7 @@ import static net.kyori.adventure.text.format.NamedTextColor.*;
  *     <li>{@link Level#FINE} - Green</li>
  * </ul>
  */
+@SuppressWarnings("unused")
 public final class MSLogger {
     private static final Logger LOGGER = Logger.getLogger(WhoMine.class.getSimpleName());
 

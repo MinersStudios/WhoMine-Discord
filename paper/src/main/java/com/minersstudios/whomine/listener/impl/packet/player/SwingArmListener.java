@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import com.minersstudios.whomine.api.packet.registry.PlayPackets;
 import com.minersstudios.whomine.packet.PaperPacketContainer;
 import com.minersstudios.whomine.packet.PaperPacketListener;
@@ -21,7 +21,7 @@ public final class SwingArmListener extends PaperPacketListener {
         super(PlayPackets.SERVER_SWING_ARM);
     }
 
-    @EventHandler
+    @CancellableHandler
     public void onEvent(final @NotNull PaperPacketContainer container) {
         final WhoMine module = container.getModule();
 

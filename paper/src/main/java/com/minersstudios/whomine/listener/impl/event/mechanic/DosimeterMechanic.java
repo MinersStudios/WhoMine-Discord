@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.mechanic;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.anomaly.Anomaly;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.registry.Dosimeter;
@@ -11,7 +11,7 @@ import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
@@ -40,7 +40,7 @@ public final class DosimeterMechanic {
     @ListenFor(PlayerSwapHandItemsEvent.class)
     public static final class PlayerSwapHandItems extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerSwapHandItems(final @NotNull PaperEventContainer<PlayerSwapHandItemsEvent> container) {
             final PlayerSwapHandItemsEvent event = container.getEvent();
             final Player player = event.getPlayer();
@@ -61,7 +61,7 @@ public final class DosimeterMechanic {
     @ListenFor(PlayerItemHeldEvent.class)
     public static final class PlayerItemHeld extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerItemHeld(final @NotNull PaperEventContainer<PlayerItemHeldEvent> container) {
             final PlayerItemHeldEvent event = container.getEvent();
             final Player player = event.getPlayer();
@@ -87,7 +87,7 @@ public final class DosimeterMechanic {
     @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
             final InventoryClickEvent event = container.getEvent();
             final WhoMine module = container.getModule();
@@ -147,7 +147,7 @@ public final class DosimeterMechanic {
     @ListenFor(PlayerDropItemEvent.class)
     public static final class PlayerDropItem extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerDropItem(final @NotNull PaperEventContainer<PlayerDropItemEvent> container) {
             final PlayerDropItemEvent event = container.getEvent();
             final Player player = event.getPlayer();
@@ -177,7 +177,7 @@ public final class DosimeterMechanic {
     @ListenFor(PlayerQuitEvent.class)
     public static final class PlayerQuit extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerQuit(final @NotNull PaperEventContainer<PlayerQuitEvent> container) {
             final PlayerQuitEvent event = container.getEvent();
             final Player player = event.getPlayer();
@@ -200,7 +200,7 @@ public final class DosimeterMechanic {
     @ListenFor(PlayerInteractEvent.class)
     public static final class PlayerInteract extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
             final PlayerInteractEvent event = container.getEvent();
 

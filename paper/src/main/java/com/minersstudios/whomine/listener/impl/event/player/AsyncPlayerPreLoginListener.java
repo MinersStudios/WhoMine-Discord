@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.TranslationRegistry;
@@ -14,7 +14,7 @@ import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.Style;
 import net.kyori.adventure.text.format.TextDecoration;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -53,7 +53,7 @@ public final class AsyncPlayerPreLoginListener extends PaperEventListener {
             );
     //</editor-fold>
 
-    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
+    @CancellableHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onAsyncPlayerPreLogin(final @NotNull PaperEventContainer<AsyncPlayerPreLoginEvent> container) {
         final AsyncPlayerPreLoginEvent event = container.getEvent();
         final WhoMine module = container.getModule();

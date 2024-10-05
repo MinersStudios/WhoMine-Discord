@@ -1,14 +1,14 @@
 package com.minersstudios.whomine.listener.impl.event.mechanic;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.registry.cards.CardsBicycle;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.ItemUtils;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
 import org.bukkit.event.inventory.InventoryMoveItemEvent;
@@ -32,7 +32,7 @@ public final class CardBoxMechanic {
     @ListenFor(InventoryMoveItemEvent.class)
     public static final class InventoryMoveItem extends PaperEventListener {
 
-        @EventHandler(order = EventOrder.CUSTOM)
+        @CancellableHandler(order = EventOrder.CUSTOM)
         public void onInventoryMoveItem(final @NotNull PaperEventContainer<InventoryMoveItemEvent> container) {
             final InventoryMoveItemEvent event = container.getEvent();
 
@@ -51,7 +51,7 @@ public final class CardBoxMechanic {
     @ListenFor(InventoryDragEvent.class)
     public static final class InventoryDrag extends PaperEventListener {
 
-        @EventHandler(order = EventOrder.CUSTOM)
+        @CancellableHandler(order = EventOrder.CUSTOM)
         public void onInventoryDrag(final @NotNull PaperEventContainer<InventoryDragEvent> container) {
             final InventoryDragEvent event = container.getEvent();
 
@@ -68,7 +68,7 @@ public final class CardBoxMechanic {
     @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
-        @EventHandler(order = EventOrder.CUSTOM)
+        @CancellableHandler(order = EventOrder.CUSTOM)
         public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
             final InventoryClickEvent event = container.getEvent();
             final ItemStack cursorItem = event.getCursor();

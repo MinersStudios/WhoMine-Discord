@@ -1,11 +1,12 @@
-package com.minersstudios.whomine.api.event;
+package com.minersstudios.whomine.api.event.handler;
 
+import com.minersstudios.whomine.api.event.EventOrder;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.annotation.*;
 
 /**
- * An annotation that marks a method as an event handler.
+ * An annotation that marks a method as a cancellable event handler.
  * <p>
  * <b>It contains :</b>
  * <ul>
@@ -17,12 +18,12 @@ import java.lang.annotation.*;
  * </ul>
  *
  * @see EventOrder
- * @see EventHandlerParams
+ * @see CancellableHandlerParams
  */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
-public @interface EventHandler {
+public @interface CancellableHandler {
 
     /**
      * Returns the order of the event.
@@ -46,8 +47,11 @@ public @interface EventHandler {
      * <p>
      * If set to {@code true}, the event call will be ignored if it is canceled
      * by a lower order event in this or another event listener.
+     * <p>
+     * The default value is
+     * {@value CancellableHandlerParams#DEFAULT_IGNORE_CANCELLED}.
      *
      * @return Whether to ignore an event call if it is canceled
      */
-    boolean ignoreCancelled() default false;
+    boolean ignoreCancelled() default CancellableHandlerParams.DEFAULT_IGNORE_CANCELLED;
 }

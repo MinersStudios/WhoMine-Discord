@@ -1,13 +1,13 @@
 package com.minersstudios.whomine.listener.impl.event.mechanic;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.item.CustomItemType;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -24,7 +24,7 @@ public final class BanSwordMechanic {
     @ListenFor(EntityDamageByEntityEvent.class)
     public static final class EntityDamageByEntity extends PaperEventListener {
 
-        @EventHandler(order = EventOrder.CUSTOM)
+        @CancellableHandler(order = EventOrder.CUSTOM)
         public void onEntityDamageByEntity(final @NotNull PaperEventContainer<EntityDamageByEntityEvent> container) {
             final EntityDamageByEntityEvent event = container.getEvent();
 
@@ -47,7 +47,7 @@ public final class BanSwordMechanic {
     @ListenFor(InventoryClickEvent.class)
     public static final class InventoryClick extends PaperEventListener {
 
-        @EventHandler(order = EventOrder.CUSTOM)
+        @CancellableHandler(order = EventOrder.CUSTOM)
         public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
             final InventoryClickEvent event = container.getEvent();
             final ItemStack currentItem = event.getCurrentItem();

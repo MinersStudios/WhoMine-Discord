@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.listener.impl.event.mechanic;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.decor.CustomDecorType;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
@@ -9,7 +9,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Levelled;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -26,7 +26,7 @@ public final class PoopMechanic {
     @ListenFor(PlayerInteractEvent.class)
     public static final class PlayerInteract extends PaperEventListener {
 
-        @EventHandler
+        @CancellableHandler
         public void onPlayerInteract(final @NotNull PaperEventContainer<PlayerInteractEvent> container) {
             final PlayerInteractEvent event = container.getEvent();
 

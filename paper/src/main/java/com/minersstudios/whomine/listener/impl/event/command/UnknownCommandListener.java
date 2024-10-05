@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.command;
 
-import com.minersstudios.whomine.api.event.EventHandler;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSLogger;
@@ -13,7 +13,7 @@ import static com.minersstudios.whomine.api.locale.Translations.ERROR_UNKNOWN_CO
 @ListenFor(UnknownCommandEvent.class)
 public class UnknownCommandListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onUnknownCommand(final @NotNull PaperEventContainer<UnknownCommandEvent> container) {
         final UnknownCommandEvent event = container.getEvent();
 

@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.inventory.meta.BookMeta;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ import static net.kyori.adventure.text.Component.text;
 @ListenFor(PlayerEditBookEvent.class)
 public final class PlayerEditBookListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPlayerEditBook(final @NotNull PaperEventContainer<PlayerEditBookEvent> container) {
         final PlayerEditBookEvent event = container.getEvent();
 

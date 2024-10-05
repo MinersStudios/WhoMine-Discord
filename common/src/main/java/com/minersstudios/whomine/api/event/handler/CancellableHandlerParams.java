@@ -1,6 +1,8 @@
-package com.minersstudios.whomine.api.event;
+package com.minersstudios.whomine.api.event.handler;
 
-import com.minersstudios.whomine.api.order.Ordered;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.listener.handler.AbstractHandlerParams;
+import com.minersstudios.whomine.api.listener.handler.HandlerParams;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +28,7 @@ import javax.annotation.concurrent.Immutable;
  *         <td>Returns the default event handler params</td>
  *     </tr>
  *     <tr>
- *         <td>{@link #of(EventHandler)}</td>
+ *         <td>{@link #of(CancellableHandler)}</td>
  *         <td>Creates a new event handler params with the given handler's
  *         order and ignore cancelled state</td>
  *     </tr>
@@ -47,32 +49,31 @@ import javax.annotation.concurrent.Immutable;
  *     </tr>
  * </table>
  *
- * @see EventHandler
+ * @see CancellableHandler
  */
 @SuppressWarnings("unused")
 @Immutable
-public class EventHandlerParams implements Ordered<EventOrder>, Comparable<EventHandlerParams> {
-    private static final EventHandlerParams DEFAULT = new EventHandlerParams(EventOrder.NORMAL, false);
+public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> {
+    /**
+     * Default ignore cancelled state of the
+     * {@link CancellableHandlerParams cancellable handler params}
+     */
+    public static final boolean DEFAULT_IGNORE_CANCELLED = false;
+    private static final CancellableHandlerParams DEFAULT =
+            new CancellableHandlerParams(
+                    DEFAULT_ORDER,
+                    DEFAULT_IGNORE_CANCELLED
+            );
 
-    private final EventOrder order;
     private final boolean ignoreCancelled;
 
-    private EventHandlerParams(
+    protected CancellableHandlerParams(
             final @NotNull EventOrder order,
             final boolean ignoreCancelled
     ) {
-        this.order = order;
-        this.ignoreCancelled = ignoreCancelled;
-    }
+        super(order);
 
-    /**
-     * Returns the order of the event handler
-     *
-     * @return The order of the event handler
-     */
-    @Override
-    public final @NotNull EventOrder getOrder() {
-        return this.order;
+        this.ignoreCancelled = ignoreCancelled;
     }
 
     /**
@@ -85,12 +86,17 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
     }
 
     @Override
-    public int compareTo(final @NotNull EventHandlerParams other) {
-        int result = this.compareByOrder(other);
+    public int compareTo(final @NotNull HandlerParams<EventOrder> other) {
+        int result = super.compareTo(other);
 
-        return result == 0
-                ? Boolean.compare(other.ignoreCancelled, this.ignoreCancelled)
-                : result;
+        if (
+                result == 0
+                && other instanceof CancellableHandlerParams that
+        ) {
+            result = Boolean.compare(this.ignoreCancelled, that.ignoreCancelled);
+        }
+
+        return result;
     }
 
     /**
@@ -103,7 +109,7 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
         final int prime = 31;
         int result = 1;
 
-        result = prime * result + this.order.hashCode();
+        result = prime * result + this.getOrder().hashCode();
         result = prime * result + Boolean.hashCode(this.ignoreCancelled);
 
         return result;
@@ -121,8 +127,8 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
     public boolean equals(final @Nullable Object obj) {
         return this == obj
                 || (
-                        obj instanceof EventHandlerParams that
-                        && this.order == that.order
+                        obj instanceof CancellableHandlerParams that
+                        && this.getOrder().isEqualTo(that.getOrder())
                         && this.ignoreCancelled == that.ignoreCancelled
                 );
     }
@@ -135,7 +141,7 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{'
-                + "order=" + this.order
+                + "order=" + this.getOrder()
                 + ", ignoreCancelled=" + this.ignoreCancelled
                 + '}';
     }
@@ -150,8 +156,22 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
      *
      * @return The default event handler params
      */
-    public static @NotNull EventHandlerParams defaultParams() {
+    public static @NotNull CancellableHandlerParams defaultParams() {
         return DEFAULT;
+    }
+
+    /**
+     * Creates a new event handler params with the given handler's order and
+     * default ignore cancelled state
+     *
+     * @param handler The event handler
+     * @return A new event handler params with the given handler's order and
+     *         default ignore cancelled state
+     * @see #of(EventOrder, boolean)
+     */
+    @Contract("_ -> new")
+    public static @NotNull CancellableHandlerParams of(final @NotNull EventHandler handler) {
+        return of(handler.value());
     }
 
     /**
@@ -164,7 +184,7 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
-    public static @NotNull EventHandlerParams of(final @NotNull EventHandler handler) {
+    public static @NotNull CancellableHandlerParams of(final @NotNull CancellableHandler handler) {
         return of(handler.order(), handler.ignoreCancelled());
     }
 
@@ -181,7 +201,7 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
-    public static @NotNull EventHandlerParams of(final @NotNull EventOrder order) {
+    public static @NotNull CancellableHandlerParams of(final @NotNull EventOrder order) {
         return of(order, DEFAULT.isIgnoringCancelled());
     }
 
@@ -198,7 +218,7 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
-    public static @NotNull EventHandlerParams of(final boolean ignoreCancelled) {
+    public static @NotNull CancellableHandlerParams of(final boolean ignoreCancelled) {
         return of(DEFAULT.getOrder(), ignoreCancelled);
     }
 
@@ -213,10 +233,10 @@ public class EventHandlerParams implements Ordered<EventOrder>, Comparable<Event
      *         cancelled state
      */
     @Contract("_, _ -> new")
-    public static @NotNull EventHandlerParams of(
+    public static @NotNull CancellableHandlerParams of(
             final @NotNull EventOrder order,
             final boolean ignoreCancelled
     ) {
-        return new EventHandlerParams(order, ignoreCancelled);
+        return new CancellableHandlerParams(order, ignoreCancelled);
     }
 }

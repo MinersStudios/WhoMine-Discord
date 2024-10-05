@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.event.PaperEventContainer;
@@ -11,14 +11,14 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.InventoryCreativeEvent;
 import org.jetbrains.annotations.NotNull;
 
 @ListenFor(InventoryCreativeEvent.class)
 public final class InventoryCreativeListener extends PaperEventListener {
 
-    @EventHandler(order = EventOrder.CUSTOM)
+    @CancellableHandler(order = EventOrder.CUSTOM)
     public void onInventoryCreative(final @NotNull PaperEventContainer<InventoryCreativeEvent> container) {
         final InventoryCreativeEvent event = container.getEvent();
 

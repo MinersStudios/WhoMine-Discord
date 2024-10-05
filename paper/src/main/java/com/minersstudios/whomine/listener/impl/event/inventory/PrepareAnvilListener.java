@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.decor.CustomDecorData;
 import com.minersstudios.whomine.custom.item.CustomItem;
@@ -10,7 +10,7 @@ import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSCustomUtils;
 import org.bukkit.OfflinePlayer;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.PrepareAnvilEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(PrepareAnvilEvent.class)
 public final class PrepareAnvilListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPrepareAnvil(final @NotNull PaperEventContainer<PrepareAnvilEvent> container) {
         final PrepareAnvilEvent event = container.getEvent();
         final ItemStack resultItem = event.getResult();

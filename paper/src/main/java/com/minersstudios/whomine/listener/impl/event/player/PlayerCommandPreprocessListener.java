@@ -1,19 +1,19 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.api.locale.Translations;
 import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.jetbrains.annotations.NotNull;
 
 @ListenFor(PlayerCommandPreprocessEvent.class)
 public final class PlayerCommandPreprocessListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPlayerCommandPreprocess(final @NotNull PaperEventContainer<PlayerCommandPreprocessEvent> container) {
         final PlayerCommandPreprocessEvent event = container.getEvent();
         final Player player = event.getPlayer();

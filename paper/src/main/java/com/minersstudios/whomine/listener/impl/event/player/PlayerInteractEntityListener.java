@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -12,7 +12,7 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +23,7 @@ import java.security.SecureRandom;
 public final class PlayerInteractEntityListener extends PaperEventListener {
     private final SecureRandom random = new SecureRandom();
 
-    @EventHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
+    @CancellableHandler(order = EventOrder.CUSTOM, ignoreCancelled = true)
     public void onPlayerInteractEntity(final @NotNull PaperEventContainer<PlayerInteractEntityEvent> container) {
         final PlayerInteractEntityEvent event = container.getEvent();
         final Player whoClicked = event.getPlayer();

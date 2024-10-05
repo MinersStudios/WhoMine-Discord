@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
-import com.minersstudios.whomine.api.event.EventHandler;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(BlockDropItemEvent.class)
 public final class BlockDropItemListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onBlockDropItem(final @NotNull PaperEventContainer<BlockDropItemEvent> container) {
         final BlockDropItemEvent event = container.getEvent();
         final var items = event.getItems();

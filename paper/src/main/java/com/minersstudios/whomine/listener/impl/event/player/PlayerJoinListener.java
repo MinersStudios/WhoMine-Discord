@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.packet.ChannelInjector;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(PlayerJoinEvent.class)
 public final class PlayerJoinListener extends PaperEventListener {
 
-    @EventHandler(order = EventOrder.LOWEST)
+    @CancellableHandler(order = EventOrder.LOWEST)
     public void onPlayerJoin(final @NotNull PaperEventContainer<PlayerJoinEvent> container) {
         final PlayerJoinEvent event = container.getEvent();
         final WhoMine module = container.getModule();

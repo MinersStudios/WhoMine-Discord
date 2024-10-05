@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.inventory;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.custom.item.CustomItem;
 import com.minersstudios.whomine.custom.item.Wearable;
@@ -15,7 +15,7 @@ import com.minersstudios.whomine.utility.MSLogger;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
@@ -49,7 +49,7 @@ public final class InventoryClickListener extends PaperEventListener {
             //</editor-fold>
     );
 
-    @EventHandler(order = EventOrder.CUSTOM)
+    @CancellableHandler(order = EventOrder.CUSTOM)
     public void onInventoryClick(final @NotNull PaperEventContainer<InventoryClickEvent> container) {
         final InventoryClickEvent event = container.getEvent();
         final WhoMine module = container.getModule();

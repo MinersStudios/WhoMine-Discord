@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.EventHandler;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.custom.block.params.ToolType;
@@ -41,7 +41,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(BlockBreakEvent.class)
 public final class BlockBreakListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onBlockBreak(final @NotNull PaperEventContainer<BlockBreakEvent> container) {
         final WhoMine module = container.getModule();
         final BlockBreakEvent event = container.getEvent();

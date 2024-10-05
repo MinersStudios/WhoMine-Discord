@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import com.minersstudios.whomine.custom.block.CustomBlock;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
@@ -44,7 +44,7 @@ public final class PlayerActionListener extends PaperPacketListener {
         this.clickRequestMap = new ConcurrentHashMap<>();
     }
 
-    @EventHandler
+    @CancellableHandler
     public void onEvent(final @NotNull PaperPacketContainer container) {
         final PaperPacketEvent event = container.getEvent();
         final ServerPlayer player = event.getConnection().getPlayer();

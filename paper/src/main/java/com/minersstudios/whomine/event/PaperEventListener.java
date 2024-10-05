@@ -2,7 +2,9 @@ package com.minersstudios.whomine.event;
 
 import com.minersstudios.whomine.api.event.EventExecutor;
 import com.minersstudios.whomine.api.event.EventListener;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.api.throwable.ListenerException;
 import com.minersstudios.whomine.listener.api.PaperListenerManager;
 import org.bukkit.event.Event;
@@ -54,7 +56,7 @@ public abstract class PaperEventListener
      *                            not have a {@link ListenFor} annotation
      */
     protected PaperEventListener() throws ClassCastException, ListenerException {
-        super();
+        super(CancellableHandler.class, CancellableHandlerParams::of);
     }
 
     /**
@@ -68,6 +70,6 @@ public abstract class PaperEventListener
      *                           for the same order
      */
     protected PaperEventListener(final @NotNull Class<? extends Event> key) throws ListenerException {
-        super(key);
+        super(key, CancellableHandler.class, CancellableHandlerParams::of);
     }
 }

@@ -1,14 +1,11 @@
 package com.minersstudios.whomine.api.event;
 
-import com.minersstudios.whomine.api.executor.Executable;
-import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import com.minersstudios.whomine.api.module.Module;
-import com.minersstudios.whomine.api.module.ModuleComponent;
 import com.minersstudios.whomine.api.packet.PacketContainer;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * Represents an event container that can be executed by
+ * Represents a cancellable event container that can be executed by
  * {@link EventExecutor event executors}
  * <p>
  * <b>It contains :</b>
@@ -23,33 +20,26 @@ import org.jetbrains.annotations.NotNull;
  * @see EventListener
  * @see PacketContainer
  */
-public abstract class EventContainer<M extends Module, E>
-        extends AbstractModuleComponent<M>
-        implements ModuleComponent<M>, Executable {
-
-    private final E event;
+public abstract class CancellableEventContainer<M extends Module, E>
+        extends EventContainer<M, E> {
 
     /**
-     * Event container constructor
+     * Cancellable event container constructor
      *
      * @param module The module that registers and handles the event
      * @param event  The event associated with this event container
      */
-    protected EventContainer(
+    protected CancellableEventContainer(
             final @NotNull M module,
             final @NotNull E event
     ) {
-        super(module);
-
-        this.event = event;
+        super(module, event);
     }
 
     /**
-     * Returns the event
+     * Returns whether the event has been cancelled
      *
-     * @return The event
+     * @return Whether the event has been cancelled
      */
-    public @NotNull E getEvent() {
-        return this.event;
-    }
+    public abstract boolean isCancelled();
 }

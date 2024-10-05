@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.player.PlayerInfo;
@@ -8,7 +8,7 @@ import io.papermc.paper.advancement.AdvancementDisplay;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.HoverEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerAdvancementDoneEvent;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +19,7 @@ import static net.kyori.adventure.text.Component.*;
 @ListenFor(PlayerAdvancementDoneEvent.class)
 public final class PlayerAdvancementDoneListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPlayerAdvancementDone(final @NotNull PaperEventContainer<PlayerAdvancementDoneEvent> container) {
         final PlayerAdvancementDoneEvent event = container.getEvent();
         final AdvancementDisplay advancementDisplay = event.getAdvancement().getDisplay();

@@ -2,10 +2,15 @@ package com.minersstudios.whomine.api.packet;
 
 import com.minersstudios.whomine.api.event.EventExecutor;
 import com.minersstudios.whomine.api.event.EventListener;
+import com.minersstudios.whomine.api.event.EventOrder;
+import com.minersstudios.whomine.api.listener.handler.HandlerParams;
 import com.minersstudios.whomine.api.listener.ListenerManager;
 import com.minersstudios.whomine.api.registrable.Registrable;
 import com.minersstudios.whomine.api.throwable.ListenerException;
 import org.jetbrains.annotations.NotNull;
+
+import java.lang.annotation.Annotation;
+import java.util.function.Function;
 
 /**
  * An abstract class that represents a packet listener.
@@ -46,11 +51,18 @@ public abstract class PacketListener<C extends PacketContainer<?, ?>>
      * This constructor will automatically retrieve all handlers from the
      * listener class.
      *
-     * @param packetType The packet type of the packet listener
+     * @param packetType       The packet type of the packet listener
+     * @param annotationClass  The annotation class of the event handler
+     * @param executorFunction The function to retrieve the handler parameters
+     *                         from the annotation
      * @throws ListenerException If the listener has duplicate handlers for the
      *                           same order
      */
-    protected PacketListener(final @NotNull PacketType packetType) throws ListenerException {
-        super(packetType);
+    protected <A extends Annotation> PacketListener(
+            final @NotNull PacketType packetType,
+            final @NotNull Class<A> annotationClass,
+            final @NotNull Function<A, HandlerParams<EventOrder>> executorFunction
+    ) throws ListenerException {
+        super(packetType, annotationClass, executorFunction);
     }
 }

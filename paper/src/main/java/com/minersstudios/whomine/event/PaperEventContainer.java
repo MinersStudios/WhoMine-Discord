@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.event;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.EventContainer;
+import com.minersstudios.whomine.api.event.CancellableEventContainer;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
  * @see PaperEventListener
  */
 @SuppressWarnings("unused")
-public class PaperEventContainer<E extends Event> extends EventContainer<WhoMine, E> {
+public class PaperEventContainer<E extends Event> extends CancellableEventContainer<WhoMine, E> {
 
     private PaperEventContainer(
             final @NotNull WhoMine module,
@@ -42,7 +42,7 @@ public class PaperEventContainer<E extends Event> extends EventContainer<WhoMine
      * @param event  The event associated with this container
      * @return A new container instance
      */
-    public static @NotNull <E extends Event> PaperEventContainer<E> of(
+    public static <E extends Event> @NotNull PaperEventContainer<E> of(
             final @NotNull WhoMine module,
             final @NotNull E event
     ) {

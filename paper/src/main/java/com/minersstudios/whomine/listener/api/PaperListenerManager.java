@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.api;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventContainer;
-import com.minersstudios.whomine.api.event.EventHandlerParams;
+import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
 import com.minersstudios.whomine.api.event.EventListener;
 import com.minersstudios.whomine.api.event.EventOrder;
 import com.minersstudios.whomine.api.listener.Listener;
@@ -259,7 +259,7 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
                 }
 
                 for (final var executor : eventListener.executors()) {
-                    final EventHandlerParams params = executor.getParams();
+                    final var params = executor.getParams();
                     final EventOrder order = params.getOrder();
 
                     this.getModule().getServer().getPluginManager().registerEvent(
@@ -280,7 +280,8 @@ public final class PaperListenerManager extends ListenerManager<WhoMine> {
                                 );
                             },
                             this.getModule(),
-                            params.isIgnoringCancelled()
+                            params instanceof final CancellableHandlerParams cancellable
+                            && cancellable.isIgnoringCancelled()
                     );
                 }
 

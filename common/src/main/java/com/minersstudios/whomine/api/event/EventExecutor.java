@@ -1,6 +1,8 @@
 package com.minersstudios.whomine.api.event;
 
 import com.minersstudios.whomine.api.executor.Executor;
+import com.minersstudios.whomine.api.listener.handler.HandlerParams;
+import com.minersstudios.whomine.api.order.Order;
 import com.minersstudios.whomine.api.order.Ordered;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -24,11 +26,11 @@ import java.util.logging.Logger;
  * @see EventContainer
  */
 @Immutable
-public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<EventOrder> {
+public class EventExecutor<O extends Order<O>> implements Executor<EventContainer<?, ?>>, Ordered<O> {
     private static final Logger LOGGER = Logger.getLogger(EventExecutor.class.getSimpleName());
 
     private final Method method;
-    private final EventHandlerParams params;
+    private final HandlerParams<O> params;
 
     /**
      * Constructs a new event executor
@@ -38,7 +40,7 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<Ev
      */
     protected EventExecutor(
             final @NotNull Method method,
-            final @NotNull EventHandlerParams params
+            final @NotNull HandlerParams<O> params
     ) {
         this.method = method;
         this.params = params;
@@ -58,7 +60,7 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<Ev
      *
      * @return The parameters of the event handler
      */
-    public @NotNull EventHandlerParams getParams() {
+    public @NotNull HandlerParams<O> getParams() {
         return this.params;
     }
 
@@ -68,7 +70,7 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<Ev
      * @return The order of the event
      */
     @Override
-    public @NotNull EventOrder getOrder() {
+    public @NotNull O getOrder() {
         return this.getParams().getOrder();
     }
 
@@ -132,7 +134,7 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<Ev
     public boolean equals(final @Nullable Object obj) {
         return this == obj
                 || (
-                        obj instanceof EventExecutor other
+                        obj instanceof EventExecutor<?> other
                         && this.method.equals(other.method)
                         && this.params.equals(other.params)
                 );
@@ -154,29 +156,14 @@ public class EventExecutor implements Executor<EventContainer<?, ?>>, Ordered<Ev
     /**
      * Creates an event executor
      *
-     * @param method  The method to execute
-     * @param handler The handler of the event executor
-     * @return An event executor
-     * @see #of(Method, EventHandlerParams)
-     */
-    public static @NotNull EventExecutor of(
-            final @NotNull Method method,
-            final @NotNull EventHandler handler
-    ) {
-        return of(method, EventHandlerParams.of(handler));
-    }
-
-    /**
-     * Creates an event executor
-     *
      * @param method The method to execute
      * @param params The parameters of the event handler
      * @return An event executor
      */
-    public static @NotNull EventExecutor of(
+    public static <O extends Order<O>> @NotNull EventExecutor<O> of(
             final @NotNull Method method,
-            final @NotNull EventHandlerParams params
+            final @NotNull HandlerParams<O> params
     ) {
-        return new EventExecutor(method, params);
+        return new EventExecutor<>(method, params);
     }
 }

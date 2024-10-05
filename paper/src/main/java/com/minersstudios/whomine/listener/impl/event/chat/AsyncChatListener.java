@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.impl.event.chat;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.chat.ChatType;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
@@ -12,7 +12,7 @@ import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.utility.MessageUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
@@ -24,7 +24,7 @@ import static net.kyori.adventure.text.Component.text;
 @ListenFor(AsyncChatEvent.class)
 public final class AsyncChatListener extends PaperEventListener {
 
-    @EventHandler(order = EventOrder.LOW, ignoreCancelled = true)
+    @CancellableHandler(order = EventOrder.LOW, ignoreCancelled = true)
     public void onAsyncChat(final @NotNull PaperEventContainer<AsyncChatEvent> container) {
         final AsyncChatEvent event = container.getEvent();
         final WhoMine module = container.getModule();

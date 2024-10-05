@@ -1,5 +1,6 @@
 package com.minersstudios.whomine.api.packet;
 
+import com.minersstudios.whomine.api.event.CancellableEventContainer;
 import com.minersstudios.whomine.api.event.EventContainer;
 import com.minersstudios.whomine.api.module.Module;
 import org.jetbrains.annotations.NotNull;
@@ -21,7 +22,7 @@ import org.jetbrains.annotations.NotNull;
  * @see EventContainer
  */
 @SuppressWarnings("unused")
-public abstract class PacketContainer<M extends Module, E extends PacketEvent<?, ?>> extends EventContainer<M, E> {
+public abstract class PacketContainer<M extends Module, E extends PacketEvent<?, ?>> extends CancellableEventContainer<M, E> {
 
     /**
      * Packet container constructor

@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.listener.impl.event.inventory;
 
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.ItemUtils;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.inventory.PrepareItemCraftEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 @ListenFor(PrepareItemCraftEvent.class)
 public final class PrepareItemCraftListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPrepareItemCraft(final @NotNull PaperEventContainer<PrepareItemCraftEvent> container) {
         final PrepareItemCraftEvent event = container.getEvent();
         final Recipe recipe = event.getRecipe();

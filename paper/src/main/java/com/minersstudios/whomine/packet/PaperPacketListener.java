@@ -1,6 +1,8 @@
 package com.minersstudios.whomine.packet;
 
 import com.minersstudios.whomine.api.event.EventExecutor;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
 import com.minersstudios.whomine.api.listener.Listener;
 import com.minersstudios.whomine.api.packet.PacketListener;
 import com.minersstudios.whomine.api.packet.PacketType;
@@ -49,6 +51,6 @@ public abstract class PaperPacketListener extends PacketListener<PaperPacketCont
      *                           same order
      */
     protected PaperPacketListener(final @NotNull PacketType packetType) throws ListenerException {
-        super(packetType);
+        super(packetType, CancellableHandler.class, CancellableHandlerParams::of);
     }
 }

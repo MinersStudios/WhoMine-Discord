@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.player;
 
 import com.minersstudios.whomine.PaperCache;
-import com.minersstudios.whomine.api.event.ListenFor;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;
 import com.minersstudios.whomine.event.PaperEventContainer;
@@ -11,14 +11,14 @@ import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.EventHandler;
+import com.minersstudios.whomine.api.event.handler.CancellableHandler;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.jetbrains.annotations.NotNull;
 
 @ListenFor(PlayerMoveEvent.class)
 public final class PlayerMoveListener extends PaperEventListener {
 
-    @EventHandler
+    @CancellableHandler
     public void onPlayerMove(final @NotNull PaperEventContainer<PlayerMoveEvent> container) {
         final PlayerMoveEvent event = container.getEvent();
         final PaperCache cache = container.getModule().getCache();
