@@ -1,8 +1,5 @@
 package com.minersstudios.whomine.api.module;
 
-import com.minersstudios.whomine.api.discord.DiscordModule;
-import com.minersstudios.whomine.api.gui.GuiManager;
-import com.minersstudios.whomine.api.listener.ListenerManager;
 import com.minersstudios.whomine.api.module.components.Cache;
 import com.minersstudios.whomine.api.module.components.Configuration;
 import com.minersstudios.whomine.api.status.FailureStatus;
@@ -109,27 +106,6 @@ public interface MainModule<M extends MainModule<M>> extends Module {
      * @return The configuration of the module
      */
     @NotNull Configuration<M> getConfiguration();
-
-    /**
-     * Returns the listener manager of the module
-     *
-     * @return The listener manager of the module
-     */
-    @NotNull ListenerManager<M> getListenerManager();
-
-    /**
-     * Returns the gui manager of the module
-     *
-     * @return The gui manager of the module
-     */
-    @NotNull GuiManager<M> getGuiManager();
-
-    /**
-     * Returns the discord module
-     *
-     * @return The discord module
-     */
-    <D extends DiscordModule<D>> @NotNull D getDiscordModule();
 
     /**
      * Returns whether the module is fully loaded

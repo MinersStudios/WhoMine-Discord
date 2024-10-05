@@ -1,5 +1,6 @@
 package com.minersstudios.whomine;
 
+import com.minersstudios.whomine.api.gui.GuiManager;
 import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.discord.DiscordManager;
 import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
@@ -30,12 +31,27 @@ public interface WhoMine extends MainModule<WhoMine>, Plugin, TaskExecutor {
     @Override
     @NotNull PaperConfig getConfiguration();
 
-    @Override
+    /**
+     * Returns the listener manager of the module
+     *
+     * @return The listener manager of the module
+     */
     @NotNull PaperListenerManager getListenerManager();
 
-    @SuppressWarnings("unchecked")
-    @Override
+    /**
+     * Returns the gui manager of the module
+     *
+     * @return The gui manager of the module
+     */
+    @NotNull GuiManager<WhoMine> getGuiManager();
+
+    /**
+     * Returns the discord module
+     *
+     * @return The discord module
+     */
     @NotNull DiscordManager getDiscordModule();
+
 
     /**
      * Returns an unmodifiable view of the inventory holder map
