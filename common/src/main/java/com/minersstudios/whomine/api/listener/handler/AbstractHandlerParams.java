@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * An immutable abstract class that represents the parameters of a handler.
+ * An immutable abstract class that represents the parameters of a handler
  *
  * @param <O> The order type
  */

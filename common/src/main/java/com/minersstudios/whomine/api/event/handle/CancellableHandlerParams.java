@@ -1,7 +1,6 @@
-package com.minersstudios.whomine.api.event.handler;
+package com.minersstudios.whomine.api.event.handle;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.listener.handler.AbstractHandlerParams;
 import com.minersstudios.whomine.api.listener.handler.HandlerParams;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -10,12 +9,12 @@ import org.jetbrains.annotations.Nullable;
 import javax.annotation.concurrent.Immutable;
 
 /**
- * An immutable class that represents the parameters of an event handler.
+ * An immutable class that represents the parameters of a cancellable handler.
  * <p>
  * <b>It contains :</b>
  * <ul>
- *     <li>The order of the event handler</li>
- *     <li>Whether the event handler should ignore cancelled events</li>
+ *     <li>The order of the handler</li>
+ *     <li>Whether the handler should ignore cancelled events</li>
  * </ul>
  * <table>
  *     <caption>Factory Methods</caption>
@@ -25,26 +24,26 @@ import javax.annotation.concurrent.Immutable;
  *     </tr>
  *     <tr>
  *         <td>{@link #defaultParams()}</td>
- *         <td>Returns the default event handler params</td>
+ *         <td>Returns the default cancellable handler params</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(CancellableHandler)}</td>
- *         <td>Creates a new event handler params with the given handler's
+ *         <td>Creates a new cancellable handler params with the given handler's
  *         order and ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(EventOrder)}</td>
- *         <td>Creates a new event handler params with the given order and
+ *         <td>Creates a new cancellable handler params with the given order and
  *         default ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(boolean)}</td>
- *         <td>Creates a new event handler params with the default order and
- *         ignore cancelled state</td>
+ *         <td>Creates a new cancellable handler params with the default order
+ *         and ignore cancelled state</td>
  *     </tr>
  *     <tr>
  *         <td>{@link #of(EventOrder, boolean)}</td>
- *         <td>Creates a new event handler params with the given order and
+ *         <td>Creates a new cancellable handler params with the given order and
  *         ignore cancelled state</td>
  *     </tr>
  * </table>
@@ -53,7 +52,7 @@ import javax.annotation.concurrent.Immutable;
  */
 @SuppressWarnings("unused")
 @Immutable
-public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> {
+public class CancellableHandlerParams extends EventHandlerParams {
     /**
      * Default ignore cancelled state of the
      * {@link CancellableHandlerParams cancellable handler params}
@@ -77,9 +76,9 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
     }
 
     /**
-     * Returns whether the event handler should ignore cancelled events
+     * Returns whether the handler should ignore cancelled events
      *
-     * @return Whether the event handler should ignore cancelled events
+     * @return Whether the handler should ignore cancelled events
      */
     public final boolean isIgnoringCancelled() {
         return this.ignoreCancelled;
@@ -99,11 +98,6 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
         return result;
     }
 
-    /**
-     * Returns a hash code value for this event handler params
-     *
-     * @return A hash code value for this event handler params
-     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -115,13 +109,6 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
         return result;
     }
 
-    /**
-     * Indicates whether some other object is {@code equal to} this event
-     * handler params
-     *
-     * @param obj The reference object with which to compare
-     * @return True if this object is the same as the obj argument
-     */
     @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
@@ -133,11 +120,6 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
                 );
     }
 
-    /**
-     * Returns a string representation of this event handler params
-     *
-     * @return A string representation of this event handler params
-     */
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{'
@@ -147,26 +129,26 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
     }
 
     /**
-     * Returns the default event handler params.
+     * Returns the default cancellable handler params.
      * <p>
      * <ul>
      *     <li>Order: {@link EventOrder#NORMAL}</li>
      *     <li>Ignore Cancelled: {@code false}</li>
      * </ul>
      *
-     * @return The default event handler params
+     * @return The default cancellable handler params
      */
     public static @NotNull CancellableHandlerParams defaultParams() {
         return DEFAULT;
     }
 
     /**
-     * Creates a new event handler params with the given handler's order and
-     * default ignore cancelled state
+     * Creates a new cancellable handler params with the given handler's order
+     * and default ignore cancelled state
      *
-     * @param handler The event handler
-     * @return A new event handler params with the given handler's order and
-     *         default ignore cancelled state
+     * @param handler The cancellable event handler
+     * @return A new cancellable handler params with the given handler's order
+     *         and default ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
@@ -175,12 +157,12 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
     }
 
     /**
-     * Creates a new event handler params with the given handler's order and
-     * ignore cancelled state
+     * Creates a new cancellable handler params with the given handler's order
+     * and ignore cancelled state
      *
-     * @param handler The event handler
-     * @return A new event handler params with the given handler's order and
-     *         ignore cancelled state
+     * @param handler The cancellable event handler
+     * @return A new cancellable handler params with the given handler's order
+     *         and ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
@@ -189,47 +171,47 @@ public class CancellableHandlerParams extends AbstractHandlerParams<EventOrder> 
     }
 
     /**
-     * Creates a new event handler params with the given order and default
+     * Creates a new cancellable handler params with the given order and default
      * ignore cancelled state.
      * <p>
      * The default ignore cancelled state retrieved from the
      * {@link #defaultParams() default params}.
      *
-     * @param order The order of the event handler
-     * @return A new event handler params with the given order and default
+     * @param order The order of the handler
+     * @return A new cancellable handler params with the given order and default
      *         ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
     public static @NotNull CancellableHandlerParams of(final @NotNull EventOrder order) {
-        return of(order, DEFAULT.isIgnoringCancelled());
+        return of(order, DEFAULT_IGNORE_CANCELLED);
     }
 
     /**
-     * Creates a new event handler params with the default order and ignore
-     * cancelled state.
+     * Creates a new cancellable handler params with the default order and
+     * ignore cancelled state.
      * <p>
-     * The default order retrieved from the {@link #defaultParams() default params}.
+     * The default order is {@link EventHandlerParams#DEFAULT_ORDER}.
      *
-     * @param ignoreCancelled Whether the event handler should ignore cancelled
-     *                        events
-     * @return A new event handler params with the default order and ignore
-     *         cancelled state
+     * @param ignoreCancelled Whether the cancellable event handler should
+     *                        ignore cancelled events
+     * @return A new cancellable handler params with the default order and
+     *         ignore cancelled state
      * @see #of(EventOrder, boolean)
      */
     @Contract("_ -> new")
     public static @NotNull CancellableHandlerParams of(final boolean ignoreCancelled) {
-        return of(DEFAULT.getOrder(), ignoreCancelled);
+        return of(DEFAULT_ORDER, ignoreCancelled);
     }
 
     /**
-     * Creates a new event handler params with the given order and ignore
+     * Creates a new cancellable handler params with the given order and ignore
      * cancelled state
      *
-     * @param order           The order of the event handler
-     * @param ignoreCancelled Whether the event handler should ignore cancelled
-     *                        events
-     * @return A new event handler params with the given order and ignore
+     * @param order           The order of the handler
+     * @param ignoreCancelled Whether the cancellable handler should ignore
+     *                        cancelled events
+     * @return A new cancellable handler params with the given order and ignore
      *         cancelled state
      */
     @Contract("_, _ -> new")

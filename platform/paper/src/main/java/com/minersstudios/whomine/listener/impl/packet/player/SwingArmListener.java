@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.packet.player;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import com.minersstudios.whomine.api.packet.registry.PlayPackets;
 import com.minersstudios.whomine.packet.PaperPacketContainer;
 import com.minersstudios.whomine.packet.PaperPacketListener;

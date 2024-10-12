@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.api.event.handler;
+package com.minersstudios.whomine.api.event.handle;
 
 import com.minersstudios.whomine.api.event.EventOrder;
 import com.minersstudios.whomine.api.listener.handler.HandlerParams;

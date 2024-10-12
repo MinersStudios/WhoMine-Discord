@@ -1,9 +1,10 @@
 package com.minersstudios.whomine.api.listener.handler;
 
-import com.minersstudios.whomine.api.event.EventOrder;
 import com.minersstudios.whomine.api.order.Order;
 import com.minersstudios.whomine.api.order.Ordered;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.annotation.concurrent.Immutable;
 
@@ -14,8 +15,25 @@ import javax.annotation.concurrent.Immutable;
  */
 @Immutable
 public interface HandlerParams<O extends Order<O>> extends Ordered<O>, Comparable<HandlerParams<O>> {
-    /** Default order of the handler */
-    EventOrder DEFAULT_ORDER = EventOrder.NORMAL;
+
+    /**
+     * Returns a hash code value for this handler params
+     *
+     * @return A hash code value for this handler params
+     */
+    @Override
+    int hashCode();
+
+    /**
+     * Indicates whether some other object is {@code equal to} this
+     * handler params
+     *
+     * @param obj The reference object with which to compare
+     * @return True if this object is the same as the obj argument
+     */
+    @Contract("null -> false")
+    @Override
+    boolean equals(final @Nullable Object obj);
 
     /**
      * Returns a string representation of this handler params

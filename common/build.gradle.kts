@@ -10,6 +10,8 @@ dependencies {
     api(libs.adventure.legacy)
     api(libs.adventure.plain)
     api(libs.adventure.minimessage)
+    api(libs.asm)
+    api(libs.asm.commons)
     api(libs.netty.buffer)
 }
 

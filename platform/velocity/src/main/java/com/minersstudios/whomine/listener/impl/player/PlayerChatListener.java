@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.player;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.event.handler.AsyncHandler;
+import com.minersstudios.whomine.api.event.handle.AsyncHandler;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.event.VelocityEventContainer;
 import com.minersstudios.whomine.event.VelocityEventListener;

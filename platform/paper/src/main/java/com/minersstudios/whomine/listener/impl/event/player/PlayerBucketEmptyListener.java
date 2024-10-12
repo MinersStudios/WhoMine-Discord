@@ -8,7 +8,7 @@ import com.minersstudios.whomine.event.PaperEventListener;
 import com.minersstudios.whomine.utility.MSDecorUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.jetbrains.annotations.NotNull;
 

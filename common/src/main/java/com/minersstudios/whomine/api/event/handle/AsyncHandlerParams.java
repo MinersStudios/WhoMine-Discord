@@ -1,7 +1,6 @@
-package com.minersstudios.whomine.api.event.handler;
+package com.minersstudios.whomine.api.event.handle;
 
 import com.minersstudios.whomine.api.event.EventOrder;
-import com.minersstudios.whomine.api.listener.handler.AbstractHandlerParams;
 import com.minersstudios.whomine.api.listener.handler.HandlerParams;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -53,7 +52,7 @@ import javax.annotation.concurrent.Immutable;
  */
 @SuppressWarnings("unused")
 @Immutable
-public class AsyncHandlerParams extends AbstractHandlerParams<EventOrder> {
+public class AsyncHandlerParams extends EventHandlerParams {
     /**
      * Default async state of the
      * {@link AsyncHandlerParams async handler params}
@@ -99,11 +98,6 @@ public class AsyncHandlerParams extends AbstractHandlerParams<EventOrder> {
         return result;
     }
 
-    /**
-     * Returns a hash code value for this event handler params
-     *
-     * @return A hash code value for this event handler params
-     */
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -115,13 +109,6 @@ public class AsyncHandlerParams extends AbstractHandlerParams<EventOrder> {
         return result;
     }
 
-    /**
-     * Indicates whether some other object is {@code equal to} this event
-     * handler params
-     *
-     * @param obj The reference object with which to compare
-     * @return True if this object is the same as the obj argument
-     */
     @Contract("null -> false")
     @Override
     public boolean equals(final @Nullable Object obj) {
@@ -133,11 +120,6 @@ public class AsyncHandlerParams extends AbstractHandlerParams<EventOrder> {
                 );
     }
 
-    /**
-     * Returns a string representation of this event handler params
-     *
-     * @return A string representation of this event handler params
-     */
     @Override
     public @NotNull String toString() {
         return this.getClass().getSimpleName() + '{'
@@ -207,7 +189,7 @@ public class AsyncHandlerParams extends AbstractHandlerParams<EventOrder> {
     /**
      * Creates a new event handler params with the default order and async state.
      * <p>
-     * The default order is {@link HandlerParams#DEFAULT_ORDER}.
+     * The default order is {@link EventHandlerParams#DEFAULT_ORDER}.
      *
      * @param async Whether the event handler must be called asynchronously
      * @return A new event handler params with the default order and async state

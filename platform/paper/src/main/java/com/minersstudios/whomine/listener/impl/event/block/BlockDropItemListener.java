@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
 import com.minersstudios.whomine.event.PaperEventContainer;

@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.event;
 
-import com.minersstudios.whomine.api.event.EventExecutor;
+import com.minersstudios.whomine.api.event.handle.HandlerExecutor;
 import com.minersstudios.whomine.api.event.EventListener;
-import com.minersstudios.whomine.api.event.handler.AsyncHandler;
-import com.minersstudios.whomine.api.event.handler.AsyncHandlerParams;
+import com.minersstudios.whomine.api.event.handle.AsyncHandler;
+import com.minersstudios.whomine.api.event.handle.AsyncHandlerParams;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.api.listener.Listener;
 import com.minersstudios.whomine.api.throwable.ListenerException;
@@ -35,7 +35,7 @@ import org.jetbrains.annotations.NotNull;
  * </table>
  *
  * @see VelocityEventContainer
- * @see EventExecutor
+ * @see HandlerExecutor
  */
 @SuppressWarnings("unused")
 public abstract class VelocityEventListener

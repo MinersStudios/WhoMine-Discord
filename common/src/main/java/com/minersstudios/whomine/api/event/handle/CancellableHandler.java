@@ -1,4 +1,4 @@
-package com.minersstudios.whomine.api.event.handler;
+package com.minersstudios.whomine.api.event.handle;
 
 import com.minersstudios.whomine.api.event.EventOrder;
 import org.jetbrains.annotations.NotNull;

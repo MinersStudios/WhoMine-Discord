@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.event;
 
-import com.minersstudios.whomine.api.event.EventExecutor;
+import com.minersstudios.whomine.api.event.handle.HandlerExecutor;
 import com.minersstudios.whomine.api.event.EventListener;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
-import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandlerParams;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.api.throwable.ListenerException;
 import com.minersstudios.whomine.listener.api.PaperListenerManager;
@@ -36,7 +36,7 @@ import org.jetbrains.annotations.NotNull;
  * </table>
  *
  * @see PaperEventContainer
- * @see EventExecutor
+ * @see HandlerExecutor
  */
 @SuppressWarnings("unused")
 public abstract class PaperEventListener

@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.api.packet;
 
-import com.minersstudios.whomine.api.event.EventExecutor;
+import com.minersstudios.whomine.api.event.handle.HandlerExecutor;
 import com.minersstudios.whomine.api.event.EventListener;
 import com.minersstudios.whomine.api.event.EventOrder;
 import com.minersstudios.whomine.api.listener.handler.HandlerParams;
@@ -39,7 +39,7 @@ import java.util.function.Function;
  * @param <C> The packet container type of the event listener
  *
  * @see PacketContainer
- * @see EventExecutor
+ * @see HandlerExecutor
  */
 @SuppressWarnings("unused")
 public abstract class PacketListener<C extends PacketContainer<?, ?>>

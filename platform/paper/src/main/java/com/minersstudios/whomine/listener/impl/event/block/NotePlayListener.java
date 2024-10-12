@@ -7,7 +7,7 @@ import com.minersstudios.whomine.event.PaperEventContainer;
 import com.minersstudios.whomine.event.PaperEventListener;
 import org.bukkit.Instrument;
 import org.bukkit.Note;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import org.bukkit.event.block.NotePlayEvent;
 import org.jetbrains.annotations.NotNull;
 

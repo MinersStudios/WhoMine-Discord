@@ -2,6 +2,7 @@
 # libraries
 adventure-api         = "4.17.0"
 authme                = "5.6.0"
+asm                   = "9.7.1"
 coreprotect           = "22.4"
 fastutil              = "8.5.14"
 google-guava          = "33.3.1-jre"
@@ -26,6 +27,8 @@ adventure-legacy      = { group = "net.kyori",                  name = "adventur
 adventure-plain       = { group = "net.kyori",                  name = "adventure-text-serializer-plain",  version.ref = "adventure-api" }
 adventure-minimessage = { group = "net.kyori",                  name = "adventure-text-minimessage",       version.ref = "adventure-api" }
 authme                = { group = "fr.xephi",                   name = "authme",                           version.ref = "authme" }
+asm                   = { group = "org.ow2.asm",                name = "asm",                              version.ref = "asm" }
+asm-commons           = { group = "org.ow2.asm",                name = "asm-commons",                      version.ref = "asm" }
 coreprotect           = { group = "net.coreprotect",            name = "coreprotect",                      version.ref = "coreprotect" }
 fastutil              = { group = "it.unimi.dsi",               name = "fastutil",                         version.ref = "fastutil" }
 google-guava          = { group = "com.google.guava",           name = "guava",                            version.ref = "google-guava" }

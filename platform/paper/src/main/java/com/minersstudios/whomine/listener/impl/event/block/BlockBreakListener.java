@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.listener.impl.event.block;
 
 import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.custom.block.CustomBlockData;
 import com.minersstudios.whomine.custom.block.CustomBlockRegistry;

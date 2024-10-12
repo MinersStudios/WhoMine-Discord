@@ -12,7 +12,7 @@ import com.minersstudios.whomine.utility.MSLogger;
 import com.minersstudios.whomine.utility.MessageUtils;
 import io.papermc.paper.event.player.AsyncChatEvent;
 import org.bukkit.entity.Player;
-import com.minersstudios.whomine.api.event.handler.CancellableHandler;
+import com.minersstudios.whomine.api.event.handle.CancellableHandler;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;

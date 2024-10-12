@@ -1,5 +1,6 @@
 package com.minersstudios.whomine.api.event;
 
+import com.minersstudios.whomine.api.event.handle.HandlerExecutor;
 import com.minersstudios.whomine.api.executor.Executable;
 import com.minersstudios.whomine.api.module.AbstractModuleComponent;
 import com.minersstudios.whomine.api.module.Module;
@@ -9,7 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 /**
  * Represents an event container that can be executed by
- * {@link EventExecutor event executors}
+ * {@link HandlerExecutor handler executors}
  * <p>
  * <b>It contains :</b>
  * <ul>

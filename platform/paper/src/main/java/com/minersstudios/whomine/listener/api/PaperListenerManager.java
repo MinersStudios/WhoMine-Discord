@@ -2,7 +2,7 @@ package com.minersstudios.whomine.listener.api;
 
 import com.minersstudios.whomine.WhoMine;
 import com.minersstudios.whomine.api.event.EventContainer;
-import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
+import com.minersstudios.whomine.api.event.handle.CancellableHandlerParams;
 import com.minersstudios.whomine.api.event.EventListener;
 import com.minersstudios.whomine.api.event.EventOrder;
 import com.minersstudios.whomine.api.listener.Listener;

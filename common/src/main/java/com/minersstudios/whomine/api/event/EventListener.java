@@ -1,10 +1,11 @@
 package com.minersstudios.whomine.api.event;
 
 import com.google.common.base.Joiner;
+import com.minersstudios.whomine.api.event.handle.HandlerExecutor;
 import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.api.listener.Listener;
 import com.minersstudios.whomine.api.listener.ListenerManager;
-import com.minersstudios.whomine.api.event.handler.CancellableHandlerParams;
+import com.minersstudios.whomine.api.event.handle.CancellableHandlerParams;
 import com.minersstudios.whomine.api.listener.handler.HandlerParams;
 import com.minersstudios.whomine.api.registrable.Registrable;
 import com.minersstudios.whomine.api.throwable.ListenerException;
@@ -46,14 +47,14 @@ import java.util.function.Function;
  * @param <C> The event container type of the event listener
  *
  * @see EventContainer
- * @see EventExecutor
+ * @see HandlerExecutor
  */
 @SuppressWarnings("unused")
 public abstract class EventListener<K, C extends EventContainer<?, ?>>
         implements Listener<K> {
 
     private final K key;
-    private final Map<EventOrder, EventExecutor<EventOrder>> executorMap;
+    private final Map<EventOrder, HandlerExecutor<EventOrder>> executorMap;
 
     /**
      * Constructs a new event listener.
@@ -102,7 +103,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
     }
 
     @Override
-    public @NotNull K getKey() {
+    public final @NotNull K getKey() {
         return this.key;
     }
 
@@ -111,7 +112,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      *
      * @return An unmodifiable set of event orders
      */
-    public @NotNull @Unmodifiable Set<EventOrder> orders() {
+    public final @NotNull @Unmodifiable Set<EventOrder> orders() {
         return Collections.unmodifiableSet(this.executorMap.keySet());
     }
 
@@ -120,7 +121,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      *
      * @return An unmodifiable list of event executors
      */
-    public @NotNull @Unmodifiable Collection<EventExecutor<EventOrder>> executors() {
+    public final @NotNull @Unmodifiable Collection<HandlerExecutor<EventOrder>> executors() {
         return Collections.unmodifiableCollection(this.executorMap.values());
     }
 
@@ -146,7 +147,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      * @param order The event order
      * @return True if the event listener contains the specified order
      */
-    public boolean containsOrder(final @NotNull EventOrder order) {
+    public final boolean containsOrder(final @NotNull EventOrder order) {
         return this.executorMap.containsKey(order);
     }
 
@@ -156,7 +157,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
      * @param executor The event executor
      * @return True if the event listener contains the specified executor
      */
-    public boolean containsExecutor(final @NotNull EventExecutor<EventOrder> executor) {
+    public final boolean containsExecutor(final @NotNull HandlerExecutor<EventOrder> executor) {
         return this.executorMap.containsValue(executor);
     }
 
@@ -238,11 +239,11 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
         return annotation;
     }
 
-    private <A extends Annotation> @NotNull Map<EventOrder, EventExecutor<EventOrder>> retrieveExecutors(
+    private <A extends Annotation> @NotNull Map<EventOrder, HandlerExecutor<EventOrder>> retrieveExecutors(
             final @NotNull Class<A> annotationClass,
             final @NotNull Function<A, HandlerParams<EventOrder>> executorFunction
     ) throws ListenerException {
-        final var map = new Object2ObjectAVLTreeMap<EventOrder, EventExecutor<EventOrder>>(EventOrder::compareTo);
+        final var map = new Object2ObjectAVLTreeMap<EventOrder, HandlerExecutor<EventOrder>>(EventOrder::compareTo);
 
         for (final var method : this.getClass().getMethods()) {
             final var parameterTypes = method.getParameterTypes();
@@ -266,7 +267,7 @@ public abstract class EventListener<K, C extends EventContainer<?, ?>>
 
                 map.put(
                         order,
-                        EventExecutor.of(method, handlerParams)
+                        HandlerExecutor.of(method, handlerParams)
                 );
             }
         }
