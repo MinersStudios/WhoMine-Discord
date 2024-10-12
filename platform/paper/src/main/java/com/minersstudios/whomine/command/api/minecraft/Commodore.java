@@ -2,6 +2,7 @@ package com.minersstudios.whomine.command.api.minecraft;
 
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
 import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.whomine.api.listener.ListenFor;
 import com.minersstudios.whomine.api.module.MainModule;
 import com.minersstudios.whomine.api.status.StatusWatcher;
 import com.minersstudios.whomine.event.PaperEventContainer;
@@ -15,7 +16,6 @@ import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
 import com.minersstudios.whomine.api.event.handler.CancellableHandler;
-import org.bukkit.event.Listener;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -80,25 +80,7 @@ public final class Commodore {
                 StatusWatcher.builder()
                 .statuses(MainModule.ENABLED)
                 .successRunnable(
-                        () -> plugin.getListenerManager().register(new PaperEventListener(AsyncPlayerSendCommandsEvent.class) {
-
-                            @CancellableHandler
-                            public void onPlayerSendCommandsEvent(final @NotNull PaperEventContainer<AsyncPlayerSendCommandsEvent<?>> container) {
-                                final var event = container.getEvent();
-
-                                if (
-                                        event.isAsynchronous()
-                                        || !event.hasFiredAsync()
-                                ) {
-                                    for (final var command : Commodore.this.commands) {
-                                        command.apply(
-                                                event.getPlayer(),
-                                                event.getCommandNode()
-                                        );
-                                    }
-                                }
-                            }
-                        })
+                        () -> plugin.getListenerManager().register(new AsyncPlayerSendCommandsListener())
                 )
                 .build()
         );
@@ -261,6 +243,27 @@ public final class Commodore {
 
             removeChild(root, this.node.getName());
             root.addChild((CommandNode<S>) this.node);
+        }
+    }
+
+    @ListenFor(AsyncPlayerSendCommandsEvent.class)
+    public class AsyncPlayerSendCommandsListener extends PaperEventListener {
+
+        @CancellableHandler
+        public void onPlayerSendCommandsEvent(final @NotNull PaperEventContainer<AsyncPlayerSendCommandsEvent<?>> container) {
+            final var event = container.getEvent();
+
+            if (
+                    event.isAsynchronous()
+                    || !event.hasFiredAsync()
+            ) {
+                for (final var command : Commodore.this.commands) {
+                    command.apply(
+                            event.getPlayer(),
+                            event.getCommandNode()
+                    );
+                }
+            }
         }
     }
 }
