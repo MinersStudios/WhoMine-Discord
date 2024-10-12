@@ -2,6 +2,8 @@ package com.minersstudios.whomine.api.event.handle;
 
 import com.minersstudios.whomine.api.event.EventContainer;
 import com.minersstudios.whomine.api.event.EventListener;
+import com.minersstudios.whomine.api.listener.handler.HandlerParams;
+import com.minersstudios.whomine.api.order.Order;
 import com.minersstudios.whomine.api.throwable.ListenerException;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.ClassWriter;
@@ -12,30 +14,39 @@ import java.lang.reflect.Method;
 
 import static org.objectweb.asm.Opcodes.*;
 
-final class EventExecutorFabric {
-    private static final String NAME_TEMPLATE = EventExecutor.class.getName() + "$Generated$";
-    private static final String METHOD_NAME = "execute";
+final class HandlerExecutorFabric {
+    //<editor-fold desc="Constants" defaultstate="collapsed">
+    private static final String HANDLER_NAME_TEMPLATE      = HandlerExecutor.class.getName() + "$Generated$";
+    private static final String HANDLER_INTERNAL_NAME      = Type.getInternalName(HandlerExecutor.class);
+    private static final String HANDLER_IMPL_INTERNAL_NAME = Type.getInternalName(HandlerExecutorImpl.class);
+    private static final String CONSTRUCTOR_NAME           = "<init>";
+    private static final String CONSTRUCTOR_DESCRIPTOR     = '(' + HandlerParams.class.descriptorString() + ")V";
+    private static final String METHOD_NAME                = "execute";
     private static final String METHOD_DESCRIPTOR =
-            "(L" + Type.getInternalName(EventListener.class) +
-            ";L" + Type.getInternalName(EventContainer.class) + ";)V";
+            '(' +
+            EventListener.class.descriptorString() +
+            EventContainer.class.descriptorString() +
+            ")V";
+    //</editor-fold>
 
     private String className;
     private ExecutorClassLoader classLoader;
-    private Class<? extends EventExecutor> clazz;
+    private Class<? extends HandlerExecutor<?>> clazz;
 
-    public @NotNull EventExecutorFabric defineClassName(final @NotNull String className) {
+    public @NotNull HandlerExecutorFabric defineClassName(final @NotNull String className) {
         this.className = className;
 
         return this;
     }
 
-    public @NotNull EventExecutorFabric defineLoader(final @NotNull ClassLoader loader) {
+    public @NotNull HandlerExecutorFabric defineLoader(final @NotNull ClassLoader loader) {
         this.classLoader = new ExecutorClassLoader(loader);
 
         return this;
     }
 
-    public @NotNull EventExecutorFabric generateClass(final @NotNull Method method) throws IllegalStateException, ListenerException {
+    @SuppressWarnings("unchecked")
+    public @NotNull HandlerExecutorFabric generateClass(final @NotNull Method method) throws IllegalStateException, ListenerException {
         if (this.className == null) {
             throw new IllegalStateException("Class name is not defined");
         }
@@ -45,14 +56,14 @@ final class EventExecutorFabric {
         }
 
         try {
-            this.clazz =
+            this.clazz = (Class<? extends HandlerExecutor<?>>)
                     this.classLoader
                     .loadClass(this.className)
-                    .asSubclass(EventExecutor.class);
+                    .asSubclass(HandlerExecutorImpl.class);
         } catch (final ClassNotFoundException e) {
             this.clazz = null;
         } catch (final ClassCastException e) {
-            throw new ListenerException("Class is already generated, but not an instance of EventExecutor", e);
+            throw new ListenerException("Class is already generated, but not an instance of " + HandlerExecutorImpl.class, e);
         }
 
         if (this.clazz == null) {
@@ -66,13 +77,14 @@ final class EventExecutorFabric {
         return this;
     }
 
-    public @NotNull EventExecutor createInstance() throws IllegalStateException, ListenerException {
+    public @NotNull HandlerExecutor<?> createInstance(final HandlerParams<?> params) throws IllegalStateException, ListenerException {
         if (this.clazz == null) {
             throw new IllegalStateException("Class is not generated");
         }
 
         try {
-            return this.clazz.getConstructor().newInstance();
+            return this.clazz.getConstructor(HandlerParams.class)
+                             .newInstance(params);
         } catch (final Throwable e) {
             throw new ListenerException("Failed to create instance of " + this.clazz, e);
         }
@@ -81,14 +93,20 @@ final class EventExecutorFabric {
     private void generateConstructor(final @NotNull ClassWriter writer) {
         final GeneratorAdapter generator =
                 new GeneratorAdapter(
-                        writer.visitMethod(ACC_PUBLIC, "<init>", "()V", null, null),
+                        writer.visitMethod(ACC_PUBLIC, CONSTRUCTOR_NAME, CONSTRUCTOR_DESCRIPTOR, null, null),
                         ACC_PUBLIC,
-                        "<init>",
-                        "()V"
+                        CONSTRUCTOR_NAME,
+                        CONSTRUCTOR_DESCRIPTOR
                 );
 
         generator.loadThis();
-        generator.visitMethodInsn(INVOKESPECIAL, Type.getInternalName(Object.class), "<init>", "()V", false);
+        generator.loadArg(0);
+        generator.visitMethodInsn(
+                INVOKESPECIAL, HANDLER_IMPL_INTERNAL_NAME,
+                CONSTRUCTOR_NAME,
+                CONSTRUCTOR_DESCRIPTOR,
+                false
+        );
         generator.returnValue();
         generator.endMethod();
     }
@@ -127,16 +145,14 @@ final class EventExecutorFabric {
     }
 
     private byte @NotNull [] generateClassData(final @NotNull Method method) {
-        final String className = this.className.replace('.', '/');
         final ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_FRAMES | ClassWriter.COMPUTE_MAXS);
 
         writer.visit(
                 V21,
                 ACC_PUBLIC,
-                className,
-                null,
-                Type.getInternalName(Object.class),
-                new String[] { Type.getInternalName(EventExecutor.class) }
+                this.className.replace('.', '/'),
+                null, HANDLER_IMPL_INTERNAL_NAME,
+                new String[] { HANDLER_INTERNAL_NAME }
         );
         this.generateConstructor(writer);
         this.generateMethod(writer, method);
@@ -145,12 +161,16 @@ final class EventExecutorFabric {
         return writer.toByteArray();
     }
 
-    public static @NotNull EventExecutor create(final @NotNull Method method) throws IllegalStateException, ListenerException {
-        return new EventExecutorFabric()
-                .defineClassName(NAME_TEMPLATE + method.hashCode())
+    @SuppressWarnings("unchecked")
+    public static <O extends Order<O>> @NotNull HandlerExecutor<O> create(
+            final @NotNull Method method,
+            final @NotNull HandlerParams<O> handlerParams
+    ) throws IllegalStateException, ListenerException {
+        return (HandlerExecutor<O>) new HandlerExecutorFabric()
+                .defineClassName(HANDLER_NAME_TEMPLATE + method.hashCode())
                 .defineLoader(method.getDeclaringClass().getClassLoader())
                 .generateClass(method)
-                .createInstance();
+                .createInstance(handlerParams);
     }
 
     private static final class ExecutorClassLoader extends ClassLoader {
@@ -163,7 +183,8 @@ final class EventExecutorFabric {
             super(parent);
         }
 
-        public @NotNull Class<? extends EventExecutor> defineClass(
+        @SuppressWarnings("unchecked")
+        public @NotNull Class<? extends HandlerExecutorImpl<?>> defineClass(
                 final @NotNull String name,
                 final byte @NotNull [] bytes
         ) {
@@ -171,7 +192,7 @@ final class EventExecutorFabric {
 
             this.resolveClass(clazz);
 
-            return clazz.asSubclass(EventExecutor.class);
+            return (Class<? extends HandlerExecutorImpl<?>>) clazz.asSubclass(HandlerExecutorImpl.class);
         }
     }
 }
