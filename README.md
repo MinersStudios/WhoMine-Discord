@@ -7,9 +7,8 @@
     </picture>
   </a>
   <p>
-    Here you will find various things from the server <b>WhoMine</b> <br> 
-    Most of them are pieces of shit so don't be surprised
-  </p>
+    Here you will find various things from the server <b>WhoMine</b><br> 
+    Most of them are pieces of shit so don't be surprised</p>
   • • •<br><br>
   <div>
     <a href="https://github.com/MinersStudios/WhoMine/stargazers">
