@@ -69,3 +69,8 @@
     </picture>
   </a>
 </div>
+
+## WhoAsked?
+
+They asked:  
+[![The list of contributors](https://github.com/user-attachments/assets/3e07b947-33ec-4621-9323-c77d9323894f)](https://github.com/MinersStudios/WhoMine/graphs/contributors)
