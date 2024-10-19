@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.scheduler.task;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.player.collection.MuteMap;
-import com.minersstudios.whomine.player.collection.PlayerInfoMap;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.player.collection.MuteMap;
+import com.minersstudios.wholib.paper.player.collection.PlayerInfoMap;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;

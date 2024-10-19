@@ -1,13 +1,13 @@
 package com.minersstudios.whomine.command.impl.minecraft.player.roleplay;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -19,9 +19,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.ME;
-import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.TODO;
-import static com.minersstudios.whomine.utility.MessageUtils.sendRPEventMessage;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.RolePlayActionType.ME;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.RolePlayActionType.TODO;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.sendRPEventMessage;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 import static net.kyori.adventure.text.Component.text;

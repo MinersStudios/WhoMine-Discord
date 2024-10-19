@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.scheduler.task;
 
 import com.destroystokyo.paper.profile.PlayerProfile;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.player.collection.PlayerInfoMap;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.player.collection.PlayerInfoMap;
 import io.papermc.paper.ban.BanListType;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import org.bukkit.BanEntry;

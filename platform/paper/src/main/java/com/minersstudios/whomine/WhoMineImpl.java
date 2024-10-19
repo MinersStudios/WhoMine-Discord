@@ -1,34 +1,48 @@
 package com.minersstudios.whomine;
 
 import com.google.common.base.Charsets;
-import com.minersstudios.whomine.api.locale.TranslationRegistry;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.api.status.StatusHandler;
-import com.minersstudios.whomine.api.status.StatusWatcher;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.api.utility.SharedConstants;
-import com.minersstudios.whomine.chat.ChatType;
+import com.minersstudios.wholib.locale.TranslationRegistry;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.PaperCache;
+import com.minersstudios.wholib.paper.PaperConfig;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.*;
+import com.minersstudios.wholib.status.StatusHandler;
+import com.minersstudios.wholib.status.StatusWatcher;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
+import com.minersstudios.wholib.utility.SharedConstants;
+import com.minersstudios.wholib.paper.chat.ChatType;
 import com.minersstudios.whomine.command.api.CommandManager;
-import com.minersstudios.whomine.custom.decor.CustomDecorType;
-import com.minersstudios.whomine.custom.item.CustomItemType;
-import com.minersstudios.whomine.discord.DiscordManager;
-import com.minersstudios.whomine.gui.PaperGuiManager;
-import com.minersstudios.whomine.listener.api.PaperListenerManager;
-import com.minersstudios.whomine.listener.impl.event.mechanic.DosimeterMechanic;
+import com.minersstudios.wholib.paper.custom.decor.CustomDecorType;
+import com.minersstudios.wholib.paper.custom.item.CustomItemType;
+import com.minersstudios.wholib.paper.discord.DiscordManager;
+import com.minersstudios.wholib.paper.gui.PaperGuiManager;
+import com.minersstudios.wholib.paper.listener.PaperListenerManager;
+import com.minersstudios.whomine.listener.event.block.*;
+import com.minersstudios.whomine.listener.event.entity.*;
+import com.minersstudios.whomine.listener.event.inventory.*;
+import com.minersstudios.whomine.listener.event.mechanic.*;
+import com.minersstudios.whomine.listener.event.player.*;
+import com.minersstudios.whomine.listener.event.chat.AsyncChatListener;
+import com.minersstudios.whomine.listener.event.command.UnknownCommandListener;
+import com.minersstudios.whomine.listener.event.hanging.HangingBreakByEntityListener;
+import com.minersstudios.whomine.listener.event.server.ServerCommandListener;
+import com.minersstudios.whomine.listener.packet.player.PlayerActionListener;
+import com.minersstudios.whomine.listener.packet.player.PlayerUpdateSignListener;
+import com.minersstudios.whomine.listener.packet.player.SwingArmListener;
 import com.minersstudios.whomine.menu.DiscordLinkCodeMenu;
 import com.minersstudios.whomine.menu.PronounMenu;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
 import com.minersstudios.whomine.menu.SkinsMenu;
-import com.minersstudios.whomine.player.collection.PlayerInfoMap;
+import com.minersstudios.wholib.paper.player.collection.PlayerInfoMap;
 import com.minersstudios.whomine.scheduler.task.BanListTask;
 import com.minersstudios.whomine.scheduler.task.MuteMapTask;
 import com.minersstudios.whomine.scheduler.task.PlayerListTask;
 import com.minersstudios.whomine.scheduler.task.SeatsTask;
-import com.minersstudios.whomine.utility.*;
-import com.minersstudios.whomine.world.WorldDark;
-import com.minersstudios.whomine.world.sound.SoundAdapter;
-import com.minersstudios.whomine.world.sound.SoundGroup;
+import com.minersstudios.wholib.paper.world.WorldDark;
+import com.minersstudios.wholib.paper.world.sound.SoundAdapter;
+import com.minersstudios.wholib.paper.world.sound.SoundGroup;
 import fr.xephi.authme.AuthMe;
 import fr.xephi.authme.api.v3.AuthMeApi;
 import net.coreprotect.CoreProtect;
@@ -50,17 +64,16 @@ import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
-import static com.minersstudios.whomine.api.utility.Font.Chars.RED_EXCLAMATION_MARK;
+import static com.minersstudios.wholib.locale.Translations.*;
+import static com.minersstudios.wholib.utility.Font.Chars.RED_EXCLAMATION_MARK;
 import static net.kyori.adventure.text.Component.text;
 
 @ApiStatus.Internal
 public final class WhoMineImpl extends JavaPlugin implements WhoMine {
-    static WhoMine singleton;
 
     private final StatusHandler statusHandler;
-    private final PaperCache cache;
-    private final PaperConfig config;
+    private final PaperCacheImpl cache;
+    private final PaperConfigImpl config;
     private final PaperListenerManager listenerManager;
     private final PaperGuiManager guiManager;
     private final CommandManager commandManager;
@@ -80,13 +93,13 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
     }
 
     public WhoMineImpl() {
-        singleton = this;
+        SINGLETON.set(this);
 
         this.setupDataFolder();
 
         this.configFile = new File(this.getDataFolder(), "config.yml");
-        this.cache = new PaperCache(this);
-        this.config = new PaperConfig(this);
+        this.cache = new PaperCacheImpl(this);
+        this.config = new PaperConfigImpl(this);
         this.statusHandler = new StatusHandler();
         this.listenerManager = new PaperListenerManager(this);
         this.guiManager = new PaperGuiManager(this);
@@ -192,8 +205,8 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
 
         this.cache.load();
         this.discordManager.load();
-        this.listenerManager.bootstrap();
         this.commandManager.bootstrap();
+        this.bootstrap();
 
         this.statusHandler.addWatcher(
                 StatusWatcher.builder()
@@ -534,6 +547,113 @@ public final class WhoMineImpl extends JavaPlugin implements WhoMine {
         } catch (IllegalAccessException e) {
             throw new IllegalStateException("Could not set data folder", e);
         }
+    }
+
+    private void bootstrap() {
+        //<editor-fold desc="Discord listeners" defaultstate="collapsed">
+
+        // TODO: Discord listener manager
+        //module.getStatusHandler().addWatcher(
+        //        StatusWatcher.builder()
+        //        .statuses(MainModule.LOADED_DISCORD)
+        //        .successRunnable(
+        //                () -> {
+        //                    this.listenerManager.register(new CommandAutoCompleteInteractionListener());
+        //                    this.listenerManager.register(new MessageReceivedListener());
+        //                    this.listenerManager.register(new SlashCommandInteractionListener());
+        //                }
+        //        )
+        //        .build()
+        //);
+        //</editor-fold>
+
+        //<editor-fold desc="Event listeners" defaultstate="collapsed">
+
+        // Block listeners
+        this.listenerManager.register(new BlockBreakListener());
+
+        this.listenerManager.register(new BlockDamageListener());
+        this.listenerManager.register(new BlockDropItemListener());
+        this.listenerManager.register(new BlockExplodeListener());
+        this.listenerManager.register(new BlockPistonExtendListener());
+        this.listenerManager.register(new BlockPistonRetractListener());
+        this.listenerManager.register(new BlockPlaceListener());
+        this.listenerManager.register(new NotePlayListener());
+
+        // Chat listeners
+        this.listenerManager.register(new AsyncChatListener());
+
+        // Command listeners
+        this.listenerManager.register(new UnknownCommandListener());
+
+        // Entity listeners
+        this.listenerManager.register(new EntityChangeBlockListener());
+        this.listenerManager.register(new EntityDamageByEntityListener());
+        this.listenerManager.register(new EntityDamageListener());
+        this.listenerManager.register(new EntityDismountListener());
+        this.listenerManager.register(new EntityExplodeListener());
+
+        // Hanging listeners
+        this.listenerManager.register(new HangingBreakByEntityListener());
+
+        // Inventory listeners
+        this.listenerManager.register(new InventoryClickListener());
+        this.listenerManager.register(new InventoryCloseListener());
+        this.listenerManager.register(new InventoryCreativeListener());
+        this.listenerManager.register(new InventoryDragListener());
+        this.listenerManager.register(new InventoryOpenListener());
+        this.listenerManager.register(new PrepareAnvilListener());
+        this.listenerManager.register(new PrepareItemCraftListener());
+
+        // Player listeners
+        this.listenerManager.register(new AsyncPlayerPreLoginListener());
+        this.listenerManager.register(new PlayerAdvancementDoneListener());
+        this.listenerManager.register(new PlayerBucketEmptyListener());
+        this.listenerManager.register(new PlayerChangedWorldListener());
+        this.listenerManager.register(new PlayerCommandPreprocessListener());
+        this.listenerManager.register(new PlayerDeathListener());
+        this.listenerManager.register(new PlayerDropItemListener());
+        this.listenerManager.register(new PlayerEditBookListener());
+        this.listenerManager.register(new PlayerGameModeChangeListener());
+        this.listenerManager.register(new PlayerInteractEntityListener());
+        this.listenerManager.register(new PlayerInteractListener());
+        this.listenerManager.register(new PlayerJoinListener());
+        this.listenerManager.register(new PlayerKickListener());
+        this.listenerManager.register(new PlayerMoveListener());
+        this.listenerManager.register(new PlayerQuitListener());
+        this.listenerManager.register(new PlayerResourcePackStatusListener());
+        this.listenerManager.register(new PlayerSpawnLocationListener());
+        this.listenerManager.register(new PlayerStopSpectatingEntityListener());
+        this.listenerManager.register(new PlayerTeleportListener());
+
+        // Server listeners
+        this.listenerManager.register(new ServerCommandListener());
+
+        // Mechanic listeners
+        this.listenerManager.register(new BanSwordMechanic.EntityDamageByEntity());
+        this.listenerManager.register(new BanSwordMechanic.InventoryClick());
+        this.listenerManager.register(new CardBoxMechanic.InventoryMoveItem());
+        this.listenerManager.register(new CardBoxMechanic.InventoryDrag());
+        this.listenerManager.register(new CardBoxMechanic.InventoryClick());
+        this.listenerManager.register(new CocaineMechanic.PlayerItemConsume());
+        this.listenerManager.register(new DamageableItemMechanic.PlayerItemDamage());
+        this.listenerManager.register(new DosimeterMechanic.PlayerSwapHandItems());
+        this.listenerManager.register(new DosimeterMechanic.PlayerItemHeld());
+        this.listenerManager.register(new DosimeterMechanic.InventoryClick());
+        this.listenerManager.register(new DosimeterMechanic.PlayerDropItem());
+        this.listenerManager.register(new DosimeterMechanic.PlayerQuit());
+        this.listenerManager.register(new DosimeterMechanic.PlayerInteract());
+        this.listenerManager.register(new PoopMechanic.PlayerInteract());
+
+        //</editor-fold>
+
+        //<editor-fold desc="Packet listeners" defaultstate="collapsed">
+
+        this.listenerManager.register(new PlayerActionListener());
+        this.listenerManager.register(new PlayerUpdateSignListener());
+        this.listenerManager.register(new SwingArmListener());
+
+        //</editor-fold>
     }
 
     private static void initClass(final @NotNull Class<?> clazz) throws ExceptionInInitializerError {

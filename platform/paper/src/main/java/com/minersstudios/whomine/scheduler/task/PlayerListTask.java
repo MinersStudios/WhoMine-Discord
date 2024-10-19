@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.scheduler.task;
 
-import com.minersstudios.whomine.PaperCache;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.player.collection.PlayerInfoMap;
-import com.minersstudios.whomine.world.WorldDark;
+import com.minersstudios.wholib.paper.PaperCache;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.player.collection.PlayerInfoMap;
+import com.minersstudios.wholib.paper.world.WorldDark;
 import org.bukkit.Server;
 import org.jetbrains.annotations.NotNull;
 

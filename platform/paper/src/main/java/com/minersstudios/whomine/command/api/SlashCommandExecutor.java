@@ -1,9 +1,9 @@
 package com.minersstudios.whomine.command.api;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
 import com.minersstudios.whomine.command.api.discord.interaction.TabCompleterHandler;
-import com.minersstudios.whomine.api.module.AbstractModuleComponent;
+import com.minersstudios.wholib.module.AbstractModuleComponent;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.CommandAutoCompleteInteractionEvent;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;

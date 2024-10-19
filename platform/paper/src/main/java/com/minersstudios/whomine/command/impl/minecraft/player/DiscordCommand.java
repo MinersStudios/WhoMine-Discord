@@ -1,15 +1,14 @@
 package com.minersstudios.whomine.command.impl.minecraft.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.discord.DiscordManager;
-import com.minersstudios.whomine.menu.DiscordLinkCodeMenu;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.wholib.paper.discord.BotHandler;
+import com.minersstudios.wholib.paper.discord.DiscordManager;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -21,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
-import static com.minersstudios.whomine.api.utility.SharedConstants.DISCORD_LINK;
+import static com.minersstudios.wholib.locale.Translations.*;
+import static com.minersstudios.wholib.utility.SharedConstants.DISCORD_LINK;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.event.HoverEvent.showText;
@@ -70,7 +69,7 @@ public final class DiscordCommand extends PluginCommandExecutor {
 
         if (args.length > 0) {
             switch (args[0]) {
-                case "link" -> plugin.getGuiManager().open(DiscordLinkCodeMenu.class, player);
+                case "link" -> plugin.getGuiManager().open("discord_link_code", player);
                 case "unlink" -> {
                     final PlayerInfo playerInfo = PlayerInfo.fromOnlinePlayer(plugin, player);
                     final long id = playerInfo.unlinkDiscord();

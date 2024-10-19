@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.api;
 
-import com.minersstudios.whomine.api.module.MainModule;
+import com.minersstudios.wholib.module.MainModule;
 import com.minersstudios.whomine.WhoMineImpl;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.command.api.minecraft.Commodore;
@@ -28,8 +28,8 @@ import com.minersstudios.whomine.command.impl.minecraft.player.PrivateMessageCom
 import com.minersstudios.whomine.command.impl.minecraft.player.ResourcePackCommand;
 import com.minersstudios.whomine.command.impl.minecraft.player.SkinsCommand;
 import com.minersstudios.whomine.command.impl.minecraft.player.roleplay.*;
-import com.minersstudios.whomine.api.status.StatusWatcher;
-import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.wholib.status.StatusWatcher;
+import com.minersstudios.wholib.utility.ChatUtils;
 import com.mojang.brigadier.tree.LiteralCommandNode;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;

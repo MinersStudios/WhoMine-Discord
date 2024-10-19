@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.command.api;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.api.module.AbstractModuleComponent;
+import com.minersstudios.wholib.module.AbstractModuleComponent;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

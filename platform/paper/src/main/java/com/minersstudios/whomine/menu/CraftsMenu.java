@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.inventory.*;
-import com.minersstudios.whomine.inventory.action.ButtonClickAction;
+import com.minersstudios.wholib.paper.inventory.*;
+import com.minersstudios.wholib.paper.inventory.action.ButtonClickAction;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -17,8 +17,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
-import static com.minersstudios.whomine.api.utility.ChatUtils.DEFAULT_STYLE;
+import static com.minersstudios.wholib.locale.Translations.*;
+import static com.minersstudios.wholib.utility.ChatUtils.DEFAULT_STYLE;
 
 public final class CraftsMenu {
     public static final int RESULT_SLOT = 15;

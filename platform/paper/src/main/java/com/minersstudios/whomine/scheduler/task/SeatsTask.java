@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.scheduler.task;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

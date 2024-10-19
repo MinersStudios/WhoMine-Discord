@@ -1,13 +1,13 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.inventory.InventoryButton;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
-import com.minersstudios.whomine.inventory.holder.InventoryHolder;
-import com.minersstudios.whomine.player.ResourcePack;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.PlayerSettings;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.inventory.CustomInventory;
+import com.minersstudios.wholib.paper.inventory.InventoryButton;
+import com.minersstudios.wholib.paper.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.wholib.paper.inventory.holder.InventoryHolder;
+import com.minersstudios.wholib.paper.player.ResourcePack;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.PlayerSettings;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -19,13 +19,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
-import static com.minersstudios.whomine.api.utility.ChatUtils.COLORLESS_DEFAULT_STYLE;
-import static com.minersstudios.whomine.api.utility.ChatUtils.DEFAULT_STYLE;
+import static com.minersstudios.wholib.locale.Translations.*;
+import static com.minersstudios.wholib.utility.ChatUtils.COLORLESS_DEFAULT_STYLE;
+import static com.minersstudios.wholib.utility.ChatUtils.DEFAULT_STYLE;
 import static net.kyori.adventure.text.format.NamedTextColor.GRAY;
 
 @InventoryHolder
 public final class ResourcePackMenu extends AbstractInventoryHolder {
+
+    public ResourcePackMenu() {
+        super("resource_pack_choice");
+    }
 
     @Override
     protected @NotNull CustomInventory createCustomInventory() {

@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.command.impl.minecraft.item;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.annotation.Resource;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.annotation.Resource;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.paper.custom.item.renameable.RenameableItemRegistry;
 import org.bukkit.Keyed;
 import org.bukkit.Server;
 import org.bukkit.command.CommandSender;
@@ -34,7 +34,7 @@ public final class ReloadCommand {
             }
         }
 
-        plugin.getCache().customItemRecipes.clear();
+        plugin.getCache().getCustomItemRecipes().clear();
         plugin.getCache().getRenameableMenuItems().clear();
         RenameableItemRegistry.unregisterAll();
         plugin.getConfiguration().reload();

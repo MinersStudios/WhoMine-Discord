@@ -1,10 +1,14 @@
 package com.minersstudios.whomine;
 
-import com.minersstudios.whomine.api.annotation.Resource;
-import com.minersstudios.whomine.api.status.StatusHandler;
-import com.minersstudios.whomine.discord.DiscordModuleImpl;
-import com.minersstudios.whomine.gui.VelocityGuiManager;
-import com.minersstudios.whomine.listener.api.VelocityListenerManager;
+import com.minersstudios.wholib.annotation.Resource;
+import com.minersstudios.wholib.status.StatusHandler;
+import com.minersstudios.wholib.velocity.VelocityCache;
+import com.minersstudios.wholib.velocity.VelocityConfig;
+import com.minersstudios.wholib.velocity.WhoMine;
+import com.minersstudios.wholib.velocity.discord.DiscordModuleImpl;
+import com.minersstudios.wholib.velocity.gui.VelocityGuiManager;
+import com.minersstudios.wholib.velocity.listener.VelocityListenerManager;
+import com.minersstudios.whomine.listener.player.PlayerChatListener;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
@@ -16,7 +20,7 @@ import javax.inject.Inject;
 import java.nio.file.Path;
 import java.util.logging.Logger;
 
-import static com.minersstudios.whomine.api.utility.ProjectInfo.*;
+import static com.minersstudios.wholib.utility.ProjectInfo.*;
 
 @Plugin(
         id = Resource.WHOMINE,
@@ -108,7 +112,15 @@ public final class WhoMineImpl implements WhoMine {
     }
 
     @Subscribe
-    public void onProxyInitialize(final @NotNull ProxyInitializeEvent event) {
-        this.listenerManager.bootstrap();
+    public void onProxyInitialize(final @NotNull ProxyInitializeEvent ignored) {
+        this.bootstrap();
+    }
+
+    private void bootstrap() {
+        //<editor-fold desc="Event listeners" defaultstate="collapsed">
+
+        this.listenerManager.register(new PlayerChatListener());
+
+        //</editor-fold>
     }
 }

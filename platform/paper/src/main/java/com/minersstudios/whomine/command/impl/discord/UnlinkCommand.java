@@ -1,18 +1,18 @@
 package com.minersstudios.whomine.command.impl.discord;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.utility.ChatUtils;
 import com.minersstudios.whomine.command.api.SlashCommandExecutor;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.player.PlayerInfo;
+import com.minersstudios.wholib.paper.discord.BotHandler;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.api.locale.Translations.COMMAND_DISCORD_UNLINK_DISCORD_SUCCESS;
-import static com.minersstudios.whomine.api.locale.Translations.COMMAND_DISCORD_UNLINK_MINECRAFT_SUCCESS;
+import static com.minersstudios.wholib.locale.Translations.COMMAND_DISCORD_UNLINK_DISCORD_SUCCESS;
+import static com.minersstudios.wholib.locale.Translations.COMMAND_DISCORD_UNLINK_MINECRAFT_SUCCESS;
 import static net.kyori.adventure.text.Component.text;
 
 public final class UnlinkCommand extends SlashCommandExecutor {

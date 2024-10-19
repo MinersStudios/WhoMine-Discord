@@ -1,16 +1,16 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.player.PlayerFile;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.Pronouns;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.paper.player.PlayerFile;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.Pronouns;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Locale;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class AdminPronounsCommand {

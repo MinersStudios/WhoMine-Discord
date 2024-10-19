@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.command.impl.minecraft.player.roleplay;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 
 import java.security.SecureRandom;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
-import static com.minersstudios.whomine.utility.MessageUtils.RolePlayActionType.ME;
-import static com.minersstudios.whomine.utility.MessageUtils.sendRPEventMessage;
+import static com.minersstudios.wholib.locale.Translations.*;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.RolePlayActionType.ME;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.sendRPEventMessage;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 import static net.kyori.adventure.text.Component.text;

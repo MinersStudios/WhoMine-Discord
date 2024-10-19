@@ -1,16 +1,16 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.inventory.InventoryButton;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
-import com.minersstudios.whomine.inventory.holder.InventoryHolder;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.player.PlayerFile;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.skin.Skin;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.inventory.CustomInventory;
+import com.minersstudios.wholib.paper.inventory.InventoryButton;
+import com.minersstudios.wholib.paper.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.wholib.paper.inventory.holder.InventoryHolder;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.paper.discord.BotHandler;
+import com.minersstudios.wholib.paper.player.PlayerFile;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.skin.Skin;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.kyori.adventure.text.Component;
 import org.bukkit.Material;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 @InventoryHolder
@@ -32,6 +32,10 @@ public final class SkinsMenu extends AbstractInventoryHolder {
     private InventoryButton applyButtonEmpty;
     private InventoryButton deleteButton;
     private InventoryButton deleteButtonEmpty;
+
+    public SkinsMenu() {
+        super("skins_choice");
+    }
 
     @Override
     protected @NotNull CustomInventory createCustomInventory() {

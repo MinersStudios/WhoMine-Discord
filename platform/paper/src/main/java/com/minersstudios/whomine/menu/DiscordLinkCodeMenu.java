@@ -1,11 +1,12 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
-import com.minersstudios.whomine.inventory.holder.InventoryHolder;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.player.PlayerInfo;
+import com.minersstudios.wholib.paper.inventory.CustomInventory;
+import com.minersstudios.wholib.paper.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.wholib.paper.inventory.holder.InventoryHolder;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.utility.ResourcedPath;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TranslatableComponent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 @InventoryHolder
@@ -34,6 +35,10 @@ public final class DiscordLinkCodeMenu extends AbstractInventoryHolder {
             MENU_DISCORD_NUMBERS_8.asTranslatable(),
             MENU_DISCORD_NUMBERS_9.asTranslatable()
     );
+
+    public DiscordLinkCodeMenu() {
+        super("discord_link_code");
+    }
 
     @Override
     protected @Nullable CustomInventory createCustomInventory() {

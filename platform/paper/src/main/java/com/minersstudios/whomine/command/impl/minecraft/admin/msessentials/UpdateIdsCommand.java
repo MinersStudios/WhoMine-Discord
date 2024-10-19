@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.msessentials;
 
-import com.minersstudios.whomine.PaperCache;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.player.PlayerInfo;
+import com.minersstudios.wholib.paper.PaperCache;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

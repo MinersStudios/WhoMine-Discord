@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.command.impl.minecraft.player;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
 import com.minersstudios.whomine.menu.ResourcePackMenu;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.wholib.utility.Font;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -37,7 +37,7 @@ public final class ResourcePackCommand extends PluginCommandExecutor {
             final String @NotNull ... args
     ) {
         this.getModule().getGuiManager().open(
-                ResourcePackMenu.class,
+                "resource_pack_choice",
                 (Player) sender
         );
 

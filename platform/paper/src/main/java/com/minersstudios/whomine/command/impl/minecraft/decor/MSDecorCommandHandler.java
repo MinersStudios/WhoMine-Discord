@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.command.impl.minecraft.decor;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.custom.decor.CustomDecorType;
-import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.utility.MSPlayerUtils;
+import com.minersstudios.wholib.paper.custom.decor.CustomDecorType;
+import com.minersstudios.wholib.utility.Font;
+import com.minersstudios.wholib.paper.utility.MSPlayerUtils;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;

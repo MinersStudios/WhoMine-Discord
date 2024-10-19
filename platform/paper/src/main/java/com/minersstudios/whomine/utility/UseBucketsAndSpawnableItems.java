@@ -1,5 +1,7 @@
 package com.minersstudios.whomine.utility;
 
+import com.minersstudios.wholib.paper.utility.BlockUtils;
+import com.minersstudios.wholib.paper.utility.CoreProtectUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;

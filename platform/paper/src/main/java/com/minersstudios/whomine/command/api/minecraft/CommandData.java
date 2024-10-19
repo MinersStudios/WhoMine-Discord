@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.api.minecraft;
 
-import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.wholib.utility.ChatUtils;
 import com.mojang.brigadier.tree.CommandNode;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMap;
 import it.unimi.dsi.fastutil.objects.Object2BooleanMaps;

@@ -1,18 +1,18 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.utility.DateUtils;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.collection.MuteMap;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.paper.utility.DateUtils;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.collection.MuteMap;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 import java.time.Instant;
 import java.util.Locale;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class AdminMuteInfoCommand {

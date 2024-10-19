@@ -1,11 +1,12 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin;
 
-import com.minersstudios.whomine.PaperConfig;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.PaperConfig;
+import com.minersstudios.whomine.PaperConfigImpl;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.api.utility.Font;
+import com.minersstudios.wholib.utility.Font;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.commands.arguments.DimensionArgument;
@@ -22,7 +23,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 import static net.kyori.adventure.text.Component.text;

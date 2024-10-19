@@ -1,8 +1,8 @@
 package com.minersstudios.whomine.command.impl.minecraft;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 

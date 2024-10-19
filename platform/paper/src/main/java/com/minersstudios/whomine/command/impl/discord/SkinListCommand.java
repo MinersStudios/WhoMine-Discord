@@ -1,11 +1,11 @@
 package com.minersstudios.whomine.command.impl.discord;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.locale.Translations;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.locale.Translations;
 import com.minersstudios.whomine.command.api.SlashCommandExecutor;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.player.PlayerInfo;
+import com.minersstudios.wholib.paper.discord.BotHandler;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
 import net.dv8tion.jda.api.interactions.commands.build.Commands;
 import org.jetbrains.annotations.NotNull;
 

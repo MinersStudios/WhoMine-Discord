@@ -1,14 +1,14 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.collection.IDMap;
-import com.minersstudios.whomine.utility.DateUtils;
-import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.api.utility.IDUtils;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.collection.IDMap;
+import com.minersstudios.wholib.paper.utility.DateUtils;
+import com.minersstudios.wholib.utility.Font;
+import com.minersstudios.wholib.utility.IDUtils;
 import com.mojang.brigadier.arguments.DoubleArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.arguments.StringArgumentType;
@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 

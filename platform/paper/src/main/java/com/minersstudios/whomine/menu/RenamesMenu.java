@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.inventory.*;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.custom.item.renameable.RenameCollection;
-import com.minersstudios.whomine.custom.item.renameable.RenameableItem;
-import com.minersstudios.whomine.custom.item.renameable.RenameableItemRegistry;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.inventory.*;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.paper.custom.item.renameable.RenameCollection;
+import com.minersstudios.wholib.paper.custom.item.renameable.RenameableItem;
+import com.minersstudios.wholib.paper.custom.item.renameable.RenameableItemRegistry;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.IntStream;
 
-import static com.minersstudios.whomine.inventory.InventoryButton.playClickSound;
+import static com.minersstudios.wholib.paper.inventory.InventoryButton.playClickSound;
 
 public final class RenamesMenu {
     private static final int RENAMEABLE_ITEM_SLOT = 2;

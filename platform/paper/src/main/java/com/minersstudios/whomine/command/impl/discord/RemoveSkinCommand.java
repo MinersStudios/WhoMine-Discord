@@ -1,14 +1,14 @@
 package com.minersstudios.whomine.command.impl.discord;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.api.utility.ChatUtils;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.utility.ChatUtils;
 import com.minersstudios.whomine.command.api.SlashCommandExecutor;
 import com.minersstudios.whomine.command.api.discord.interaction.CommandHandler;
 import com.minersstudios.whomine.command.api.discord.interaction.TabCompleterHandler;
-import com.minersstudios.whomine.discord.BotHandler;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.skin.Skin;
+import com.minersstudios.wholib.paper.discord.BotHandler;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.skin.Skin;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.dv8tion.jda.api.entities.Message;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -23,7 +23,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 import static net.kyori.adventure.text.Component.text;
 
 public final class RemoveSkinCommand extends SlashCommandExecutor {

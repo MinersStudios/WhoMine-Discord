@@ -1,14 +1,14 @@
 package com.minersstudios.whomine.command.impl.minecraft.player;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
 import com.minersstudios.whomine.command.api.PluginCommandExecutor;
 import com.minersstudios.whomine.command.api.minecraft.CommandData;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.api.utility.Font;
-import com.minersstudios.whomine.utility.MSPlayerUtils;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.utility.Font;
+import com.minersstudios.wholib.paper.utility.MSPlayerUtils;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-import static com.minersstudios.whomine.utility.MessageUtils.sendPrivateMessage;
+import static com.minersstudios.wholib.paper.utility.MessageUtils.sendPrivateMessage;
 import static com.mojang.brigadier.builder.LiteralArgumentBuilder.literal;
 import static com.mojang.brigadier.builder.RequiredArgumentBuilder.argument;
 import static net.kyori.adventure.text.Component.text;

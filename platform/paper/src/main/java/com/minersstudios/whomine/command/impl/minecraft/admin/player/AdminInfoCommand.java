@@ -1,12 +1,13 @@
 package com.minersstudios.whomine.command.impl.minecraft.admin.player;
 
-import com.minersstudios.whomine.PaperConfig;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.player.PlayerFile;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.PlayerName;
-import com.minersstudios.whomine.player.PlayerSettings;
+import com.minersstudios.wholib.paper.PaperConfig;
+import com.minersstudios.whomine.PaperConfigImpl;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.paper.player.PlayerFile;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.PlayerName;
+import com.minersstudios.wholib.paper.player.PlayerSettings;
 import org.bukkit.Location;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;

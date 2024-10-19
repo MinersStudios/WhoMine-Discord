@@ -1,22 +1,19 @@
 plugins {
-    alias(libs.plugins.shadow)
+    id("whomine.platform")
+    id("whomine.velocitypowered")
 }
 
 dependencies {
-    implementation(project(":WhoMine-common"))
+    api(Libs.Velocity.asProject(rootProject))
 
-    compileOnly(libs.velocity.api)
-    annotationProcessor(libs.velocity.api)
-}
-
-tasks {
-    shadowJar {
-        destinationDirectory.set(file("$rootDir/build"))
-
-        archiveVersion.set(project.version.toString())
-    }
-
-    build {
-        dependsOn(shadowJar)
-    }
+    runtimeClasspath(libs.asm.api)
+    runtimeClasspath(libs.asm.commons)
+    runtimeClasspath(libs.fastutil)
+    runtimeClasspath(libs.google.guava)
+    runtimeClasspath(libs.google.gson)
+    runtimeClasspath(libs.google.jsr305)
+    runtimeClasspath(libs.jackson.annotations)
+    runtimeClasspath(libs.jda)
+    runtimeClasspath(libs.jetbrains.annotations)
+    runtimeClasspath(libs.netty.buffer)
 }

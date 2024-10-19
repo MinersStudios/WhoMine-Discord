@@ -1,7 +1,7 @@
 package com.minersstudios.whomine.command.api.discord.interaction;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.player.PlayerInfo;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
 import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.interactions.Interaction;
 import org.jetbrains.annotations.NotNull;

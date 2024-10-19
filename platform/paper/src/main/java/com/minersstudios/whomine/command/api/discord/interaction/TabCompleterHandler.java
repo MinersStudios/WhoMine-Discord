@@ -1,6 +1,6 @@
 package com.minersstudios.whomine.command.api.discord.interaction;
 
-import com.minersstudios.whomine.WhoMine;
+import com.minersstudios.wholib.paper.WhoMine;
 import net.dv8tion.jda.api.interactions.AutoCompleteQuery;
 import net.dv8tion.jda.api.interactions.commands.CommandAutoCompleteInteraction;
 import org.jetbrains.annotations.NotNull;

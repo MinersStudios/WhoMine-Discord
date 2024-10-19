@@ -1,3 +1,5 @@
+#file: noinspection Annotator
+
 name: "CodeQL"
 
 on:
@@ -27,7 +29,7 @@ jobs:
       uses: actions/checkout@v4
       with:
         ref: ${{ github.event.pull_request.head.sha }}
-      
+
     - name: Initialize CodeQL
       uses: github/codeql-action/init@v3
       with:

@@ -1,37 +1,16 @@
 import io.papermc.paperweight.userdev.ReobfArtifactConfiguration.Companion.MOJANG_PRODUCTION
 
-val paperVersion:       String = rootProject.property("paper.version").toString()
-val author:             String = rootProject.property("project.author").toString()
-val contributors:       String = rootProject.property("project.contributors").toString()
-val website:            String = rootProject.property("project.website").toString()
-val coreProtectVersion: String = libs.versions.coreprotect.get()
-val authMeVersion:      String = libs.versions.authme.get()
-val apiVersion:         String
-    get() {
-        val minecraftVersion = paperweight.minecraftVersion.get()
-        val parts = minecraftVersion.split('.')
-
-        return if (parts.size < 2) {
-            throw IllegalStateException("Invalid Minecraft version: '$minecraftVersion'")
-        } else {
-            "'${parts[0]}.${parts[1]}'"
-        }
-    }
+val apiVersion: String = apiVersion(paperweight.minecraftVersion.get())
 
 plugins {
-    alias(libs.plugins.paper.userdev)
-    alias(libs.plugins.paper.run)
-    alias(libs.plugins.shadow)
+    id("whomine.platform")
+    id("whomine.paperweight")
 }
 
 paperweight.reobfArtifactConfiguration = MOJANG_PRODUCTION
 
 dependencies {
-    paperweight.paperDevBundle(paperVersion)
-
-    implementation(project(":WhoMine-common"))
-    compileOnly(libs.authme)
-    compileOnly(libs.coreprotect)
+    api(Libs.Paper.asProject(rootProject))
 }
 
 tasks {
@@ -40,12 +19,12 @@ tasks {
             "name"               to project.name,
             "version"            to project.version,
             "description"        to project.description,
-            "author"             to author,
-            "contributors"       to contributors,
-            "website"            to website,
+            "author"             to projectAuthor,
+            "contributors"       to projectContributors,
+            "website"            to projectWebsite,
             "apiVersion"         to apiVersion,
-            "coreProtectVersion" to coreProtectVersion,
-            "authMeVersion"      to libs.versions.authme.get(),
+            "coreProtectVersion" to libs.versions.coreprotect.get(),
+            "authMeVersion"      to libs.versions.authme.get()
         )
 
         inputs.properties(props)

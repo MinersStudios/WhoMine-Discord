@@ -1,12 +1,12 @@
 package com.minersstudios.whomine.command.api.minecraft;
 
 import com.destroystokyo.paper.event.brigadier.AsyncPlayerSendCommandsEvent;
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.listener.ListenFor;
-import com.minersstudios.whomine.api.module.MainModule;
-import com.minersstudios.whomine.api.status.StatusWatcher;
-import com.minersstudios.whomine.event.PaperEventContainer;
-import com.minersstudios.whomine.event.PaperEventListener;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.listener.ListenFor;
+import com.minersstudios.wholib.module.MainModule;
+import com.minersstudios.wholib.status.StatusWatcher;
+import com.minersstudios.wholib.paper.event.PaperEventContainer;
+import com.minersstudios.wholib.paper.event.PaperEventListener;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import com.mojang.brigadier.tree.ArgumentCommandNode;
 import com.mojang.brigadier.tree.CommandNode;
@@ -15,7 +15,7 @@ import com.mojang.brigadier.tree.RootCommandNode;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.PluginCommand;
-import com.minersstudios.whomine.api.event.handle.CancellableHandler;
+import com.minersstudios.wholib.event.handle.CancellableHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

@@ -1,10 +1,10 @@
 package com.minersstudios.whomine.command.impl.minecraft.item;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.api.locale.Translations;
-import com.minersstudios.whomine.utility.MSLogger;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.custom.item.CustomItem;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.locale.Translations;
+import com.minersstudios.wholib.paper.utility.MSLogger;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.custom.item.CustomItem;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -1,15 +1,15 @@
 package com.minersstudios.whomine.menu;
 
-import com.minersstudios.whomine.WhoMine;
-import com.minersstudios.whomine.inventory.CustomInventory;
-import com.minersstudios.whomine.inventory.InventoryButton;
-import com.minersstudios.whomine.inventory.holder.AbstractInventoryHolder;
-import com.minersstudios.whomine.inventory.holder.InventoryHolder;
-import com.minersstudios.whomine.api.utility.ChatUtils;
-import com.minersstudios.whomine.player.PlayerFile;
-import com.minersstudios.whomine.player.PlayerInfo;
-import com.minersstudios.whomine.player.Pronouns;
-import com.minersstudios.whomine.player.RegistrationProcess;
+import com.minersstudios.wholib.paper.WhoMine;
+import com.minersstudios.wholib.paper.inventory.CustomInventory;
+import com.minersstudios.wholib.paper.inventory.InventoryButton;
+import com.minersstudios.wholib.paper.inventory.holder.AbstractInventoryHolder;
+import com.minersstudios.wholib.paper.inventory.holder.InventoryHolder;
+import com.minersstudios.wholib.utility.ChatUtils;
+import com.minersstudios.wholib.paper.player.PlayerFile;
+import com.minersstudios.wholib.paper.player.PlayerInfo;
+import com.minersstudios.wholib.paper.player.Pronouns;
+import com.minersstudios.wholib.paper.player.RegistrationProcess;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -19,10 +19,14 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import static com.minersstudios.whomine.api.locale.Translations.*;
+import static com.minersstudios.wholib.locale.Translations.*;
 
 @InventoryHolder
 public final class PronounMenu extends AbstractInventoryHolder {
+
+    public PronounMenu() {
+        super("pronouns_choice");
+    }
 
     @Override
     protected @NotNull CustomInventory createCustomInventory() {
