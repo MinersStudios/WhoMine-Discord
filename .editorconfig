@@ -2,12 +2,14 @@ root = true
 
 [*]
 charset = utf-8
+end_of_line = lf
+tab_width = 4
 indent_size = 4
 indent_style = space
-tab_width = 4
 insert_final_newline = true
+trim_trailing_whitespace = true
 max_line_length = 120
-ij_visual_guides = 80
+ij_visual_guides = 80, 120
 ij_continuation_indent_size = 8
 
 [*.java]
@@ -264,5 +266,5 @@ ij_json_space_before_colon = false
 ij_json_space_before_comma = false
 ij_json_wrap_long_lines = false
 
-[{*.yml,*.md}]
+[*.{yml,md}]
 indent_size = 2
