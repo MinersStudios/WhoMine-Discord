@@ -10,10 +10,12 @@ import com.minersstudios.wholib.packet.registry.PlayPackets;
 import com.minersstudios.wholib.paper.packet.PaperPacketContainer;
 import com.minersstudios.wholib.paper.packet.PaperPacketEvent;
 import com.minersstudios.wholib.paper.packet.PaperPacketListener;
+import com.minersstudios.wholib.paper.utility.ApiConverter;
 import com.minersstudios.wholib.paper.world.location.MSPosition;
 import com.minersstudios.wholib.paper.world.sound.SoundGroup;
 import com.minersstudios.wholib.paper.utility.BlockUtils;
 import com.minersstudios.wholib.paper.utility.PlayerUtils;
+import com.minersstudios.wholib.utility.ResourcedPath;
 import com.minersstudios.wholib.utility.SharedConstants;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
@@ -21,9 +23,13 @@ import net.minecraft.network.protocol.game.ServerboundPlayerActionPacket;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.GameType;
 import org.bukkit.Location;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeInstance;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.type.NoteBlock;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlotGroup;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -110,6 +116,14 @@ public final class PlayerActionListener extends PaperPacketListener {
      * Handles the block-breaking process
      */
     private class Handler {
+        @SuppressWarnings("UnstableApiUsage")
+        private static final AttributeModifier BREAK_SPEED_MODIFIER =
+                new AttributeModifier(
+                        ApiConverter.apiToBukkit(ResourcedPath.whomine("custom_break_speed")),
+                        -1,
+                        AttributeModifier.Operation.MULTIPLY_SCALAR_1,
+                        EquipmentSlotGroup.HAND
+                );
 
         private final WhoMine module;
         private final ServerPlayer serverPlayer;
@@ -140,6 +154,7 @@ public final class PlayerActionListener extends PaperPacketListener {
             this.stop();
 
             if (this.block.getBlockData() instanceof final NoteBlock noteBlock) {
+                this.addSpeedModifier();
                 this.handleNoteBlock(noteBlock);
             } else {
                 this.handleWoodenBlock();
@@ -179,6 +194,7 @@ public final class PlayerActionListener extends PaperPacketListener {
                     if (fromPacket) {
                         if (this.block.equals(getTargetBlock(this.serverPlayer))) {
                             this.stop(entry);
+
                             return;
                         }
 
@@ -230,6 +246,8 @@ public final class PlayerActionListener extends PaperPacketListener {
          *              the player will be stopped
          */
         public void stop(final @Nullable DiggingMap.Entry entry) {
+            this.removeSpeedModifier();
+
             final DiggingMap diggingMap = this.module.getCache().getDiggingMap();
 
             if (entry == null) {
@@ -304,6 +322,25 @@ public final class PlayerActionListener extends PaperPacketListener {
                     block,
                     entry == null ? -1 : entry.getStage()
             );
+        }
+
+        private void addSpeedModifier() {
+            final AttributeInstance attributeInstance =
+                    this.serverPlayer.getBukkitEntity().getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+
+            if (attributeInstance != null) {
+                attributeInstance.removeModifier(BREAK_SPEED_MODIFIER);
+                attributeInstance.addTransientModifier(BREAK_SPEED_MODIFIER);
+            }
+        }
+
+        private void removeSpeedModifier() {
+            final AttributeInstance attributeInstance =
+                    this.serverPlayer.getBukkitEntity().getAttribute(Attribute.GENERIC_ATTACK_SPEED);
+
+            if (attributeInstance != null) {
+                attributeInstance.removeModifier(BREAK_SPEED_MODIFIER);
+            }
         }
 
         private void handleNoteBlock(final @NotNull NoteBlock noteBlock) {

@@ -4,6 +4,7 @@ import com.minersstudios.wholib.annotation.Path;
 import com.minersstudios.wholib.annotation.Resource;
 import com.minersstudios.wholib.annotation.ResourcePath;
 import com.minersstudios.wholib.throwable.InvalidResourceException;
+import net.kyori.adventure.key.Key;
 import org.intellij.lang.annotations.Subst;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -137,6 +138,10 @@ public final class ResourcedPath {
         return ChatUtils.isBlank(this.resource)
                ? this.path
                : this.resource + ':' + this.path;
+    }
+
+    public @NotNull Key toAdventure() {
+        return Key.key(this.resource, this.path);
     }
 
     /**
