@@ -69,7 +69,7 @@
       <img alt="WhoMine documentation" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=MinersStudios&repo=WMDocs&icon_color=d5c3f0&hide_border=true&theme=dark&border_radius=20&title_color=d5c3f0&bg_color=39363f1e&cache_seconds=86400" width="49%">
     </picture>
   </a>
-  <br>
+  <br><br>
   <h1>ᴀᴄᴛɪᴠɪᴛʏ</h1>
   <a href="https://github.com/MinersStudios/WhoMine/pulse">
     <picture>
@@ -77,6 +77,39 @@
       <img alt="WhoMine activity" src="https://repobeats.axiom.co/api/embed/5586cf36d9133a4d1cd9c97427b21089d2e68d26.svg" width="98%">
     </picture>
   </a>
+  <br><br>
+  <h1>​🇸​​🇵​​🇪​​🇨​​🇮​​🇦​​🇱​ ​🇦​​🇨​​🇰​​🇳​​🇴​​🇼​​🇱​​🇪​​🇩​​🇬​​🇪​​🇲​​🇪​​🇳​​🇹​​</h1>
+  <h4 align="start">Special thanks to the people who have made a great and irreplaceable contribution to our project, helped in development, drawing, modeling, finding bugs and much more:</h4>
+  <table align="start">
+    <thread>
+      <tr>
+        <th width="1000px">Special thanks</th>
+        <th width="1000px">Сontributors</th>
+      </tr>
+    </thread>
+    <tbody>
+      <tr>
+        <td>
+          <ul>
+            <li><a href="https://youtube.com/channel/UCy0OPVHSPfh0LOM5x-lY7AQ">Demmicat</a></li>
+            <li><a href="https://youtube.com/@thelasing7475">TheLaysing</a></li>
+            <li>Mooniru</li>
+            <li><a href="https://twitch.tv/forgettmine">ForgettMine</a></li>
+            <li>ProtoLeo</li>
+            <li><a href="https://github.com/PackmanDude">PackmanDude</a></li>
+            <li><a href="https://github.com/hackerdemon666">HackerDemon</a></li>
+            <li><a href="https://youtube.com/@roostyk">Roostyk</a></li>
+            <li><a href="https://youtube.com/@copnef8359">CoPNeF</a></li>
+          </ul>
+        </td>
+        <td align="center">
+          <a href="https://github.com/MinersStudios/WhoMine/graphs/contributors">
+            <img src="https://contrib.rocks/image?repo=MinersStudios/WhoMine">
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <h1></h1>
   <br>
   <a rel="license" target="_blank" href="https://github.com/MinersStudios/WhoMine/blob/release/LICENSE.md">
