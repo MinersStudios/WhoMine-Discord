@@ -69,4 +69,30 @@
       <img alt="WhoMine documentation" src="https://github-readme-stats-git-masterrstaa-rickstaa.vercel.app/api/pin/?username=MinersStudios&repo=WMDocs&icon_color=d5c3f0&hide_border=true&theme=dark&border_radius=20&title_color=d5c3f0&bg_color=39363f1e&cache_seconds=86400" width="49%">
     </picture>
   </a>
+  <br>
+  <h1>ᴀᴄᴛɪᴠɪᴛʏ</h1>
+  <a href="https://github.com/MinersStudios/WhoMine/pulse">
+    <picture>
+      <source media="(prefers-color-scheme: light)" srcset="https://repobeats.axiom.co/api/embed/5586cf36d9133a4d1cd9c97427b21089d2e68d26.svg">
+      <img alt="WhoMine activity" src="https://repobeats.axiom.co/api/embed/5586cf36d9133a4d1cd9c97427b21089d2e68d26.svg" width="98%">
+    </picture>
+  </a>
+  <h1></h1>
+  <br>
+  <a rel="license" target="_blank" href="https://github.com/MinersStudios/WhoMine/blob/release/LICENSE.md">
+    <img alt="MIT License" src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg" width="72px"/>
+  </a>
+  <h6>
+    This project is licensed under the <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+    <br><br>
+    <ul align="justify">
+      <li>Feel free to use this plugin for any purpose, including commercial projects.</li>
+      <li>You are permitted to modify, distribute, and include this project in any form, as long as the original copyright notice is retained.</li>
+      <li>If you share or publish modified versions, attribution to the original <a href="https://github.com/MinersStudios/WhoMine">GitHub repository</a> is appreciated.</li>
+      <li>This software is provided "as is", without any warranties or guarantees, as detailed in the license terms.</li>
+    </ul>
+    <br>
+    Not an official Minecraft product<br>
+    We are in no way affiliated with or endorsed by 𝗠𝗼𝗷𝗮𝗻𝗴 𝗦𝘆𝗻𝗲𝗿𝗴𝗶𝗲𝘀 𝗔𝗕, 𝗠𝗶𝗰𝗿𝗼𝘀𝗼𝗳𝘁 𝗖𝗼𝗿𝗽𝗼𝗿𝗮𝘁𝗶𝗼𝗻 or other rights-holders
+  </h6>
 </div>
