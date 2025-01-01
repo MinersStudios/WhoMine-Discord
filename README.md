@@ -78,7 +78,7 @@
     </picture>
   </a>
   <br><br>
-  <h1>​🇸​​🇵​​🇪​​🇨​​🇮​​🇦​​🇱​ ​🇦​​🇨​​🇰​​🇳​​🇴​​🇼​​🇱​​🇪​​🇩​​🇬​​🇪​​🇲​​🇪​​🇳​​🇹​​</h1>
+  <h1>ꜱᴘᴇᴄɪᴀʟ ᴛʜᴀɴᴋꜱ​​</h1>
   <p align="start">Special thanks to the people who have made a great and irreplaceable contribution to our project, helped in development, drawing, modeling, finding bugs and much more:</p>
   <table align="start">
     <thread>
