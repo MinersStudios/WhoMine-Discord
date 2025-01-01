@@ -7,7 +7,7 @@
     </picture>
   </a>
   <p>
-    Here you will find various things from the server <b>WhoMine</b> <br> 
+    Here you will find various things from the server <b>WhoMine</b><br> 
     Most of them are pieces of shit so don't be surprised
   </p>
   • • •<br><br>
@@ -112,6 +112,13 @@
   </table>
   <h1></h1>
   <br>
+  <a target="_blank" href="https://minersstudios.com">
+    <picture>
+      <source media="(prefers-color-scheme: light)" srcset="https://raw.githubusercontent.com/MinersStudios/.github/refs/heads/main/assets/logos/logo.svg">
+      <img alt="MinersStudios" src="https://raw.githubusercontent.com/MinersStudios/.github/refs/heads/main/assets/logos/logo_white.svg" width="38px"/>
+    </picture>
+  </a>
+  &nbsp;&nbsp;
   <a rel="license" target="_blank" href="https://github.com/MinersStudios/WhoMine/blob/release/LICENSE.md">
     <img alt="MIT License" src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg" width="72px"/>
   </a>
