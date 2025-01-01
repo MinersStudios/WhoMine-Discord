@@ -1,6 +1,6 @@
 <!--suppress HtmlDeprecatedAttribute, HtmlUnknownTarget -->
 <div align="center">
-  <a href="https://whomine.net">
+  <a target="_blank" href="https://whomine.net">
     <picture>
       <source media="(prefers-color-scheme: light)" srcset="https://capsule-render.vercel.app/api?type=venom&color=gradient&customColorList=18&height=200&descSize=13&descAlignY=62&animation=fadeIn&section=header&text=WhoMine&fontColor=5C5C68&fontAlignY=42&fontSize=60&desc=Minecraft%20server%20with%20peculiar%20features">
       <img alt="Header" src="https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=18&height=200&descSize=13&descAlignY=52&animation=fadeIn&section=header&text=WhoMine&fontAlignY=32&fontSize=60&desc=Minecraft%20server%20with%20peculiar%20features" width="100%">
@@ -31,13 +31,13 @@
       </picture>
     </a>
     <br>
-    <a href="https://whomine.net/discord">
+    <a target="_blank" href="https://whomine.net/discord">
       <picture>
         <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/discord/928575868643733535?style=for-the-badge&label=WhoMine&logo=discord&color=c9cbff&logoColor=363636&labelColor=e8e9ff">
         <img alt="WhoMine Discord" src="https://img.shields.io/discord/928575868643733535?style=for-the-badge&label=WhoMine&logo=discord&color=c9cbff&logoColor=d9e0ee&labelColor=302d41">
       </picture>
     </a>
-    <a href="https://whomine.net/telegram">
+    <a target="_blank" href="https://whomine.net/telegram">
       <picture>
         <source media="(prefers-color-scheme: light)" srcset="https://img.shields.io/badge/telegram-black?style=for-the-badge&logo=telegram&color=c9cbff&logoColor=363636&labelColor=e8e9ff">
         <img alt="Telegram Channel" src="https://img.shields.io/badge/telegram-black?style=for-the-badge&logo=telegram&color=c9cbff&logoColor=d9e0ee&labelColor=302d41">
@@ -91,15 +91,15 @@
       <tr>
         <td>
           <ul>
-            <li><a href="https://youtube.com/channel/UCy0OPVHSPfh0LOM5x-lY7AQ">Demmicat</a></li>
-            <li><a href="https://youtube.com/@thelasing7475">TheLaysing</a></li>
+            <li><a target="_blank" href="https://youtube.com/channel/UCy0OPVHSPfh0LOM5x-lY7AQ">Demmicat</a></li>
+            <li><a target="_blank" href="https://youtube.com/@thelasing7475">TheLaysing</a></li>
             <li>Mooniru</li>
-            <li><a href="https://twitch.tv/forgettmine">ForgettMine</a></li>
+            <li><a target="_blank" href="https://twitch.tv/forgettmine">ForgettMine</a></li>
             <li>ProtoLeo</li>
-            <li><a href="https://github.com/PackmanDude">PackmanDude</a></li>
-            <li><a href="https://github.com/hackerdemon666">HackerDemon</a></li>
-            <li><a href="https://youtube.com/@roostyk">Roostyk</a></li>
-            <li><a href="https://youtube.com/@copnef8359">CoPNeF</a></li>
+            <li><a target="_blank" href="https://github.com/PackmanDude">PackmanDude</a></li>
+            <li><a target="_blank" href="https://github.com/hackerdemon666">HackerDemon</a></li>
+            <li><a target="_blank" href="https://youtube.com/@roostyk">Roostyk</a></li>
+            <li><a target="_blank" href="https://youtube.com/@copnef8359">CoPNeF</a></li>
           </ul>
         </td>
         <td align="center">
@@ -119,11 +119,11 @@
     </picture>
   </a>
   &nbsp;&nbsp;
-  <a rel="license" target="_blank" href="https://github.com/MinersStudios/WhoMine/blob/release/LICENSE.md">
+  <a rel="license" href="https://github.com/MinersStudios/WhoMine#MIT-1-ov-file">
     <img alt="MIT License" src="https://upload.wikimedia.org/wikipedia/commons/0/0c/MIT_logo.svg" width="72px"/>
   </a>
   <h6>
-    This project is licensed under the <a rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
+    This project is licensed under the <a target="_blank" rel="license" href="https://opensource.org/licenses/MIT">MIT License</a>
     <br><br>
     <ul align="justify">
       <li>Feel free to use this plugin for any purpose, including commercial projects.</li>
